@@ -148,3 +148,4 @@ if (typeof module != 'undefined' && module.exports) {
 } else {
     window.adaptive = adaptive;
 }
+

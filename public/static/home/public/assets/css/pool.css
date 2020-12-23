@@ -1,3 +1,38 @@
+.fun-entry {
+    padding: .18rem .1rem .166667rem;
+    text-align: center;
+    background-color: #fff;
+    margin-top: 0.2rem;
+}
+.flex-pack-justify {
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+.flex {
+    display: -ms-flexbox;
+    display: flex;
+}
+.nav_img {
+    width: 30%;
+    margin: 0.2rem;
+}
+.nav_btn {
+    color: #333;
+    margin-top: 0.11893333rem;
+    letter-spacing: .013333rem;
+}
+.conduct{
+    color: #fafafa;
+    line-height: 0.54rem;
+    background: linear-gradient(225deg, rgb(255, 86, 133) 0%, rgb(255, 123, 0) 51%, rgb(255, 155, 0) 100%);
+    position: absolute;
+    border-radius: 1.333333rem;
+    width: 1.546667rem;
+    align-items: center;
+    text-align: center;
+    margin-inline-start: .286667rem;
+    margin: 0.18rem 0 0 0.52rem;
+}
 body {
     background: #f6f6f6;
 }
@@ -14,7 +49,7 @@ body {
     width: 100%;
     position: relative;
     margin: 0px auto;
-    border-radius: 5px;
+    border-radius: .133333rem;
     height: 3rem;
     overflow: hidden;
 }
@@ -104,7 +139,7 @@ body {
 }
 
 .kaxinghao {
-    font-size: 0.32rem;
+    /*font-size: 0.32rem;*/
     color: #666666;
     width: 1.9rem;
     text-align: center;
@@ -121,7 +156,8 @@ body {
 
 .wangka_taocan {
     background-color: #fff;
-    margin-top: 0.2rem;
+    /*margin-top: 0.2rem;*/
+    border-bottom: .013333rem solid #e6e6e6;
 }
 
 .wangka_box {
@@ -138,15 +174,17 @@ body {
 }
 
 .wk_display img {
-    width: 2rem;
-    height: 1.5rem;
+    width: 3.15rem;
+    height: 2.25rem;
+    border-radius: .133333rem;
 }
 
 .wk_biaoti {
-    font-size: 0.36rem;
+    font-size: 0.309rem;
     color: #333333;
     font-weight: bold;
     margin: 0.13rem 0 0 0.15rem;
+    margin-inline-start: .486667rem;
 }
 
 .wk_wenan {
@@ -155,6 +193,7 @@ body {
     margin: 0.15rem 0 0 0.15rem;
     width: 3.35rem;
     line-height: 0.44rem;
+    margin-inline-start: .486667rem;
 }
 
 .wk_banli {
