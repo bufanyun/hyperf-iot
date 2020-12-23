@@ -1,0 +1,179 @@
+body {
+    background: #f6f6f6;
+}
+
+/* banner */
+
+.banner img {
+    width: 7.5rem;
+    height: 3rem;
+}
+
+.m-slider {
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+    margin: 0px auto;
+    border-radius: 5px;
+    height: 3rem;
+    overflow: hidden;
+}
+
+.slider-wrapper {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    -webkit-transform: translate3d(0px, 0px, 0px);
+    transform: translate3d(0px, 0px, 0px);
+    position: relative;
+    z-index: 1;
+    -webkit-transition-property: -webkit-transform;
+    transition-property: -webkit-transform;
+    transition-property: transform;
+    transition-property: transform, -webkit-transform;
+}
+
+.slider-item {
+    width: 100%;
+    height: 100%;
+    -webkit-flex-shrink: 0;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    background: #f6f6f6;
+}
+
+.slider-item img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border: none;
+}
+
+.slider-pagination {
+    text-align: right;
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+    right: 0;
+    bottom: 10px;
+    pointer-events: none;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: end;
+    -webkit-align-items: flex-end;
+    -ms-flex-align: end;
+    align-items: flex-end;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.slider-pagination > .slider-pagination-item {
+    margin: 0 .1rem;
+    width: 8px;
+    height: 8px;
+    display: inline-block;
+    border-radius: 100%;
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.slider-pagination > .slider-pagination-item.slider-pagination-item-active {
+    background-color: #fff;
+    border-radius: 100%;
+}
+
+/* 号卡 */
+
+.haoka_box {
+    background-color: #fff;
+    margin-top: 0.2rem;
+}
+
+.haoka_margin {
+    width: 6.9rem;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.kaxinghao {
+    font-size: 0.32rem;
+    color: #666666;
+    width: 1.9rem;
+    text-align: center;
+    padding: 0.25rem 0;
+}
+
+.kaxinghao_er {
+    font-weight: bold;
+    color: #ff2e04;
+    border-bottom: #ff2e04 solid 0.03rem;
+}
+
+/* 套餐 */
+
+.wangka_taocan {
+    background-color: #fff;
+    margin-top: 0.2rem;
+}
+
+.wangka_box {
+    width: 6.9rem;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.25rem 0;
+}
+
+.wk_display {
+    display: flex;
+}
+
+.wk_display img {
+    width: 2rem;
+    height: 1.5rem;
+}
+
+.wk_biaoti {
+    font-size: 0.36rem;
+    color: #333333;
+    font-weight: bold;
+    margin: 0.13rem 0 0 0.15rem;
+}
+
+.wk_wenan {
+    font-size: 0.2rem;
+    color: #919191;
+    margin: 0.15rem 0 0 0.15rem;
+    width: 3.35rem;
+    line-height: 0.44rem;
+}
+
+.wk_banli {
+    margin: 0;
+    padding: 0;
+    border: none;
+    width: 1rem;
+    height: 1rem;
+    background: -webkit-linear-gradient(top, #ff9018, #ff2d03);
+    border-radius: 50%;
+    box-shadow: 0rem 0.05rem 0.08rem 0rem rgba(255, 47, 4, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wk_banli div {
+    font-size: 0.26rem;
+    color: #ffffff;
+    line-height: 0.34rem;
+    width: 0.52rem;
+}
