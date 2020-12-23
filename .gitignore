@@ -4,7 +4,7 @@
 *.patch
 .idea/
 .git/
-runtime/
+runtime/*
 vendor/
 .phpintel/
 .env
@@ -14,3 +14,4 @@ vendor/
 .user.ini
 test/
 push.sh
+*.zip
