@@ -1022,3 +1022,30 @@ if (!function_exists('toArr')) {
         return json_decode(json_encode($arr), true);
     }
 }
+
+if (!function_exists('redis')) {
+    /**
+     * 获取redis连接池对象
+     * @return \Hyperf\Redis\Redis|null
+     */
+    function redis() :? \Hyperf\Redis\Redis
+    {
+        $container = ApplicationContext::getContainer();
+        $redis = $container->get(\Hyperf\Redis\Redis::class);
+        return $redis;
+    }
+}
+
+if (!function_exists('buildStringHash')) {
+    /**
+     * 将字串符生成hash
+     * buildStringHash
+     * @param string $data
+     * @return string
+     */
+    function buildStringHash(string $data) : string
+    {
+        $data = hash('ripemd160', base64_encode(trim($data)));
+        return $data;
+    }
+}

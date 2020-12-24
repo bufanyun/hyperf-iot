@@ -15,6 +15,7 @@ use Hyperf\Utils\ApplicationContext;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Annotation\Middleware;
 
+
 /**
  * SpreadController
  * 推广下单
@@ -27,6 +28,7 @@ use Hyperf\HttpServer\Annotation\Middleware;
  */
 class SpreadController extends BaseController
 {
+
     /**
      * pool
      * 号卡汇总列表

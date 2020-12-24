@@ -33,14 +33,14 @@
                     <input id="mobilePhone" type="tel" title="联系电话" placeholder="请输入联系电话" maxlength="11"/>
                 </div>
             </li>
-            <li id="apply-yzm">
-                <div class="p-title">验证码</div>
-                <div class="p-content">
-                    <input id="captchaText" class="yzmInput" maxlength="4" type="text" title="请输入验证码" placeholder="请输入验证码"/>
-                    <span class="rightI" style="display: none"></span>
-                    <span class="yzm" id="captcha">获取验证码</span>
-                </div>
-            </li>
+{{--            <li id="apply-yzm">--}}
+{{--                <div class="p-title">验证码</div>--}}
+{{--                <div class="p-content">--}}
+{{--                    <input id="captchaText" class="yzmInput" maxlength="4" type="text" title="请输入验证码" placeholder="请输入验证码"/>--}}
+{{--                    <span class="rightI" style="display: none"></span>--}}
+{{--                    <span class="yzm" id="captcha">获取验证码</span>--}}
+{{--                </div>--}}
+{{--            </li>--}}
         </ul>
     </div>
     <div class="voiceYzmTip" hidden>我们将通过电话方式告知您验证码，请注意接听</div>
