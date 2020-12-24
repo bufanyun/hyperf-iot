@@ -33,19 +33,19 @@
                     <input id="mobilePhone" type="tel" title="联系电话" placeholder="请输入联系电话" maxlength="11"/>
                 </div>
             </li>
-{{--            <li id="apply-yzm">--}}
-{{--                <div class="p-title">验证码</div>--}}
-{{--                <div class="p-content">--}}
-{{--                    <input id="captchaText" class="yzmInput" maxlength="4" type="text" title="请输入验证码" placeholder="请输入验证码"/>--}}
-{{--                    <span class="rightI" style="display: none"></span>--}}
-{{--                    <span class="yzm" id="captcha">获取验证码</span>--}}
-{{--                </div>--}}
-{{--            </li>--}}
+            <li id="apply-yzm" style="display: none">
+                <div class="p-title">验证码</div>
+                <div class="p-content">
+                    <input id="captchaText" class="yzmInput" maxlength="4" type="text" title="请输入验证码" placeholder="请输入验证码"/>
+                    <span class="rightI" style="display: none"></span>
+                    <span class="yzm" id="captcha">获取验证码</span>
+                </div>
+            </li>
         </ul>
     </div>
-    <div class="voiceYzmTip" hidden>我们将通过电话方式告知您验证码，请注意接听</div>
+{{--    <div class="voiceYzmTip" hidden>我们将通过电话方式告知您验证码，请注意接听</div>--}}
     <div class="fill fill-two" id="postDistrict">
-        <div class="voiceCaptcha" hidden>*收不到验证码？试试<a href="javascript:;" id="voiceCaptcha">语音验证码&gt;</a></div>
+{{--        <div class="voiceCaptcha" hidden>*收不到验证码？试试<a href="javascript:;" id="voiceCaptcha">语音验证码&gt;</a></div>--}}
         <h2>请填写配送地址<span>(支持全国配送，新疆、西藏仅限省内配送)</span></h2>
         <ul class="fill-list">
             <li id="delivery">
@@ -61,13 +61,13 @@
         </ul>
     </div>
     <div class="fill fill-two">
-        <h2>请选择号码<span class="mainNum"></span></h2>
+        <h2 id="lianghao-title" style="display: none">请选择号码<span class="mainNum"></span></h2>
         <ul class="fill-list">
-            <li id="location">
+            <li id="location" style="display: none">
                 <div class="p-title">号码归属</div>
                 <div class="p-content p-select grey arr">请选择号码归属地</div>
             </li>
-            <li id="number">
+            <li id="number" style="display: none">
                 <div class="p-title">选择号码</div>
                 <div class="p-content p-select"></div>
             </li>
@@ -78,9 +78,11 @@
 <section class="apply">
     <div class="protocol-div">
         <p class="protocol agree" id="protocol">
-            <i class="protocol-radio"></i>我已阅读并同意<a href="javascript:;" id="go-protocol">《客户入网服务协议及业务协议》</a>
+            <i class="protocol-radio"></i>我已阅读并同意
+            <a href="javascript:;" id="go_notice">《信息收集和使用规则公告》</a>
+{{--            <a href="javascript:;" id="go-protocol">《客户入网服务协议及业务协议》</a>--}}
         </p>
-        <p class="protocol"><a href="javascript:;" id="go_notice">《关于客户个人信息收集、使用规则的公告》</a></p>
+{{--        <p class="protocol"><a href="javascript:;" id="go_notice">《关于客户个人信息收集、使用规则的公告》</a></p>--}}
         <p class="international">国际/港澳台漫游和国际/港澳台长途功能将于号码激活时同步生效</p>
     </div>
 </section>
@@ -206,6 +208,8 @@
 <div class="mask" hidden></div>
 </body>
 <script>
+    let API_interface = 'http://admin.facms.cn';
+    let config = @json($product, JSON_PRETTY_PRINT);
     let u = "xwku2YAd9bm%20h/khvLl6dw==";
     let p = "51";
     let c = "510";
@@ -234,5 +238,16 @@
 <script src="/static/home/public/assets/js/index.js?r=8752134"></script>
 <script>
     $('.eruda-entry-btn').hide();
+    if(config.captcha_switch === 1){
+        $('#apply-yzm').slideDown("slow");
+    }
+    if(config.area_switch === 1){
+        $('#location').slideDown("slow");
+    }
+    if(config.num_select_switch === 1){
+        $('#lianghao-title').slideDown("slow");
+        $('#number').slideDown("slow");
+    }
+
 </script>
 </html>

@@ -139,7 +139,9 @@ $(function () {
     var setProduct = function () {
         $('#top-desc').show().text(_topText);
     };
-    $('.privacy').css('width', ($(window).width() / 0.75) + 'px');
+
+    let privacy_width = $(window).width() > 640 ? 640 : $(window).width();
+    $('.privacy').css('width', (privacy_width / 0.75) + 'px');
     // 请求参数初始化
     var setReq = function () {
         req.numInfo = {};
@@ -241,19 +243,34 @@ $(function () {
             req.numInfo.essCity = '187';
         }
         var param = {
-            provinceCode: req.numInfo.essProvince,
-            cityCode: req.numInfo.essProvince == '50' ? '501' : req.numInfo.essCity,
-            monthFeeLimit: 0,
-            goodsId: req.numInfo.essProvince + initParam.goodsId.substr(2),
-            searchCategory: 3,
-            net: '01',
-            amounts: 200,
-            codeTypeCode: '',
-            searchValue: $('#search').data('val'),
-            qryType: '02',
-            goodsNet: 4,
-            channel: 'msg-xsg'
+            // provinceCode: req.numInfo.essProvince,
+            // cityCode: req.numInfo.essProvince == '50' ? '501' : req.numInfo.essCity,
+            // monthFeeLimit: 0,
+            // goodsId: req.numInfo.essProvince + initParam.goodsId.substr(2),
+            // searchCategory: 3,
+            // net: '01',
+            // amounts: 200,
+            // codeTypeCode: '',
+            // searchValue: $('#search').data('val'),
+            // qryType: '02',
+            // goodsNet: 4,
+            // channel: 'msg-xsg'
         };
+        $._ajaxSwitch({
+            type: 'get',
+            url: 'http://admin.facms.cn/home/api/selectPhones?province=%E5%B9%BF%E4%B8%9C&city=%E5%B9%BF%E5%B7%9E&sid=1',
+            data: param,
+            dataType: 'jsonp',
+            jsonp: 'callback',
+            jsonpCallback: 'jsonp_queryMoreNums',
+            success: function (numberData) {
+                console.log(numberData);
+                initNum = numberData.data.flexData;
+                decompress(numberData.data.flexData);
+            },
+        });
+        return;
+
         if (isSearch) {
             param.searchType = '02';
         } else {
@@ -262,7 +279,7 @@ $(function () {
         if (!commonCheck.isEmpty(param.goodsId)) {
             $._ajaxSwitch({
                 type: 'get',
-                url: 'https://msgo.10010.com/NumApp/NumberCenter/qryNum',
+                url: 'http://admin.facms.cn/home/api/selectPhones?province=%E5%B9%BF%E4%B8%9C&city=%E5%B9%BF%E5%B7%9E&sid=1',
                 data: param,
                 dataType: 'jsonp',
                 jsonp: 'callback',
@@ -1016,7 +1033,7 @@ $(function () {
     });
     $('#go_notice').click(function () {
         // $('#protocol-desc .protocol-desc').load('https://msgo.10010.com/newMsg/toDoor/html/notice.html').css('maxHeight', '22rem');
-        $('#protocol-desc .protocol-desc').load('http://dianhuaka.nyyouhe.com/index/goods/notice.html').css('maxHeight', '22rem');
+        $('#protocol-desc .protocol-desc').load(API_interface + '/home/spread/com-collection-announcement').css('maxHeight', '22rem');
         $('#protocol-desc .protocol-title').empty().text('关于客户个人信息收集、使用规则的公告');
         $('#protocol-desc .content>.protocol').hide();
         $('#protocol-desc,.mask').show();

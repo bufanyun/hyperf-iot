@@ -54,10 +54,10 @@ class SpreadController extends BaseController
 
     /**
      * product_show
-     * 号卡汇总列表
+     * 产品展示页
      * @RequestMapping(path="product_show")
      *
-     * Middleware(SpreadMiddleware::class)
+     * @Middleware(SpreadMiddleware::class)
      */
     public function product_show()
     {
@@ -80,13 +80,14 @@ class SpreadController extends BaseController
      * 资料填写
      * @RequestMapping(path="plat_apply")
      *
-     * Middleware(SpreadMiddleware::class)
+     * @Middleware(SpreadMiddleware::class)
      */
     public function plat_apply()
     {
         $reqParam = $this->request->all();
         $product = Db::table('product_sale')
-            ->select('product_access.label', 'product_sale.*')
+            ->select('product_access.label','product_access.captcha_switch','product_access.area_switch','product_access.num_select_switch',
+                'product_sale.name','product_sale.titile','product_sale.price','product_sale.icon','product_sale.first_desc','product_sale.recommend')
             ->join('product_access', 'product_access.id', '=', 'product_sale.access')
             ->where(['product_sale.status' => 1, 'product_sale.id' => $reqParam['sid']])
             ->first();
@@ -101,11 +102,23 @@ class SpreadController extends BaseController
      * 提交订单
      * @RequestMapping(path="place_order")
      *
-     * Middleware(SpreadMiddleware::class)
+     * @Middleware(SpreadMiddleware::class)
      */
     public function place_order()
     {
         return $this->error(StatusCode::ERR_EXCEPTION,'商品不存在');
+    }
+
+    /**
+     * com_collection_announcement
+     * 联通信息采集公告
+     * @RequestMapping(path="com-collection-announcement")
+     *
+     * Middleware(SpreadMiddleware::class)
+     */
+    public function com_collection_announcement()
+    {
+        return $this->view([],'/Home/common/com-collection-announcement');
     }
 
 
