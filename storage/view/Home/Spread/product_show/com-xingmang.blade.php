@@ -276,7 +276,7 @@
     $('.buttonBox').on('click', function () {
         location.href = '/home/spread/plat_apply?sid='+sku_str+'&job_number={{$reqParam->job_number}}';
     });
-    document.body.clientWidth = "680px";
+    // document.body.clientWidth = "680px";
 
 
 </script>

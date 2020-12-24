@@ -71,8 +71,7 @@ class SpreadController extends BaseController
         return $this->view([
             'product' => $product,
             'reqParam' => (object)$reqParam,
-        ],
-            '/Home/Spread/product_show/' . $product->label);
+        ], '/Home/Spread/product_show/' . $product->label);
     }
     /**
      * plat_apply

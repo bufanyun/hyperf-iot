@@ -14,11 +14,13 @@
             height: 100%;
         }
     </style>
+    <link rel="stylesheet" href="/static/home/public/assets/css/foot_button.css">
     <link href="https://res.mall.10010.cn/mall/scaffold-show/static/css/app.d56bc418dec5a5eca353aee159c2b5f4.css?r=123" rel="stylesheet">
     <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 </head>
 
 <body>
+
 <div id="app">
     <div data-v-087595bc="" id="templateLandingPage" class="" style="background-size: contain; background-color: rgb(24, 12, 9);">
         <div data-v-087595bc="" class="shade" style="display: none;"></div>
@@ -212,6 +214,9 @@
         <!---->
     </div>
 </div>
+
+@include('kefu-order-show')
+
 <script type="text/javascript" src="/static/home/public/assets/js/jquery.min.js"></script>
 <script type="text/javascript">
     let sku_str = "{{$reqParam->sid}}";
