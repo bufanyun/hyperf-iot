@@ -7,6 +7,7 @@ namespace App\Controller\Home;
 use App\Constants\RedisCode;
 use App\Constants\StatusCode;
 use App\Controller\BaseController;
+use App\Exception\BusinessException;
 use Hyperf\HttpServer\Annotation\Controller;
 use Hyperf\HttpServer\Annotation\RequestMapping;
 use App\Middleware\SpreadMiddleware;
@@ -121,22 +122,29 @@ class SpreadController extends BaseController
                 $validator = $this->validationFactory->make(
                     $reqParam,
                     [
-                        'sid' => 'required',
-                        'job_number' => 'required',
-                        //                'certInfo.certName' => 'required|string',
+                        'sid'                    => 'required',
+                        'job_number'             => 'required',
+                        'certInfo.certName'      => 'required|string',
+                        'certInfo.certId'        => 'required|string',
+                        'certInfo.contractPhone' => 'required|string',
+                        'postInfo.webProvince'   => 'required|string',
+                        'postInfo.webCity'       => 'required|string',
+                        'postInfo.webCounty'     => 'required|string',
+                        'postInfo.address'       => 'required|string',
                     ],
                     [
-                        'sid.required' => '商品id不能为空',
-                        'job_number.required' => '推广工号不能为空',
-                        //                'province.required' => '归属省不能为空',
-                        //                'certInfo.certName.required' => '收货人姓名不能为空',
-                        //                'province.string' => '归属省格式错误',
-                        //                'city.string' => '归属市格式错误',
+                        'sid.required'               => '商品id不能为空',
+                        'job_number.required'        => '推广工号不能为空',
+                        'certInfo.certName.required' => '收货人姓名不能为空',
+                        'postInfo.webProvinc.requirede'   => '收货省不能为空',
                     ]
                 );
-
                 if ($validator->fails()){
                     return $this->error(StatusCode::ERR_EXCEPTION, $validator->errors()->first());
+                }
+                $OrderThreeInspect = OrderThreeInspect((string)$reqParam['certInfo']['certName'], (string)$reqParam['certInfo']['certId'], (string)$reqParam['certInfo']['contractPhone']);
+                if($OrderThreeInspect !== true){
+                    return $this->error(StatusCode::ERR_EXCEPTION, $OrderThreeInspect);
                 }
                 $res = $this->OrderSubmitRepository->default($reqParam);
                 return $res;

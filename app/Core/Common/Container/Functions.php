@@ -1049,3 +1049,153 @@ if (!function_exists('buildStringHash')) {
         return $data;
     }
 }
+
+if (!function_exists('isIdCard')) {
+    /**
+     * 身份证号验证
+     * isIdCard
+     * @param  string  $id
+     *
+     * @return bool
+     * author MengShuai <133814250@qq.com>
+     * date 2020/12/25 17:10
+     */
+    function isIdCard(string $id)
+    {
+        $id = strtoupper($id);
+        $regx = "/(^\d{15}$)|(^\d{17}([0-9]|X)$)/";
+        $arr_split = [];
+        if ( ! preg_match($regx, $id)) {
+            return false;
+        }
+        if (15 == strlen($id)) //检查15位
+        {
+            $regx = "/^(\d{6})+(\d{2})+(\d{2})+(\d{2})+(\d{3})$/";
+
+            @preg_match($regx, $id, $arr_split);
+            //检查生日日期是否正确
+            $dtm_birth = "19".$arr_split[2].'/'.$arr_split[3].'/'.$arr_split[4];
+            if ( ! strtotime($dtm_birth)) {
+                return false;
+            } else {
+                return true;
+            }
+        } else      //检查18位
+        {
+            $regx = "/^(\d{6})+(\d{4})+(\d{2})+(\d{2})+(\d{3})([0-9]|X)$/";
+            @preg_match($regx, $id, $arr_split);
+            $dtm_birth = $arr_split[2].'/'.$arr_split[3].'/'.$arr_split[4];
+            if ( ! strtotime($dtm_birth)) //检查生日日期是否正确
+            {
+                return false;
+            } else {
+                //检验18位身份证的校验码是否正确。
+                //校验位按照ISO 7064:1983.MOD 11-2的规定生成，X可以认为是数字10。
+                $arr_int =
+                    [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
+                $arr_ch =
+                    ['1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2'];
+                $sign = 0;
+                for ($i = 0; $i < 17; $i++) {
+                    $b = (int)$id[$i];
+                    $w = $arr_int[$i];
+                    $sign += $b * $w;
+                }
+                $n = $sign % 11;
+                $val_num = $arr_ch[$n];
+                if ($val_num != substr($id, 17, 1)) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        }
+    }
+}
+
+if(!function_exists('getIdCardAge')) {
+    /**
+     * 根据身份证号码获取年龄
+     * getIdCardAge
+     * @param  string  $card_id
+     *
+     * @return int
+     * author MengShuai <133814250@qq.com>
+     * date 2020/12/25 17:11
+     */
+    function getIdCardAge(string $card_id): int
+    {
+        if (strlen($card_id) < 15) {
+            return 0;
+        }
+        $age = date('Y') - substr($card_id, 6, 4) + (date('md') >= substr($card_id, 10, 4) ? 0 : -1);
+        return (int)$age;
+    }
+}
+if(!function_exists('isMobile')) {
+    /**
+     * 验证是否是正确的手机号
+     * isMobile
+     * @param  string  $value
+     *
+     * @return bool
+     * author MengShuai <133814250@qq.com>
+     * date 2020/12/25 17:12
+     */
+    function isMobile(string $value) : bool
+    {
+        $rule = '/^0?(13|14|15|16|17|18|19)[0-9]{9}$/';
+        $result = preg_match($rule, $value);
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+if(!function_exists('isChineseName')) {
+    /**
+     * 判断中文姓名是否正确
+     * isChineseName
+     * @param  string  $name
+     *
+     * @return bool
+     * author MengShuai <133814250@qq.com>
+     * date 2020/12/25 17:12
+     */
+    function isChineseName(string $name): bool {
+        if (preg_match('/^([\xe4-\xe9][\x80-\xbf]{2}){2,4}$/', $name)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+if(!function_exists('OrderThreeInspect')) {
+    /**
+     * 订单三要素格式检查
+     * OrderThreeInspect
+     * @param  string  $name
+     * @param  int  $idCard
+     * @param  int  $phone
+     *
+     * @return bool|string
+     * author MengShuai <133814250@qq.com>
+     * date 2020/12/25 17:16
+     */
+    function OrderThreeInspect(string $name, string $idCard, string $phone)
+    {
+        if (!isChineseName($name)){
+            return '请输入正确的姓名';
+        }
+        if (!isIdCard((string)$idCard)){
+            return '请输入正确的身份证号码：' . (string)$idCard;
+        }
+        if (!isMobile($phone)){
+            return '请输入正确的手机号';
+        }
+        return true;
+    }
+}
