@@ -69,10 +69,10 @@ start();
 state();
 Timer::tick(SCAN_INTERVAL, 'watch');
 
-echo "已自动更新git..";
+echo "已自动更新git.." . PHP_EOL;
 $cmd = "cd " . __DIR__  . " && ./push.sh  &> /dev/null";
 system ($cmd);
-echo "更新成功";
+echo "更新成功" . PHP_EOL;
 
 function killOldProcess()
 {
