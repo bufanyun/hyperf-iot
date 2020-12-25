@@ -13,6 +13,7 @@ use Hyperf\DbConnection\Db;
 use Hyperf\Di\Annotation\Inject;
 use Core\Common\Extend\CardApi\Bk\Tools as BkApi;
 use Core\Common\Container\Redis;
+use Hyperf\Logger\LoggerFactory;
 
 /**
  * orderSubmit
@@ -23,13 +24,14 @@ use Core\Common\Container\Redis;
  */
 class orderSubmitRepository extends BaseRepository
 {
-
-
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    protected $logger;
     /**
      * @var Redis
      */
     private $Redis;
-
     /**
      * @var BkApi
      */
@@ -39,6 +41,7 @@ class orderSubmitRepository extends BaseRepository
     {
         $this->BkApi = make(BkApi::class);
         $this->Redis = make(Redis::class);
+        $this->logger = (make(LoggerFactory::class))->get('logqwe', 'default');
     }
 
     /**
@@ -140,21 +143,22 @@ class orderSubmitRepository extends BaseRepository
                         ),
                 );
 
+
                 Db::beginTransaction();
                 try{
                     $insert = [
                         'dock_order_id' => $res['data']['order']['order_no'],
                         'order_id' => date("YmdHi") . uniqid(),
-                        'app_number' =>
+                        'app_number' => '',
                     ];
                     $res2 = Db::table('product_order')->insert($data);
                     Db::commit();
                 } catch(\Throwable $ex){
                     Db::rollBack();
+                    $this->logger->info("Your log message.");
+                    setLog('ymkj_product_order.log', '订单插入失败：'.json_encode($data, JSON_UNESCAPED_UNICODE) . "\r\n" . $ex->getMessage());
                     throw new BusinessException(StatusCode::ERR_EXCEPTION, $ex->getMessage());
                 }
-
-                setLog('ymkj_product_order.log', '订单插入失败：'.json_encode($data, JSON_UNESCAPED_UNICODE));
 
                 return [
                     'code' => StatusCode::SUCCESS,
