@@ -41,7 +41,7 @@ class orderSubmitRepository extends BaseRepository
     {
         $this->BkApi = make(BkApi::class);
         $this->Redis = make(Redis::class);
-        $this->logger = (make(LoggerFactory::class))->get('logqwe', 'default');
+        $this->logger = (make(LoggerFactory::class))->get(__CLASS__);
     }
 
     /**
@@ -91,7 +91,7 @@ class orderSubmitRepository extends BaseRepository
                     return $this->error(StatusCode::ERR_EXCEPTION, '获取接口中收货地信息失败，请联系管理员处理');
                 }
 
-//                $params = [  //统一检查参数规则
+//                $params = [
 //                    'sim_identity' => $inputData['certInfo']['certId'],
 //                    'phone' => $inputData['certInfo']['contractPhone'],
 //                    'province' => $Area['province_name'],
@@ -117,9 +117,9 @@ class orderSubmitRepository extends BaseRepository
                     'newnumber'        => $inputData['numInfo']['number'],
                     'development_code' => $this->BkApi->config['development_code'],
                     'productCode'      => $product->kind,
-//                    'captchaId'        => $inputData['captchaInfo']['captcha'],  //暂时免验证码
+//                    'captchaId'        => $inputData['captchaInfo']['captcha'],
                 ];
-                var_export($data);
+//                var_export($data);
 //                $res = $this->BkApi->request('ZOPsubmit', $data);
 //                if($res['code'] !== StatusCode::SUCCESS){
 //                    throw new BusinessException(StatusCode::ERR_EXCEPTION, $res['msg']);
@@ -131,35 +131,39 @@ class orderSubmitRepository extends BaseRepository
                         array (
                             'order' =>
                                 array (
-                                    'order_no' => 'WQPT2020122522112086188497800',
+                                    'order_no' => uniqid(),
                                     'productCode' => 'DW_NO_PRIZES_CARD',
                                     'create_time' => '2020-12-25 22:11:23',
                                     'province' => '江苏',
                                     'city' => '南京市',
                                     'newnumber' => '13042568502',
                                     'development_code' => '5112191792',
-                                    'order_id' => '3160122587228439',
+                                    'order_id' => uniqid(),
                                 ),
                         ),
                 );
 
-
-                Db::beginTransaction();
-                try{
-                    $insert = [
-                        'dock_order_id' => $res['data']['order']['order_no'],
-                        'order_id' => date("YmdHi") . uniqid(),
-                        'app_number' => '',
-                    ];
-                    $res2 = Db::table('product_order')->insert($data);
-                    Db::commit();
-                } catch(\Throwable $ex){
-                    Db::rollBack();
-                    $this->logger->info("Your log message.");
-                    setLog('ymkj_product_order.log', '订单插入失败：'.json_encode($data, JSON_UNESCAPED_UNICODE) . "\r\n" . $ex->getMessage());
-                    throw new BusinessException(StatusCode::ERR_EXCEPTION, $ex->getMessage());
-                }
-
+                $admin_id = Db::table('user')->where(['job_number' => $inputData['job_number']])->value('id');
+                $insert = [
+                    'sid' => $inputData['sid'],
+                    'admin_id' => $admin_id ? $admin_id : 1,
+                    'dock_order_id' => $res['data']['order']['order_id'],
+                    'order_id' => date("YmdHi") .'AA'. uniqid(),
+                    'name' => $inputData['certInfo']['certName'],
+                    'sim_identity' => $inputData['certInfo']['certId'],
+                    'phone' => $inputData['certInfo']['contractPhone'],
+                    'province' => $Area['province_name'],
+                    'city' => $Area['city_name'],
+                    'district' => $Area['district_name'],
+                    'address' => $inputData['postInfo']['address'],
+                    'app_province' => $Ascription['province_name'],
+                    'app_city' => $Ascription['city_name'],
+                    'app_number' => $inputData['numInfo']['number'],
+                    'sale_channel' => isset($inputData['sale_channel']) ? $inputData['sale_channel'] : '',
+                    'created_at' => date("Y-m-d H:i:s"),
+                    'status' => 1,
+                ];
+                $this->createOrder($insert);
                 return [
                     'code' => StatusCode::SUCCESS,
                     'msg' => '提交成功',
@@ -170,6 +174,30 @@ class orderSubmitRepository extends BaseRepository
                 throw new BusinessException(StatusCode::ERR_EXCEPTION, '未开放模块1');
         }
     }
+
+    /**
+     * 创建订单
+     * @param array $insert
+     */
+    private function createOrder(array $insert) : void
+    {
+        Db::beginTransaction();
+        try{
+            var_export(['$insert' => $insert]);
+            $res = Db::table('product_order')->insert($insert);
+            Db::commit();
+        } catch(\Throwable $ex){
+            Db::rollBack();
+            $this->logger->info('订单插入失败,' . __LINE__ . '行：'.json_encode($insert, JSON_UNESCAPED_UNICODE) . "\r\n 错误提示：" . $ex->getMessage());
+            throw new BusinessException(StatusCode::ERR_EXCEPTION, $ex->getMessage());
+        }
+        if(!$res){
+            Db::rollBack();
+            $this->logger->info('订单插入失败,' . __LINE__ . '行：'.json_encode($insert, JSON_UNESCAPED_UNICODE) . "\r\n");
+            throw new BusinessException(StatusCode::ERR_EXCEPTION, '订单提交失败，稍后再试！');
+        }
+    }
+
 
 
     /**
@@ -186,9 +214,9 @@ class orderSubmitRepository extends BaseRepository
     {
         if ($product->age_limit !== 'null') {
             $product->age_limit = json_decode($product->age_limit, true);
-            $age = getIdCardAge($params['certId']);
+            $age = getIdCardAge((string)$params['certId']);
             if ($age < $product->age_limit[0] || $age > $product->age_limit[1]) {
-                return '年龄需在' . $product->age_limit[0] . '至' . $product->age_limit[1] . '才能申请！';
+                return '年龄需在' . $product->age_limit[0] . '至' . $product->age_limit[1] . '才能申请！'.$age;
             }
         }
         if ($product->pay_limit !== 'null') {
