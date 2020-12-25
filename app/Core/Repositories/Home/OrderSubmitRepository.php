@@ -7,6 +7,8 @@ namespace Core\Repositories\Home;
 use App\Constants\StatusCode;
 use App\Exception\BusinessException;
 use Core\Repositories\BaseRepository;
+use Hyperf\Validation\Contract\ValidatorFactoryInterface;
+use Hyperf\Di\Annotation\Inject;
 
 /**
  * orderSubmit
@@ -15,9 +17,13 @@ use Core\Repositories\BaseRepository;
  *
  * @property \Core\Services\AttachmentService $attachmentService
  */
-class OrderSubmitRepository extends BaseRepository
+class orderSubmitRepository extends BaseRepository
 {
-
+    /**
+     * @Inject()
+     * @var ValidatorFactoryInterface
+     */
+    protected $validationFactory;
     /**
      * 默认模板
      * default
@@ -26,8 +32,29 @@ class OrderSubmitRepository extends BaseRepository
      */
     public function default(array $inputData)
     {
-//        throw new BusinessException(StatusCode::ERR_EXCEPTION,'附件ID错误');
-        return $inputData;
+        $validator = $this->validationFactory->make(
+            $inputData,
+            [
+                'sid' => 'required',
+                'job_number' => 'required',
+                'certInfo.certName' => 'required|string',
+            ],
+            [
+                'sid.required' => '商品id不能为空',
+                'job_number.required' => '推广工号不能为空',
+                'province.required' => '归属省不能为空',
+                'certInfo.certName.required' => '收货人姓名不能为空',
+                //                'province.string' => '归属省格式错误',
+                //                'city.string' => '归属市格式错误',
+            ]
+        );
+
+        if ($validator->fails()){
+            return $this->error(StatusCode::ERR_EXCEPTION, $validator->errors()->first());
+        }
+
+        
+        return $this->success(StatusCode::SUCCESS, '提交成功');
     }
 
     /**
