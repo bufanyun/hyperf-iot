@@ -24,7 +24,7 @@ class orderSubmitRepository extends BaseRepository
      * @Inject()
      * @var ValidatorFactoryInterface
      */
-    public $validationFactory;
+    protected $validationFactory;
 
     /**
      * 默认模板

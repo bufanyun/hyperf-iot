@@ -14,6 +14,7 @@ use Hyperf\DbConnection\Db;
 use Hyperf\Utils\ApplicationContext;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Annotation\Middleware;
+use Hyperf\Validation\Contract\ValidatorFactoryInterface;
 
 
 /**
@@ -28,6 +29,11 @@ use Hyperf\HttpServer\Annotation\Middleware;
  */
 class SpreadController extends BaseController
 {
+    /**
+     * @Inject()
+     * @var ValidatorFactoryInterface
+     */
+    protected $validationFactory;
 
     /**
      * pool
@@ -113,6 +119,26 @@ class SpreadController extends BaseController
         }
         switch ($reqParam['template']){
             case 'default':
+                $validator = $this->validationFactory->make(
+                    $reqParam,
+                    [
+                        'sid' => 'required',
+                        'job_number' => 'required',
+                        //                'certInfo.certName' => 'required|string',
+                    ],
+                    [
+                        'sid.required' => '商品id不能为空',
+                        'job_number.required' => '推广工号不能为空',
+                        //                'province.required' => '归属省不能为空',
+                        //                'certInfo.certName.required' => '收货人姓名不能为空',
+                        //                'province.string' => '归属省格式错误',
+                        //                'city.string' => '归属市格式错误',
+                    ]
+                );
+
+                if ($validator->fails()){
+                    return $this->error(StatusCode::ERR_EXCEPTION, $validator->errors()->first());
+                }
                 $res = $this->OrderSubmitRepository->default($reqParam);
                 return $res;
             case "str2":
