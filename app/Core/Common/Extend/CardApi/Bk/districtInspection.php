@@ -21,7 +21,7 @@ class districtInspection
      * @var string
      */
     private $area_field = ['province_name', 'city_name', 'district_name'];
-
+    private $area_field_code = ['province_code', 'city_code', 'district_code'];
     //////////////////////////////////////////////////////////////////////
 
     /**归属地表名
@@ -33,6 +33,7 @@ class districtInspection
      * @var string
      */
     private $ascription_field = ['province_name', 'city_name'];
+    private $ascription_field_code = ['ess_province_code', 'ess_city_code'];
 
     /**
      * 获取接口中的归属地格式信息
@@ -80,6 +81,56 @@ class districtInspection
             [$this->area_field[0], 'LIKE', "%{$province}%"],
             [$this->area_field[1], 'LIKE', "%{$city}%"],
             [$this->area_field[2], 'LIKE', "%{$district}%"],
+        ];
+        $res = Db::table($this->area_table)->where($where)->first();
+        return $res ? (array)$res : [];
+    }
+
+    /**
+     * 通过编码获取接口中的归属地格式信息
+     * getAscriptionCode
+     * @param  int  $province
+     * @param  int  $city
+     *
+     * @return array|null
+     * author MengShuai <133814250@qq.com>
+     * date 2020/12/25 11:36
+     */
+    public function getAscriptionCode(int $province, int $city) :? array
+    {
+        if($province === "" || $city === ""){
+            return null;
+        }
+        //  var_export([$province, $city]);exit;
+        $where = [
+            [$this->ascription_field_code[0], '=', $province],
+            [$this->ascription_field_code[1], '=', $city],
+        ];
+        $res = Db::table($this->ascription_table)->where($where)->first();
+        return $res ? (array)$res : [];
+    }
+
+    /**
+     * 通过编码获取接口中的收货地区格式信息
+     * getAreaCode
+     * @param  int  $province
+     * @param  int  $city
+     * @param  int  $district
+     *
+     * @return array|null
+     * author MengShuai <133814250@qq.com>
+     * date 2020/12/25 11:36
+     */
+    public function getAreaCode(int $province, int $city, int $district) :? array
+    {
+        if($province === "" || $city === "" || $district === ""){
+            return null;
+        }
+        //  var_export([$province, $city, $district]);exit;
+        $where = [
+            [$this->area_field_code[0], '=', $province],
+            [$this->area_field_code[1], '=', $city],
+            [$this->area_field_code[2], '=', $district],
         ];
         $res = Db::table($this->area_table)->where($where)->first();
         return $res ? (array)$res : [];

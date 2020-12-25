@@ -137,4 +137,14 @@ class Tools
         return $this->districtInspection->getArea($province, $city, $district);
     }
 
+    public function getAscriptionCode(int $province, int $city) :? array
+    {
+        return $this->districtInspection->getAscriptionCode($province, $city);
+    }
+
+    public function getAreaCode(int $province, int $city, int $district) :? array
+    {
+        return $this->districtInspection->getAreaCode($province, $city, $district);
+    }
+
 }

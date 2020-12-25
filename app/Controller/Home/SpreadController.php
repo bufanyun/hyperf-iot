@@ -87,7 +87,7 @@ class SpreadController extends BaseController
         $reqParam = $this->request->all();
         $product = Db::table('product_sale')
             ->select('product_access.label','product_access.captcha_switch','product_access.area_switch','product_access.num_select_switch',
-                'product_sale.name','product_sale.titile','product_sale.price','product_sale.icon','product_sale.first_desc','product_sale.recommend')
+                'product_sale.id','product_sale.name','product_sale.titile','product_sale.price','product_sale.icon','product_sale.first_desc','product_sale.recommend')
             ->join('product_access', 'product_access.id', '=', 'product_sale.access')
             ->where(['product_sale.status' => 1, 'product_sale.id' => $reqParam['sid']])
             ->first();

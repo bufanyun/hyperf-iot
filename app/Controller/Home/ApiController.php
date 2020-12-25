@@ -143,7 +143,7 @@ class ApiController extends BaseController
         switch ($product->api_model){
             case 'BkApi':
                 $num = (isset($params['num']) && $params['num'] == "10") ? "10" : "100";
-                $region = $this->BkApi->getAscription($params['province'], $params['city']);
+                $region = $this->BkApi->getAscriptionCode((int)$params['province'], (int)$params['city']);
                 if(!$region){
                     return $this->error(StatusCode::ERR_EXCEPTION, '获取接口中归属地信息失败，请联系管理员处理');
                 }
@@ -154,7 +154,10 @@ class ApiController extends BaseController
                     'productCode'      => $product->kind,
                     'development_code' => $this->BkApi->config['development_code'],
                 ];
-                if (isset($params['searchNumber'])) {
+                if (isset($params['searchNumber']) && $params['searchNumber'] != '') {
+                    if(!is_numeric($params['searchNumber'])){
+                        return $this->error(StatusCode::ERR_EXCEPTION, '只能搜索数字，请重新输入');
+                    }
                     $data = array_merge($data,
                         ['searchNumber' => $params['searchNumber']]);
                 }

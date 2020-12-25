@@ -209,7 +209,7 @@
 </body>
 <script>
     let API_interface = 'http://admin.facms.cn';
-    let config = @json($product, JSON_PRETTY_PRINT);
+    let product = @json($product, JSON_PRETTY_PRINT);
     let u = "xwku2YAd9bm%20h/khvLl6dw==";
     let p = "51";
     let c = "510";
@@ -238,13 +238,13 @@
 <script src="/static/home/public/assets/js/index.js?r=8752134"></script>
 <script>
     $('.eruda-entry-btn').hide();
-    if(config.captcha_switch === 1){
+    if(product.captcha_switch === 1){
         $('#apply-yzm').slideDown("slow");
     }
-    if(config.area_switch === 1){
+    if(product.area_switch === 1){
         $('#location').slideDown("slow");
     }
-    if(config.num_select_switch === 1){
+    if(product.num_select_switch === 1){
         $('#lianghao-title').slideDown("slow");
         $('#number').slideDown("slow");
     }

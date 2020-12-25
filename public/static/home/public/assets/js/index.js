@@ -186,27 +186,38 @@ $(function () {
 
     // 解析号码
     function decompress(number) {
+        console.log('number:'+JSON.stringify(number));
+        if(number.code !== 20000){
+            $('.no-number').text(number.msg).show();
+            $('#refresh').text('再试一次');
+            $('.number-list, .number-loading').hide();
+            return;
+        }
         $('.number-loading').hide();
         var mlist = ['M2', 'M3', 'M4', 'M5'];
         var _key = $('#search').data('val');
-        if (number.numArray.length == 0) {
-            if ($.inArray(number.code, mlist) > -1) {
-                $('.no-number').html('当前网络不给力，请在wifi或其他网络环境下重试！<span class="error-code">' + number.code + '</span>').show();
-            } else if (($.inArray(number.code, mlist) == -1)) {
-                if (commonCheck.isEmpty(_key)) {
-                    $('.no-number').html('当前选号人数过多，请您稍后再试！<span class="error-code">' + number.code + '</span>').show();
-                    $('#refresh').text('再试一次');
-                } else {
-                    $('.no-number').html('抱歉没有匹配的号码.<span class="error-code">' + number.code + '</span>').show();
-                    $('#refresh').text('换一批');
-                }
-            }
+        if (number.data.flexData.length == 0) {
+            // if ($.inArray(number.code, mlist) > -1) {
+            //     $('.no-number').html('当前网络不给力，请在wifi或其他网络环境下重试！<span class="error-code">' + number.code + '</span>').show();
+            // } else if (($.inArray(number.code, mlist) == -1)) {
+            //     if (commonCheck.isEmpty(_key)) {
+            //         $('.no-number').html('当前选号人数过多，请您稍后再试！<span class="error-code">' + number.code + '</span>').show();
+            //         $('#refresh').text('再试一次');
+            //     } else {
+            //         $('.no-number').html('抱歉没有匹配的号码.<span class="error-code">' + number.code + '</span>').show();
+            //         $('#refresh').text('换一批');
+            //     }
+            // }
+
+            $('.no-number').html('抱歉没有匹配的号码.<span class="error-code">' + number.code + '</span>').show();
+            $('#refresh').text('换一批');
+            $('.number-list, .number-loading').hide();
             return;
         }
         $('.number-list').show();
         numberParam.list = [];
         numberParam.current = 1;
-        var numArray = number.numArray;
+        var numArray = number.data.flexData;
         for (var i = 0; i < numArray.length; i += 12) {
             var numberObj = {};
             numberObj.advanceLimit = numArray[i + 1];
@@ -242,48 +253,34 @@ $(function () {
         if (req.numInfo.essCity === '190' && req.numInfo.essProvince === '18') {
             req.numInfo.essCity = '187';
         }
+        console.log('req:'+JSON.stringify(req));
         var param = {
-            // provinceCode: req.numInfo.essProvince,
-            // cityCode: req.numInfo.essProvince == '50' ? '501' : req.numInfo.essCity,
-            // monthFeeLimit: 0,
-            // goodsId: req.numInfo.essProvince + initParam.goodsId.substr(2),
-            // searchCategory: 3,
-            // net: '01',
-            // amounts: 200,
-            // codeTypeCode: '',
-            // searchValue: $('#search').data('val'),
-            // qryType: '02',
-            // goodsNet: 4,
-            // channel: 'msg-xsg'
+            province: req.numInfo.essProvince,
+            city: req.numInfo.essProvince == '50' ? '530' : req.numInfo.essCity,
+            monthFeeLimit: 0,
+            sid: product.id,
+            searchCategory: 3,
+            net: '01',
+            amounts: 200,
+            codeTypeCode: '',
+            searchNumber: $('#search').data('val'),
+            qryType: '02',
+            goodsNet: 4,
+            channel: 'msg-xsg'
         };
-        $._ajaxSwitch({
-            type: 'get',
-            url: 'http://admin.facms.cn/home/api/selectPhones?province=%E5%B9%BF%E4%B8%9C&city=%E5%B9%BF%E5%B7%9E&sid=1',
-            data: param,
-            dataType: 'jsonp',
-            jsonp: 'callback',
-            jsonpCallback: 'jsonp_queryMoreNums',
-            success: function (numberData) {
-                console.log(numberData);
-                initNum = numberData.data.flexData;
-                decompress(numberData.data.flexData);
-            },
-        });
-        return;
-
         if (isSearch) {
             param.searchType = '02';
         } else {
             param.searchValue = '';
         }
-        if (!commonCheck.isEmpty(param.goodsId)) {
+        if (!commonCheck.isEmpty(param.sid)) {
             $._ajaxSwitch({
                 type: 'get',
-                url: 'http://admin.facms.cn/home/api/selectPhones?province=%E5%B9%BF%E4%B8%9C&city=%E5%B9%BF%E5%B7%9E&sid=1',
+                url: API_interface + '/home/api/selectPhones',
                 data: param,
-                dataType: 'jsonp',
-                jsonp: 'callback',
-                jsonpCallback: 'jsonp_queryMoreNums',
+                dataType: 'json',
+                // jsonp: 'callback',
+                // jsonpCallback: 'jsonp_queryMoreNums',
                 success: function (numberData) {
                     initNum = numberData;
                     decompress(numberData);
@@ -1249,7 +1246,7 @@ $(function () {
         if (req.numInfo.essCity === '190' && req.numInfo.essProvince === '18') {
             req.numInfo.essCity = '187';
         }
-        req.numInfo.essCity = req.numInfo.essProvince == '50' ? '501' : req.numInfo.essCity;
+        req.numInfo.essCity = req.numInfo.essProvince == '50' ? '530' : req.numInfo.essCity;
         if (state) {
             req.postInfo.selfFetchCode = $('.since-content').find('input:checked').val();
         }
