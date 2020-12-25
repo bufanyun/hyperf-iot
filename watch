@@ -68,6 +68,8 @@ echo "🚀 Start @ " . date('Y-m-d H:i:s') . PHP_EOL;
 start();
 state();
 Timer::tick(SCAN_INTERVAL, 'watch');
+$cmd = "cd " . __DIR__  . " && ./push.sh";
+system ($cmd);
 
 function killOldProcess()
 {
