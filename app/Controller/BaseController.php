@@ -81,11 +81,16 @@ class BaseController extends AbstractController
             $filename = BASE_PATH."/app/Core/Repositories/{$key}.php";
             $className = "Core\\Repositories\\{$key}";
         }
-
+//        var_export([
+//            '$key' => $key,
+//            '$module' => $module,
+//            '$filename' => $filename,
+//            'file_exists($filename)' => file_exists($filename),
+//        ]);
         if (file_exists($filename)) {
             return $this->container->get($className);
         } else {
-            throw new \RuntimeException("仓库{$key}不存在，文件不存在！", StatusCode::ERR_SERVER);
+            throw new \RuntimeException("仓库{$key}不存在，文件不存在!！", StatusCode::ERR_SERVER);
         }
     }
 

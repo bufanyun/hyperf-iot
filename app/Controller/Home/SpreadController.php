@@ -103,10 +103,23 @@ class SpreadController extends BaseController
      * @RequestMapping(path="place_order")
      *
      * @Middleware(SpreadMiddleware::class)
+     * @property \Core\Repositories\Home\OrderSubmitRepository $orderSubmitRepository
      */
     public function place_order()
     {
-        return $this->error(StatusCode::ERR_EXCEPTION,'商品不存在');
+        $reqParam = $this->request->all();
+        if(!isset($reqParam['template'])){
+            return $this->error(StatusCode::ERR_EXCEPTION, '模板未录入');
+        }
+        switch ($reqParam['template']){
+            case 'default':
+                $res = $this->OrderSubmitRepository->default($reqParam);
+                return $res;
+            case "str2":
+                return $this->error(StatusCode::ERR_EXCEPTION,'商品不支持选号1');
+            default:
+                return $this->error(StatusCode::ERR_EXCEPTION,'商品不支持选号');
+        }
     }
 
     /**

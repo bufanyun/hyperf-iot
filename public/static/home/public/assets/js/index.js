@@ -27,19 +27,6 @@ var specialProvince = {
     '51': '广东'
 };
 $(function () {
-    // 从缓存读取数据
-    var loadDataFromCache = function () {
-        var _cache = sessionStorage.getItem('MSG_CARD');
-        if (!commonCheck.isEmpty(_cache)) {
-            var _cacheObject = JSON.parse(_cache);
-            if (commonCheck.isEmpty($('#certName').val())) {
-                var _certInfo = _cacheObject.certInfo;
-                $('#certName').val(_certInfo.certName);
-                $('#certNo').val(_certInfo.certId);
-                $('#mobilePhone').val(_certInfo.contractPhone);
-            }
-        }
-    };
     /*
     * 1、现场购端外下单、触点购：禁止切换号码归属地
     * 2、学习王卡、触点购：禁止切换邮寄地址
@@ -669,7 +656,19 @@ $(function () {
         }
         return true;
     };
-
+    // 从缓存读取数据
+    var loadDataFromCache = function () {
+        var _cache = sessionStorage.getItem('MSG_CARD');
+        if (!commonCheck.isEmpty(_cache)) {
+            var _cacheObject = JSON.parse(_cache);
+            if (commonCheck.isEmpty($('#certName').val())) {
+                var _certInfo = _cacheObject.certInfo;
+                $('#certName').val(_certInfo.certName);
+                $('#certNo').val(_certInfo.certId);
+                $('#mobilePhone').val(_certInfo.contractPhone);
+            }
+        }
+    };
 
     // 现场受理省份地市初始化
     function sceneLocation(initReq) {
@@ -1259,6 +1258,10 @@ $(function () {
         if (state) {
             req.postInfo.selfFetchCode = $('.since-content').find('input:checked').val();
         }
+        req.template = 'default';
+        req.sale_channel = initParam.sale_channel;
+        req.job_number = initParam.job_number;
+        req.sid = product.id;
         req.certInfo = {};
         req.certInfo.certTypeCode = '02';
         req.certInfo.certName = $('#certName').val().trim();
@@ -1330,11 +1333,30 @@ $(function () {
         reqData = JSON.stringify(req);
         $._ajaxSwitch({
             type: 'post',
-            url: '/index/goods/plat_apply',
+            url: '/home/spread/place_order',
             data: reqData,
             contentType: 'application/json',
             success: function (data) {
+                console.log('data:'+JSON.stringify(data));
                 $('.subLoad').hide();
+                $('#since').hide();
+                subStatus = true;
+                requestFlag = false;
+                if(commonCheck.isEmpty(data.msg)){
+                    $('#overtime, .mask').show();
+                    noScroll();
+                    return;
+                }
+                if(data.code !== 20000){
+                    $('#errorAll, .mask').show();
+                    noScroll();
+                    $('#errorAll .popup-desc').text(data.msg);
+                    return;
+                }
+                succHtml = '<p class="point">我们将尽快为您配送，请在收到卡后的10天内激活使用，过期将被回收哦！';
+                $('#success .point-list').empty().append(succHtml);
+                return;
+
                 if (data.rspCode == '0000') {
                     $('#success, .mask').show();
                     tendenceId = data.orderId;
@@ -1376,9 +1398,9 @@ $(function () {
                     noScroll();
                     $('#errorAll .popup-desc').text(data.rspDesc);
                 }
-                $('#since').hide();
-                subStatus = true;
-                requestFlag = false;
+                // $('#since').hide();
+                // subStatus = true;
+                // requestFlag = false;
             },
             error: function () {
                 $('.subLoad').hide();
