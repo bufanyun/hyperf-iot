@@ -140,6 +140,20 @@ class orderSubmitRepository extends BaseRepository
                         ),
                 );
 
+                Db::beginTransaction();
+                try{
+                    $insert = [
+                        'dock_order_id' => $res['data']['order']['order_no'],
+                        'order_id' => date("YmdHi") . uniqid(),
+                        'app_number' =>
+                    ];
+                    $res2 = Db::table('product_order')->insert($data);
+                    Db::commit();
+                } catch(\Throwable $ex){
+                    Db::rollBack();
+                    throw new BusinessException(StatusCode::ERR_EXCEPTION, $ex->getMessage());
+                }
+
                 setLog('ymkj_product_order.log', '订单插入失败：'.json_encode($data, JSON_UNESCAPED_UNICODE));
 
                 return [
