@@ -68,9 +68,11 @@ echo "🚀 Start @ " . date('Y-m-d H:i:s') . PHP_EOL;
 start();
 state();
 Timer::tick(SCAN_INTERVAL, 'watch');
+
 echo "已自动更新git..";
 $cmd = "cd " . __DIR__  . " && ./push.sh  &> /dev/null";
 system ($cmd);
+echo "更新成功";
 
 function killOldProcess()
 {
