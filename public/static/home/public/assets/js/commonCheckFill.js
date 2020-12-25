@@ -173,6 +173,7 @@ var commonCheckFill = {
             return flag;
         },
         checkPhone: function (number) {
+            number = $('#mobilePhone').val();
             if ($.trim(number) === '') {
                 commonCheckFill.error('apply-phone', '请填写联系电话');
                 return false;
@@ -251,7 +252,7 @@ var commonCheckFill = {
         },
         // 验证码校验
         checkYzm: function (yzm) {
-            if ($.trim(yzm) === '') {
+            if ($.trim(yzm) === '' && product.captcha_switch === 1) {
                 commonCheckFill.error('apply-yzm', '请填写验证码');
                 return false;
             }

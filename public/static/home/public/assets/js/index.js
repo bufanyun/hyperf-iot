@@ -27,6 +27,19 @@ var specialProvince = {
     '51': '广东'
 };
 $(function () {
+    // 从缓存读取数据
+    var loadDataFromCache = function () {
+        var _cache = sessionStorage.getItem('MSG_CARD');
+        if (!commonCheck.isEmpty(_cache)) {
+            var _cacheObject = JSON.parse(_cache);
+            if (commonCheck.isEmpty($('#certName').val())) {
+                var _certInfo = _cacheObject.certInfo;
+                $('#certName').val(_certInfo.certName);
+                $('#certNo').val(_certInfo.certId);
+                $('#mobilePhone').val(_certInfo.contractPhone);
+            }
+        }
+    };
     /*
     * 1、现场购端外下单、触点购：禁止切换号码归属地
     * 2、学习王卡、触点购：禁止切换邮寄地址
@@ -186,14 +199,13 @@ $(function () {
 
     // 解析号码
     function decompress(number) {
-        console.log('number:'+JSON.stringify(number));
+        // console.log('number:'+JSON.stringify(number));
         if(number.code !== 20000){
+            $('.number-loading').hide();
             $('.no-number').text(number.msg).show();
             $('#refresh').text('再试一次');
-            $('.number-list, .number-loading').hide();
             return;
         }
-        $('.number-loading').hide();
         var mlist = ['M2', 'M3', 'M4', 'M5'];
         var _key = $('#search').data('val');
         if (number.data.flexData.length == 0) {
@@ -211,29 +223,36 @@ $(function () {
 
             $('.no-number').html('抱歉没有匹配的号码.<span class="error-code">' + number.code + '</span>').show();
             $('#refresh').text('换一批');
-            $('.number-list, .number-loading').hide();
             return;
         }
         $('.number-list').show();
+        $('.number-loading').hide();
         numberParam.list = [];
         numberParam.current = 1;
         var numArray = number.data.flexData;
-        for (var i = 0; i < numArray.length; i += 12) {
+        // console.log('numArray.length:'+numArray.length);
+        // for (var i = 0; i < numArray.length; i += 12) {
+        for (var i = 0; i < numArray.length; i ++) {
             var numberObj = {};
             numberObj.advanceLimit = numArray[i + 1];
             numberObj.niceRule = numArray[i + 5];
             numberObj.monthLimit = numArray[i + 6];
+            // console.log('_key:'+_key);
             if (commonCheck.isEmpty(_key)) {
                 numberObj.number = numArray[i];
                 numberParam.list.push(numberObj);
             } else {
-                var len = 11 - _key.length;
-                if (numArray[i].toString().substring(len) == _key) {
-                    numberObj.number = numArray[i].toString().substring(0, len) + '<span>' + numArray[i].toString().substring(len, 11) + '</span>';
-                    numberParam.list.push(numberObj);
-                }
+                // var len = 11 - _key.length;
+                // if (numArray[i].toString().substring(len) == _key) {
+                //     console.log('ll:'+numArray[i].toString().substring(len));
+                //     numberObj.number = numArray[i].toString().substring(0, len) + '<span>' + numArray[i].toString().substring(len, 11) + '</span>';
+                //     numberParam.list.push(numberObj);
+                // }
+                numberObj.number = numArray[i].replace(_key, '<span>' + _key + '</span>');
+                numberParam.list.push(numberObj);
             }
         }
+        // console.log('numberParam.list:'+JSON.stringify(numberParam.list));
         numberParam.max = Math.ceil(numberParam.list.length / numberParam.size);
         $.shuffle(numberParam.list);
         listNumber();
@@ -253,7 +272,7 @@ $(function () {
         if (req.numInfo.essCity === '190' && req.numInfo.essProvince === '18') {
             req.numInfo.essCity = '187';
         }
-        console.log('req:'+JSON.stringify(req));
+        // console.log('req:'+JSON.stringify(req));
         var param = {
             province: req.numInfo.essProvince,
             city: req.numInfo.essProvince == '50' ? '530' : req.numInfo.essCity,
@@ -279,6 +298,7 @@ $(function () {
                 url: API_interface + '/home/api/selectPhones',
                 data: param,
                 dataType: 'json',
+                async: true,
                 // jsonp: 'callback',
                 // jsonpCallback: 'jsonp_queryMoreNums',
                 success: function (numberData) {
@@ -649,19 +669,7 @@ $(function () {
         }
         return true;
     };
-    // 从缓存读取数据
-    var loadDataFromCache = function () {
-        var _cache = sessionStorage.getItem('MSG_CARD');
-        if (!commonCheck.isEmpty(_cache)) {
-            var _cacheObject = JSON.parse(_cache);
-            if (commonCheck.isEmpty($('#certName').val())) {
-                var _certInfo = _cacheObject.certInfo;
-                $('#certName').val(_certInfo.certName);
-                $('#certNo').val(_certInfo.certId);
-                $('#mobilePhone').val(_certInfo.contractPhone);
-            }
-        }
-    };
+
 
     // 现场受理省份地市初始化
     function sceneLocation(initReq) {
@@ -1060,9 +1068,10 @@ $(function () {
             $('#search').data('val', '').val('');
             $('#search-btn').show();
             $('#search-close-btn').hide();
-            setNumber();
+            // $('.number-loading').show();
             $('#number-popup, .mask').show();
             noScroll();
+            setNumber();
         }
     });
     // 刷新号码
@@ -1124,11 +1133,11 @@ $(function () {
     };
     // 选择号码
     $('.number-list').on('click', 'a', function (e) {
-        var adLimit = parseInt($(this).attr('data-advancelimit')) || 0;
-        if (adLimit > 0) {
-            popupShow('对不起，您选择的号码已被预定，<br />请重新选择号码!');
-            return;
-        }
+        // var adLimit = parseInt($(this).attr('data-advancelimit')) || 0;
+        // if (adLimit > 0) {
+        //     popupShow('对不起，您选择的号码已被预定，<br />请重新选择号码!');
+        //     return;
+        // }
         var _number = $(e.currentTarget).text().replace('靓', '');
         var niceRule = $(e.currentTarget).attr('data-niceRule');
         var monthLimit = $(e.currentTarget).attr('data-monthLimit');
@@ -1147,7 +1156,7 @@ $(function () {
     // 配送地市弹出层
     $('#delivery').on('click', function () {
         if (!captchaOne) {
-            getcaptcha();
+            // getcaptcha();
             captchaOne = true;
         }
         var _mask = $('.mask');
