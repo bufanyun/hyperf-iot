@@ -16,7 +16,6 @@ use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Annotation\Middleware;
 use Hyperf\Validation\Contract\ValidatorFactoryInterface;
 
-
 /**
  * SpreadController
  * 推广下单
