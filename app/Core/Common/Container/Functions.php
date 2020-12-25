@@ -1199,3 +1199,23 @@ if(!function_exists('OrderThreeInspect')) {
         return true;
     }
 }
+
+if(!function_exists('setLog')) {
+    /**
+     * 打印单独的错误日志
+     * @param string $path
+     * @param string $content
+     */
+    function setLog(string $path, string $content): void
+    {
+        co(function () use($path, $content){
+            co(function () use($path, $content) {
+                file_put_contents(
+                    BASE_PATH . '/runtime/logs/' . $path,
+                    '[' . date('Y-m-d H:i:s') . '] ' . $content . "\r\n",
+                    FILE_APPEND
+                );
+            });
+        });
+    }
+}

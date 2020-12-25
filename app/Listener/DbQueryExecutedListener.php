@@ -38,7 +38,7 @@ class DbQueryExecutedListener implements ListenerInterface
     public function listen(): array
     {
         return [
-            QueryExecuted::class,
+//            QueryExecuted::class,  //关闭sql日志
         ];
     }
 

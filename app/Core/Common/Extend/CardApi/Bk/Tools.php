@@ -146,5 +146,4 @@ class Tools
     {
         return $this->districtInspection->getAreaCode($province, $city, $district);
     }
-
 }
