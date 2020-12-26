@@ -166,8 +166,6 @@ class SpreadController extends BaseController
     {
         return $this->view([],'/Home/common/com-collection-announcement');
     }
-
-
     /**
      * suc
      * 提交成功
@@ -187,7 +185,6 @@ class SpreadController extends BaseController
      *
      * Middleware(OssCallbackMiddleware::class)
      */
-
     public function test()
     {
         $method = $this->request->input('method', 'AgentTrade/checkOrder', false);
