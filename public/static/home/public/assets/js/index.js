@@ -1060,6 +1060,7 @@ $(function () {
         $('#protocol-desc .content>.protocol').hide();
         $('#protocol-desc,.mask').show();
         $('html, body').addClass('no-scroll');
+        $('#protocol').click();
     });
     // 关闭弹出层
     $('.popup-close').on('click', function (e) {
