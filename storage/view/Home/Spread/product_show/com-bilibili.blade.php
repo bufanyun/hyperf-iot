@@ -220,7 +220,7 @@
     </div>
 </div>
 
-<script type="text/javascript" src="/static/home/public/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="{{env('CDN_DOMAIN')}}/static/home/public/assets/js/jquery.min.js"></script>
 @include('Home.common.kefu-order-show')
 <script type="text/javascript">
     let sku_str = "{{$product->id}}";

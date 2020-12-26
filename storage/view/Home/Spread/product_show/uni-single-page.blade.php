@@ -17,8 +17,8 @@
     <!--解决iOS 4.3版本中safari对页面中5位数字的自动识别和自动添加样式-->
     <meta name="format-detection" content="telphone=no"/>
     <!--重置样式表-->
-    <link rel="stylesheet" type="text/css" href="/static/home/public/assets/css/reset.css"/>
-    <link rel="stylesheet" type="text/css" href="/static/home/public/assets/css/dashengka.css"/>
+    <link rel="stylesheet" type="text/css" href="{{env('CDN_DOMAIN')}}/static/home/public/assets/css/reset.css"/>
+    <link rel="stylesheet" type="text/css" href="{{env('CDN_DOMAIN')}}/static/home/public/assets/css/dashengka.css"/>
     <!--控制屏幕适配的JS-->
     <script type="text/javascript" src="{{env('CDN_DOMAIN')}}/static/home/public/assets/js/adaptive.js"></script>
     <script>
@@ -29,7 +29,7 @@
         window['adaptive'].init();
     </script>
     <!--常用库-->
-    <script type="text/javascript" src="/static/home/public/assets/js/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript" src="{{env('CDN_DOMAIN')}}/static/home/public/assets/js/jquery-1.10.1.min.js"></script>
 
     <style>
         .btnImg {

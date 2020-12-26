@@ -1,5 +1,5 @@
 <head>
-    <link rel="stylesheet" href="/static/home/public/assets/css/foot_button.css">
+    <link rel="stylesheet" href="{{env('CDN_DOMAIN')}}/static/home/public/assets/css/foot_button.css">
 </head>
 
 <div data-v-1bcf673d="" class="detail-btn" id="foot-kefu-show-order" style="display: none">

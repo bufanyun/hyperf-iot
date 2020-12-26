@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
     <meta name="format-detection" content="telephone=no"/>
     <title>资料填写</title>
-    <link rel="stylesheet" href="/static/home/public/assets/css/fill.css">
+    <link rel="stylesheet" href="{{env('CDN_DOMAIN')}}/static/home/public/assets/css/fill.css">
 </head>
 <body>
 <section class="fill-wrapper">
@@ -122,7 +122,7 @@
             <p class="numTips" hidden>请您选择号码<span>(选号别纠结，以后可以免费换号)</span></p>
             <input id="search" type="tel" class="search-input" placeholder="生日、幸运数字等">
             <a id="search-btn" href="javascript:;" class="search-btn"></a>
-            <a id="search-close-btn" href="javascript:;" class="search-close-btn" hidden><i><img src="/static/home/public/assets/images/number-close.png"></i></a>
+            <a id="search-close-btn" href="javascript:;" class="search-close-btn" hidden><i><img src="{{env('CDN_DOMAIN')}}/static/home/public/assets/images/number-close.png"></i></a>
         </div>
         <div class="number-wrap">
             <ul class="number-list">
@@ -147,7 +147,7 @@
 </section>
 <section id="error" class="popup" hidden>
     <div class="content">
-        <img class="popup-icon" src="/static/home/public/assets/images/error.png" alt="reserved">
+        <img class="popup-icon" src="{{env('CDN_DOMAIN')}}/static/home/public/assets/images/error.png" alt="reserved">
         <p class="popup-title">手慢了</p>
         <p id="reserved-number" class="popup-desc center"><span></span>号码已被抢占。</p>
         <div class="btn-box">
@@ -158,14 +158,14 @@
 </section>
 <section id="errorAll" class="popup" hidden>
     <div class="content">
-        <img class="popup-icon" src="/static/home/public/assets/images/overtime.png" alt="reserved">
+        <img class="popup-icon" src="{{env('CDN_DOMAIN')}}/static/home/public/assets/images/overtime.png" alt="reserved">
         <p class="popup-desc center"></p>
     </div>
     <a class="popup-close" href="JavaScript:;" data-type="3"></a>
 </section>
 <section id="overtime" class="popup" hidden>
     <div class="content">
-        <img class="popup-icon" src="/static/home/public/assets/images/overtime.png" alt="overtime">
+        <img class="popup-icon" src="{{env('CDN_DOMAIN')}}/static/home/public/assets/images/overtime.png" alt="overtime">
         <p class="popup-title">超时了</p>
         <p class="popup-desc center">抱歉，请求超时，</p>
         <p class="popup-desc center">请您再试一次吧！</p>
@@ -184,7 +184,7 @@
 </section>
 <section id="fail" class="popup" hidden>
     <div class="content">
-        <img class="popup-icon" src="/static/home/public/assets/images/overtime.png" alt="fail">
+        <img class="popup-icon" src="{{env('CDN_DOMAIN')}}/static/home/public/assets/images/overtime.png" alt="fail">
         <p class="popup-title">抱歉</p>
         <p class="popup-desc center">产品销售太火爆啦，请您稍后重试</p>
     </div>
@@ -192,7 +192,7 @@
 </section>
 <section id="success" class="popup" hidden>
     <div class="content">
-        <img src="/static/home/public/assets/images/successImg.png" alt="">
+        <img src="{{env('CDN_DOMAIN')}}/static/home/public/assets/images/successImg.png" alt="">
         <h2 class="p-title">提交成功</h2>
         <div class="point-list">
             <p class="point">我们将尽快为您配送，请在收到卡后的10天内激活使用，过期将被回收哦！</p>
@@ -202,7 +202,7 @@
     <a class="popup-close" id="successClose" href="JavaScript:;" data-type="4"></a>
 </section>
 <div class="subLoad" hidden>
-    <img src="/static/home/public/assets/images/loading.gif"/>
+    <img src="{{env('CDN_DOMAIN')}}/static/home/public/assets/images/loading.gif"/>
 </div>
 <div class="numErrorTips" style="display: none;"> 设备未准备好</div>
 <div class="mask" hidden></div>
@@ -228,12 +228,12 @@
     //    document.write('<scr' + 'ipt>eruda.init();</scr' + 'ipt>');
     //  })();
 </script>
-<script src="/static/home/public/assets/js/jquery-2.1.4.min.js"></script>
-<script src="/static/home/public/assets/js/id_check.js"></script>
-<script src="/static/home/public/assets/js/commonJs.js"></script>
-<script src="/static/home/public/assets/js/areaInfo.js"></script>
-<script src="/static/home/public/assets/js/commonCheckFill.js"></script>
-<script src="/static/home/public/assets/js/index.js?r=8752134"></script>
+<script src="{{env('CDN_DOMAIN')}}/static/home/public/assets/js/jquery-2.1.4.min.js"></script>
+<script src="{{env('CDN_DOMAIN')}}/static/home/public/assets/js/id_check.js"></script>
+<script src="{{env('CDN_DOMAIN')}}/static/home/public/assets/js/commonJs.js"></script>
+<script src="{{env('CDN_DOMAIN')}}/static/home/public/assets/js/areaInfo.js"></script>
+<script src="{{env('CDN_DOMAIN')}}/static/home/public/assets/js/commonCheckFill.js"></script>
+<script src="{{env('CDN_DOMAIN')}}/static/home/public/assets/js/index.js?r=8752134"></script>
 <script>
     $('.eruda-entry-btn').hide();
     if(product.captcha_switch === 1){

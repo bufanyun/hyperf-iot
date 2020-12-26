@@ -6,6 +6,7 @@ use Core\Common\Extend\CardApi\Bk\Method;
 use Core\Common\Extend\CardApi\Bk\Aes;
 use Core\Common\Extend\CardApi\Bk\districtInspection;
 use Core\Common\Extend\Tools\Curl;
+use Core\Common\Extend\Tools\Http;
 use Hyperf\Di\Annotation\Inject;
 use App\Constants\StatusCode;
 
@@ -78,10 +79,11 @@ class Tools
         if (($method = Method::get($method)) == '') {
             return ['success' => false, 'code' => 90, 'message' => 'method不存在，请检查', 'data' => null];
         }
-        $curl = make(Curl::class, [2]);
+        $curl = make(Curl::class);
         $params = $this->buildParams($data);
-//       var_export([$params,'url' => $this->config['domain'] . $method[0]]);
-        $rs = $curl->post($this->config['domain'] . $method[0], $params, 8000);
+//        var_export([$params,'url' => $this->config['domain'] . $method[0], 'push' => http_build_query($params)]);
+//        $rs = $curl->post($this->config['domain'] . $method[0], $params, 8000);  //传统模式
+        $rs = $curl->curl_post($this->config['domain'] . $method[0], $params); //协程
         return $this->format($rs, $method[1]);
     }
 
@@ -93,7 +95,7 @@ class Tools
      * author MengShuai <133814250@qq.com>
      * date 2020/11/24 17:00
      */
-    public function buildParams(array $data): ?array
+    public function buildParams(array $data): array
     {
         return array_merge($data, [
             'appID' => $this->config['appID'],

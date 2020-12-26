@@ -16,6 +16,8 @@ use Hyperf\Di\Annotation\Inject;
 use Core\Common\Extend\CardApi\Bk\Tools as BkApi;
 use Hyperf\Validation\Contract\ValidatorFactoryInterface;
 use Core\Common\Container\Redis;
+use App\Middleware\SpreadMiddleware;
+use Hyperf\HttpServer\Annotation\Middleware;
 
 /**
  * ApiController
@@ -32,13 +34,13 @@ class ApiController extends BaseController
      * @Inject()
      * @var ValidatorFactoryInterface
      */
-    protected $validationFactory;
+    private $validationFactory;
 
     /**
      * @Inject()
      * @var Redis
      */
-    protected $Redis;
+    private $Redis;
 
     /**
      *
@@ -47,56 +49,61 @@ class ApiController extends BaseController
      */
     private $BkApi;
 
+//    /**
+//     * @var \Psr\Container\ContainerInterface|void
+//     */
+//    protected $OrderSubmitRepository;
 
     /**
-     * 统一下单接口
-     * @return mixed
+     * uniform
+     * 提交订单
+     * @RequestMapping(path="uniform")
+     *
+     * @Middleware(SpreadMiddleware::class)
+     * @property \Core\Repositories\Home\OrderSubmitRepository $orderSubmitRepository
      */
     public function uniform()
     {
-        $region = $this->districtInspection->getAscription((string)$this->decrypt->province, (string)$this->decrypt->city);
-        if(!$region){
-            throw new BadRequestException('获取接口中归属地信息失败，请联系管理员处理', 71);
+        $reqParam = $this->request->all();
+        if(!isset($reqParam['template'])){
+            return $this->error(StatusCode::ERR_EXCEPTION, '模板未录入');
         }
-        $area = $this->districtInspection->getArea((string)$this->decrypt->postProvince, (string)$this->decrypt->postCity, (string)$this->decrypt->postDistrict);
-        if(!$area){
-            throw new BadRequestException('获取接口中收货地信息失败，请联系管理员处理', 72);
+        switch ($reqParam['template']){
+            case 'default':
+                $validator = $this->validationFactory->make(
+                    $reqParam,
+                    [
+                        'sid'                    => 'required',
+                        'job_number'             => 'required',
+                        'certInfo.certName'      => 'required|string',
+                        'certInfo.certId'        => 'required|string',
+                        'certInfo.contractPhone' => 'required|string',
+                        'postInfo.webProvince'   => 'required|string',
+                        'postInfo.webCity'       => 'required|string',
+                        'postInfo.webCounty'     => 'required|string',
+                        'postInfo.address'       => 'required|string',
+                    ],
+                    [
+                        'sid.required'               => '商品id不能为空',
+                        'job_number.required'        => '推广工号不能为空',
+                        'certInfo.certName.required' => '收货人姓名不能为空',
+                        'postInfo.webProvinc.requirede'   => '收货省不能为空',
+                    ]
+                );
+                if ($validator->fails()){
+                    return $this->error(StatusCode::ERR_EXCEPTION, $validator->errors()->first());
+                }
+                $OrderThreeInspect = OrderThreeInspect((string)$reqParam['certInfo']['certName'], (string)$reqParam['certInfo']['certId'], (string)$reqParam['certInfo']['contractPhone']);
+                if($OrderThreeInspect !== true){
+                    return $this->error(StatusCode::ERR_EXCEPTION, $OrderThreeInspect);
+                }
+                $res = $this->OrderSubmitRepository->default($reqParam);
+                return $res;
+            case "str2":
+                return $this->error(StatusCode::ERR_EXCEPTION,'商品不支持选号1');
+            default:
+                return $this->error(StatusCode::ERR_EXCEPTION,'商品不支持选号');
         }
-        if (is_phone($this->decrypt->receiverPhone) === false) {
-            throw new BadRequestException(\PhalApi\T('收货人手机号不正确！'), 73);
-        }
-        if (isset($this->decrypt->newnumber) && is_phone($this->decrypt->newnumber) === false) {
-            throw new BadRequestException(\PhalApi\T('选择的号码格式不正确，请检查！'), 74);
-        }
-        if (is_idcard($this->decrypt->certId) === false){
-            throw new BadRequestException(\PhalApi\T('收货人身份证号不正确！'), 75);
-        }
-        $admin_id = isset($this->decrypt->new_admin_id) && $this->decrypt->new_admin_id>0 ? $this->decrypt->new_admin_id : $this->decrypt->admin_id;
-        $AdminExtraModel = new AdminExtraModel;
-        if ($AdminExtraModel->getInfo($admin_id) == null){
-            throw new BadRequestException(\PhalApi\T('绑定管理员ID不存在，请检查！'), 76);
-        }
-
-        $data = [
-            'name'             => $this->decrypt->certName,
-            'identity'         => $this->decrypt->certId,
-            'contact'          => $this->decrypt->receiverPhone,
-            'ship_province'    => $area['province_name'],
-            'ship_city'        => $area['city_name'],
-            'ship_country'     => $area['district_name'],
-            'ship_addr'        => $this->decrypt->postAddress,
-            'province'         => $region['province_name'],
-            'city'             => $region['city_name'],
-            'productCode'      => $this->decrypt->productCode,
-            'captchaId'        => $this->decrypt->captchaId,
-            'development_code' => $this->api->config['development_code'],
-        ];
-        if (isset($this->decrypt->newnumber)){
-            $data = array_merge($data, ['newnumber' => $this->decrypt->newnumber]);
-        }
-
-        $res = $this->api->request('ZOPsubmit', $data);
-        return $res;
     }
 
     /**
@@ -180,6 +187,7 @@ class ApiController extends BaseController
                 return $this->error(StatusCode::ERR_EXCEPTION,'商品不支持选号');
             }
     }
+
     /**
      * Bk联通获取验证码
      */
@@ -238,55 +246,4 @@ class ApiController extends BaseController
         $res = $this->api->request('activeMsg', $data);
         return $res;
     }
-
-    /**
-     * test
-     * @return \Psr\Http\Message\ResponseInterface
-     *
-     * @RequestMapping(path="test")
-     *
-     * Middleware(OssCallbackMiddleware::class)
-     */
-
-    public function test()
-    {
-        $method = $this->request->input('method', 'AgentTrade/checkOrder', false);
-        $params = [
-            'method' => !$method ? 'AgentTrade/checkOrder' : $method,
-            'data'   => json_encode([
-                'test' => 1,
-            ]),
-        ];  //订单扫描
-
-        if($method == 'AgentTrade/addOrder') {
-            $params = [
-                'method' => $method,
-                'data'  => json_encode([
-                    'client' => 'system',
-                    'source' => 'tmt',
-                    'price'  => $this->request->input('price', '0.01'),
-                    'type'   => $this->request->input('type', '0'),
-                    'qrurl'  => 'https://qr.alipay.com/fkx10920stvogcastck55c5?t=1604627435932', //小辉
-                    'orderid'   => uniqid(),
-                    'device_id' => '868019047358743', //小米7 -2
-                ]),
-            ];
-        }
-
-        $sign = config('payment_sign');
-        $host = 'ws://127.0.0.1:1888?' . $sign['key']  . "=" . encrypt($params, $sign['encryption']);
-        $client = $this->clientFactory->create($host);
-        /** @var Frame $msg */
-        $msg = $client->recv(3)->data ?? null;
-        if ($msg == null){
-            var_export(['$msg' => $msg]);
-            return $this->error(StatusCode::ERR_EXCEPTION,'获取信息失败-1');
-        }
-        $result = json_decode($msg, true);
-        if (isset($result['code']) && $result['code'] == 0) {
-            return $this->success($result['data'], $result['msg']);
-        }
-        return $this->error(StatusCode::ERR_EXCEPTION, isset($result['msg']) ?? '获取信息失败-2');
-    }
-
 }

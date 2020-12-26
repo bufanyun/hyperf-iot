@@ -188,6 +188,7 @@ $(function () {
     function decompress(number) {
         // console.log('number:'+JSON.stringify(number));
         if(number.code !== 20000){
+            numberParam.current = 0;
             $('.number-loading').hide();
             $('.no-number').text(number.msg).show();
             $('#refresh').text('再试一次');
@@ -262,7 +263,7 @@ $(function () {
         // console.log('req:'+JSON.stringify(req));
         var param = {
             province: req.numInfo.essProvince,
-            city: req.numInfo.essProvince == '50' ? '530' : req.numInfo.essCity,
+            city: req.numInfo.essProvince == '50' ? '501' : req.numInfo.essCity,
             monthFeeLimit: 0,
             sid: product.id,
             searchCategory: 3,
@@ -1075,8 +1076,14 @@ $(function () {
     });
     // 刷新号码
     $('#refresh').on('click', function () {
+        console.log('numberParam.current:'+numberParam.current);
+        console.log('numberParam.max:'+numberParam.max);
         if (numberParam.current > numberParam.max) {
             // 重新获取号码
+            setNumber();
+            return;
+        }
+        if (numberParam.current === 1 || numberParam.current < 1) {
             setNumber();
             return;
         }
@@ -1254,7 +1261,7 @@ $(function () {
         if (req.numInfo.essCity === '190' && req.numInfo.essProvince === '18') {
             req.numInfo.essCity = '187';
         }
-        req.numInfo.essCity = req.numInfo.essProvince == '50' ? '530' : req.numInfo.essCity;
+        req.numInfo.essCity = req.numInfo.essProvince == '50' ? '501' : req.numInfo.essCity;
         if (state) {
             req.postInfo.selfFetchCode = $('.since-content').find('input:checked').val();
         }
@@ -1344,7 +1351,7 @@ $(function () {
         reqData = JSON.stringify(req);
         $._ajaxSwitch({
             type: 'post',
-            url: '/home/spread/place_order',
+            url: '/home/api/uniform',
             data: reqData,
             contentType: 'application/json',
             success: function (data) {

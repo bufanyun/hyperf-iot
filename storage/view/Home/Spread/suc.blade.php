@@ -8,7 +8,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <title>订单提交成功</title>
-    <link rel="stylesheet" href="/static/home/public/assets/css/index.css">
+    <link rel="stylesheet" href="{{env('CDN_DOMAIN')}}/static/home/public/assets/css/index.css">
     <style>
         .success-msg {
             padding: 20px 0;
@@ -80,7 +80,7 @@
 
 <body style="background-color:#F8F8F8;">
 <div class="success-msg" id="app">
-    <img src="/static/home/public/assets/img/success.png" style="width:70px;height:70px;margin: 0 auto;margin-top:37px;"><br>
+    <img src="{{env('CDN_DOMAIN')}}/static/home/public/assets/img/success.png" style="width:70px;height:70px;margin: 0 auto;margin-top:37px;"><br>
     <van-col>
         <span>订单提交成功</span><br>
         <p style="text-align: center;">订单审核通过后，我们将尽快安排邮寄</p>

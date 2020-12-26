@@ -171,7 +171,7 @@ class orderSubmitRepository extends BaseRepository
                     'app_province'   => $Ascription['province_name'],
                     'app_city'       => $Ascription['city_name'],
                     'app_number'     => $inputData['numInfo']['number'],
-                    'sale_channel'   => isset($inputData['sale_channel']) ? $inputData['sale_channel'] : '',
+                    'sale_channel'   => isset($inputData['sale_channel']) ? $inputData['sale_channel'] : 0,
                     'source'         => isset($inputData['source']) ? $inputData['source'] : '',
                     'created_at'     => date("Y-m-d H:i:s"),
                     'status'         => ProductOrderCode::STATUS_TO_EXAMINE,

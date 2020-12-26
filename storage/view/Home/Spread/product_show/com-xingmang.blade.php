@@ -11,7 +11,7 @@
             height: 100%;
         }
     </style>
-    <link rel="stylesheet" href="/static/home/public/assets/css/foot_button.css">
+    <link rel="stylesheet" href="{{env('CDN_DOMAIN')}}/static/home/public/assets/css/foot_button.css">
     <link href="https://res.mall.10010.cn/mall/scaffold-show/static/css/app.d56bc418dec5a5eca353aee159c2b5f4.css?r=123" rel="stylesheet">
 {{--    <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>--}}
 </head>
@@ -225,7 +225,7 @@
 <!-- <script type="text/javascript" src="https://res.mall.10010.cn/mall/scaffold-show/static/js/manifest.a88e8f54b23297ffbd25.js"></script>
 <script type="text/javascript" src="https://res.mall.10010.cn/mall/scaffold-show/static/js/vendor.4f45b38098e0c1f97494.js"></script>
 <script type="text/javascript" src="https://res.mall.10010.cn/mall/scaffold-show/static/js/app.b174da99d4dd631b1f12.js"></script> -->
-<script type="text/javascript" src="/static/home/public/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="{{env('CDN_DOMAIN')}}/static/home/public/assets/js/jquery.min.js"></script>
 @include('Home.common.kefu-order-show')
 <script type="text/javascript">
     let sku_str = "{{$product->id}}";
