@@ -29,9 +29,6 @@ return [
     'allow_origins' => [
         'http://127.0.0.1',
         'http://localhost',
-        'http://www.yoctometer.com',
-        'http://www.yinmengkeji.com',
-        'http://www.hyperfcms.com',
         'http://api.iot.qvnidaye.com',
         'http://iot.qvnidaye.com',
     ],
