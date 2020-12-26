@@ -38,7 +38,6 @@ class Tools
         ]);
     }
 
-
     /**
      * 统一返回格式
      * @param string $rs
@@ -67,7 +66,6 @@ class Tools
         }
         return $res;
     }
-
 
     /**
      * 发送请求

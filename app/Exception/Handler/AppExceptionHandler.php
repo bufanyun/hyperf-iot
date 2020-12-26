@@ -80,6 +80,11 @@ class AppExceptionHandler extends ExceptionHandler
         }else{
             $code = 500;
         }
+        
+        if(StatusCode::ERR_NON_EXISTENT === $code){ //404文件不存在时，直接返回状态码
+            $this->stopPropagation();
+            return $response->withStatus(StatusCode::ERR_NON_EXISTENT);
+        }
 
         $data = json_encode([
                 'code' => $code,
@@ -87,7 +92,7 @@ class AppExceptionHandler extends ExceptionHandler
             ],JSON_UNESCAPED_UNICODE);
         return $response
             ->withHeader("Content-Type", "application/json;charset=utf-8")
-            ->withStatus(200) //$response->getStatusCode()
+            ->withStatus(200)
             ->withBody(new SwooleStream($data));
     }
 

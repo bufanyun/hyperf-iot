@@ -1310,12 +1310,14 @@ $(function () {
             provinceCode: initParam.p
         };
         var succCallback = function (data) {
+            console.log('dataLLL'+JSON.stringify(data));
             if (data.rspCode == '0000') {
                 if (data.rspBody != '') {
                     $('#successClose').css('display', 'none');
                     setTimeout(function () {
-                        window.location.href = data.rspBody;
-                    }, 1000);
+                        console.log('5666');
+                        // window.location.href = data.rspBody;
+                    }, 5000);
                 }
             }
         };
@@ -1330,6 +1332,9 @@ $(function () {
         $('#TCaptcha,.mask').hide();
         $('.subLoad').show();
         var succHtml;
+        if(commonCheckFill.isEmpty($.trim(req.certInfo.contractPhone))){
+            req.certInfo.contractPhone = $('#mobilePhone').val();
+        }
         reqData = JSON.stringify(req);
         $._ajaxSwitch({
             type: 'post',
@@ -1353,6 +1358,9 @@ $(function () {
                     $('#errorAll .popup-desc').text(data.msg);
                     return;
                 }
+                $('#success, .mask').show();
+                tendenceId = data.order_id;
+                noScroll();
                 succHtml = '<p class="point">我们将尽快为您配送，请在收到卡后的10天内激活使用，过期将被回收哦！';
                 $('#success .point-list').empty().append(succHtml);
                 return;
