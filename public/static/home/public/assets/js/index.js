@@ -1040,21 +1040,22 @@ $(function () {
         };
         $.showProtocal(protocolParam, '/scene-buy/scene/protocol', verify);
     });
+
+    if(product.cid === 1){
+        let protocol_title_title = '《信息收集和使用规则公告》';
+        let protocol_desc_url = '/home/spread/com-collection-announcement';
+    }else if(product.cid === 2){
+        let protocol_title_title = '《客户信息收集、入网服务协议》';
+        let protocol_desc_url = '/home/spread/tel-collection-announcement';
+    }else if(product.cid === 3){
+        let protocol_title_title = '《移动客户入网服务协议》';
+        let protocol_desc_url = '/home/spread/tel-collection-announcement';
+    }else if(product.cid === 4){
+        let protocol_title_title = '《设备客户入网服务协议》';
+        let protocol_desc_url = '/home/spread/tel-collection-announcement';
+    }
     $('#go_notice').click(function () {
         // $('#protocol-desc .protocol-desc').load('https://msgo.10010.com/newMsg/toDoor/html/notice.html').css('maxHeight', '22rem');
-        let protocol_title_title = '关于客户个人信息收集、使用规则的公告';
-        let protocol_desc_url = '/home/spread/com-collection-announcement';
-        console.log('product:'+JSON.stringify(product));
-        if(product.cid === 2){
-            let protocol_title_title = '客户入网服务协议';
-            let protocol_desc_url = '/home/spread/tel-collection-announcement';
-        }else if(product.cid === 3){
-            let protocol_title_title = '移动客户入网服务协议';
-            let protocol_desc_url = '/home/spread/tel-collection-announcement';
-        }else if(product.cid === 4){
-            let protocol_title_title = '设备客户入网服务协议';
-            let protocol_desc_url = '/home/spread/tel-collection-announcement';
-        }
         $('#protocol-desc .protocol-desc').load(API_interface + protocol_desc_url + '?id='+product.id).css('maxHeight', '22rem');
         $('#protocol-desc .protocol-title').empty().text(protocol_title_title);
         $('#protocol-desc .content>.protocol').hide();
@@ -1062,6 +1063,10 @@ $(function () {
         $('html, body').addClass('no-scroll');
         $('#protocol').click();
     });
+    setTimeout(function () {
+        $('#go_notice').text(protocol_title_title);
+    }, 50);
+
     // 关闭弹出层
     $('.popup-close').on('click', function (e) {
         var _this = $(e.currentTarget);

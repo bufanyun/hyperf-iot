@@ -1,20 +1,8 @@
 <?php
 
 declare(strict_types=1);
-/**
- * Created by PhpStorm.
- *​
- * Auth.php
- *
- * User：YM
- * Date：2020/1/8
- * Time：下午4:51
- */
-
 
 namespace Core\Common\Container;
-
-
 
 use Core\Services\UserService;
 use Hyperf\Di\Annotation\Inject;
@@ -23,12 +11,12 @@ use App\Exception\BusinessException;
 use v2ray\Tools;
 
 /**
- * Auth
  * 用户认证（登录、退出、权限）
+ * Class Auth
+ *
  * @package Core\Common\Container
- * User：YM
- * Date：2020/1/8
- * Time：下午4:51
+ * author MengShuai <133814250@qq.com>
+ * date 2020/12/26 22:56
  */
 class Auth
 {
@@ -42,13 +30,13 @@ class Auth
     protected $userService;
 
     /**
-     * handleLogin
      * 处理登录
-     * User：YM
-     * Date：2020/1/10
-     * Time：上午12:44
+     * handleLogin
      * @param $inputData
-     * @return array|bool
+     *
+     * @return array
+     * author MengShuai <133814250@qq.com>
+     * date 2020/12/26 22:55
      */
     public function handleLogin($inputData)
     {
@@ -71,14 +59,14 @@ class Auth
     }
 
     /**
-     * loginByUid
      * 登录
-     * User：YM
-     * Date：2020/1/10
-     * Time：上午1:14
-     * @param $uid
+     * loginByUid
+     * @param      $uid
      * @param bool $remember
+     *
      * @return bool
+     * author MengShuai <133814250@qq.com>
+     * date 2020/12/26 22:56
      */
     public function loginByUid($uid, $remember=false)
     {
@@ -88,13 +76,13 @@ class Auth
     }
 
     /**
-     * handleUserInfo
      * 处理登录成功后返回的用户数据
-     * User：YM
-     * Date：2020/1/10
-     * Time：上午12:43
+     * handleUserInfo
      * @param $info
+     *
      * @return array
+     * author MengShuai <133814250@qq.com>
+     * date 2020/12/26 22:56
      */
     public function handleUserInfo($info)
     {
@@ -110,11 +98,13 @@ class Auth
     }
 
     /**
-     * encodeUid
      * 编码uid
-     * @param mixed $uid
-     * @access public
-     * @return void
+     * encodeUid
+     * @param $uid
+     *
+     * @return string
+     * author MengShuai <133814250@qq.com>
+     * date 2020/12/26 22:56
      */
     public function encodeUid($uid)
     {
@@ -123,11 +113,13 @@ class Auth
     }
 
     /**
-     * decodeUid
      * 解码uid
-     * @param mixed $uid
-     * @access public
-     * @return void
+     * decodeUid
+     * @param $uid
+     *
+     * @return false|string
+     * author MengShuai <133814250@qq.com>
+     * date 2020/12/26 22:56
      */
     public function decodeUid($uid)
     {
@@ -140,9 +132,6 @@ class Auth
      * check
      * 检测用户登录状态，登录返回用户信息
      * 根据返回类型，判断是否返回用户信息，还是返回用户id
-     * User：YM
-     * Date：2020/2/8
-     * Time：下午12:20
      * @param bool $type 是否返回当前用户数据
      * @return \App\Models\BaseModel|bool|\Hyperf\Database\Model\Model|null|void
      */
@@ -168,9 +157,6 @@ class Auth
     /**
      * logout
      * 退出登录
-     * User：YM
-     * Date：2020/3/8
-     * Time：下午11:47
      * @param string $type destroy直接销毁sessionid重建，clear清空整个session，remove清楚登录验证标志
      * @return string
      */

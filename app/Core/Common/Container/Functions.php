@@ -8,9 +8,7 @@ declare(strict_types=1);
  *
  * 公共函数，避免功能性函数重复书写
  * 书写规范，必须使用function_exists()方法判断
- * User：YM
- * Date：2019/12/15
- * Time：上午10:27
+ *
  */
 
 use Hyperf\Utils\Coroutine;
@@ -33,10 +31,14 @@ use Core\Common\Container\Auth;
 use Core\Common\Container\Ip2Region;
 use Hyperf\Server\ServerFactory;
 
-/**
- * 容器实例
- */
 if (!function_exists('container')) {
+    /**
+     * 容器实例
+     * container
+     * @return \Psr\Container\ContainerInterface
+     * author MengShuai <133814250@qq.com>
+     * date 2020/12/26 22:57
+     */
     function container()
     {
         return ApplicationContext::getContainer();
@@ -45,15 +47,14 @@ if (!function_exists('container')) {
 
 
 if (! function_exists('requestEntry')) {
-
     /**
-     * requestEntry
      * 根据异常返回信息，获取请求入口（模块-控制器-方法）
-     * User：YM
-     * Date：2019/12/15
-     * Time：上午10:53
+     * requestEntry
      * @param array $backTrace
-     * @return mixed|string
+     *
+     * @return string|string[]
+     * author MengShuai <133814250@qq.com>
+     * date 2020/12/26 22:57
      */
     function requestEntry(array $backTrace)
     {
@@ -85,12 +86,11 @@ if (! function_exists('requestEntry')) {
 
 if (! function_exists('getCoId')) {
     /**
-     * getCoId
      * 获取当前协程id
-     * User：YM
-     * Date：2019/12/16
-     * Time：上午12:32
+     * getCoId
      * @return int
+     * author MengShuai <133814250@qq.com>
+     * date 2020/12/26 22:57
      */
     function getCoId()
     {
@@ -100,12 +100,11 @@ if (! function_exists('getCoId')) {
 
 if (! function_exists('getClientInfo')) {
     /**
-     * getClientInfo
      * 获取请求客户端信息，获取连接的信息
-     * User：YM
-     * Date：2019/12/16
-     * Time：上午12:39
+     * getClientInfo
      * @return mixed
+     * author MengShuai <133814250@qq.com>
+     * date 2020/12/26 22:57
      */
     function getClientInfo()
     {
@@ -1217,5 +1216,29 @@ if(!function_exists('setLog')) {
                 );
             });
         });
+    }
+}
+
+if(!function_exists('str_rand')) {
+    /**
+     * 随机字串符
+     * str_rand
+     * @param int    $length
+     * @param string $char
+     *
+     * @return string
+     * author MengShuai <133814250@qq.com>
+     * @date 2020/12/26 22:49
+     */
+    function str_rand(int $length = 32, string $char = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'): string
+    {
+        if (!is_int($length) || $length < 0) {
+            return '';
+        }
+        $string = '';
+        for ($i = $length; $i > 0; $i--) {
+            $string .= $char[mt_rand(0, strlen($char) - 1)];
+        }
+        return $string;
     }
 }

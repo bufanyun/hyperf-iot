@@ -49,11 +49,6 @@ class ApiController extends BaseController
      */
     private $BkApi;
 
-//    /**
-//     * @var \Psr\Container\ContainerInterface|void
-//     */
-//    protected $OrderSubmitRepository;
-
     /**
      * uniform
      * 提交订单

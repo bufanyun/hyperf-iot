@@ -246,24 +246,5 @@
         $('#lianghao-title').slideDown("slow");
         $('#number').slideDown("slow");
     }
-
-    var protocol_title_title = '《信息收集和使用规则公告》';
-    var protocol_desc_url = '/home/spread/com-collection-announcement';
-    if(product.cid === 2){
-        protocol_title_title = '《客户入网服务协议》';
-        protocol_desc_url = '/home/spread/tel-collection-announcement';
-    }else if(product.cid === 3){
-        protocol_title_title = '《移动客户入网服务协议》';
-        protocol_desc_url = '/home/spread/tel-collection-announcement';
-    }else if(product.cid === 4){
-        protocol_title_title = '《设备客户入网服务协议》';
-        protocol_desc_url = '/home/spread/tel-collection-announcement';
-    }
-
-    setTimeout(function () {
-       $('#go_notice').text(protocol_title_title);
-    }, 50);
-
-
 </script>
 </html>
