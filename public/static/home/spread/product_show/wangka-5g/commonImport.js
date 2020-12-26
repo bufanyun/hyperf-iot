@@ -1,0 +1,2 @@
+webpackJsonp([43],[function(t,e){"use strict";!function(){document.write('<script type="text/javascript" src="https://res.mall.10010.cn/mall/mobile/alay/inspect_v1.js"></script>'),document.write('<script type="text/javascript">const el = document.getElementById("delivery"); if(el) el.addEventListener("click", function(e) {window.scroll(0, 0);});</script>')}()}]);
+//# sourceMappingURL=commonImport.js.map

@@ -166,34 +166,22 @@
                                             id="image5" usemap="#planetmap5">
                     <!---->
                 </li>
-                <li data-v-c9f45fd6=""><img data-v-c9f45fd6="" src="https://res.mall.10010.cn/mall/scaffold-img/detailImage/阿里宝卡_13_17afb33ef43bd83dfd841d08850f0012.jpg"
-                                            id="image6" usemap="#planetmap6">
-                    <!---->
-                </li>
-                <li data-v-c9f45fd6=""><img data-v-c9f45fd6="" src="https://res.mall.10010.cn/mall/scaffold-img/detailImage/阿里宝卡_14_556f24935dea26a90396da4c38ec3591.jpg"
-                                            id="image7" usemap="#planetmap7">
-                    <!---->
-                </li>
-                <li data-v-c9f45fd6=""><img data-v-c9f45fd6="" src="https://res.mall.10010.cn/mall/scaffold-img/detailImage/albk_02_268934f014f0447bd7da47af676b237d.jpg"
-                                            id="image8" usemap="#planetmap8">
-                    <!---->
-                </li>
-                <li data-v-c9f45fd6=""><img data-v-c9f45fd6="" src="https://res.mall.10010.cn/mall/scaffold-img/detailImage/albk_03_22086c2b4b450744cfb66f926eb7ff4f.jpg"
-                                            id="image9" usemap="#planetmap9">
-                    <!---->
-                </li>
-                <li data-v-c9f45fd6=""><img data-v-c9f45fd6="" src="https://res.mall.10010.cn/mall/scaffold-img/detailImage/albk_04_f3d6eead7e0eb7103d19ed7befb4aad4.jpg"
-                                            id="image10" usemap="#planetmap10">
-                    <!---->
-                </li>
-                <li data-v-c9f45fd6=""><img data-v-c9f45fd6="" src="https://res.mall.10010.cn/mall/scaffold-img/detailImage/albk_05_48363bf7c25ed098d23ceccee38dde8d.jpg"
-                                            id="image11" usemap="#planetmap11">
-                    <!---->
-                </li>
-                <li data-v-c9f45fd6=""><img data-v-c9f45fd6="" src="https://res.mall.10010.cn/mall/scaffold-img/detailImage/albk_06_937909b16417cc23709ead173507bf26.jpg"
-                                            id="image12" usemap="#planetmap12">
-                    <!---->
-                </li>
+
+                <li data-v-c9f45fd6=""><img data-v-c9f45fd6="" src="https://res.mall.10010.cn/mall/scaffold-img/detailImage/阿里宝卡（月租宝）_02_ad64de98302540d8a3f7790317327349.jpg" id="image6" usemap="#planetmap6" />
+                    <!----></li>
+                <li data-v-c9f45fd6=""><img data-v-c9f45fd6="" src="https://res.mall.10010.cn/mall/scaffold-img/detailImage/阿里宝卡（月租宝）_03_e32ef6c6dda43731d18697277c368165.jpg" id="image7" usemap="#planetmap7" />
+                    <!----></li>
+                <li data-v-c9f45fd6=""><img data-v-c9f45fd6="" src="https://res.mall.10010.cn/mall/scaffold-img/detailImage/albk_02_268934f014f0447bd7da47af676b237d.jpg" id="image8" usemap="#planetmap8" />
+                    <!----></li>
+                <li data-v-c9f45fd6=""><img data-v-c9f45fd6="" src="https://res.mall.10010.cn/mall/scaffold-img/detailImage/albk_03_22086c2b4b450744cfb66f926eb7ff4f.jpg" id="image9" usemap="#planetmap9" />
+                    <!----></li>
+                <li data-v-c9f45fd6=""><img data-v-c9f45fd6="" src="https://res.mall.10010.cn/mall/scaffold-img/detailImage/albk_04_f3d6eead7e0eb7103d19ed7befb4aad4.jpg" id="image10" usemap="#planetmap10" />
+                    <!----></li>
+                <li data-v-c9f45fd6=""><img data-v-c9f45fd6="" src="https://res.mall.10010.cn/mall/scaffold-img/detailImage/albk_05_48363bf7c25ed098d23ceccee38dde8d.jpg" id="image11" usemap="#planetmap11" />
+                    <!----></li>
+                <li data-v-c9f45fd6=""><img data-v-c9f45fd6="" src="https://res.mall.10010.cn/mall/scaffold-img/detailImage/albk_06_937909b16417cc23709ead173507bf26.jpg" id="image12" usemap="#planetmap12" />
+                    <!----></li>
+
                 <li data-v-c9f45fd6=""><img data-v-c9f45fd6="" src="https://res.mall.10010.cn/mall/scaffold-img/detailImage/albk_07_c19d49653e904eac54e544027425cc49.jpg"
                                             id="image13" usemap="#planetmap13">
                     <map data-v-c9f45fd6="" name="planetmap13" id="planetmap13">

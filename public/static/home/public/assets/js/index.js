@@ -652,8 +652,12 @@ $(function () {
             return false;
         } else if (!commonCheck.CustCheck.checkNumAddress($('#location .p-content').text())) {
             return false;
-        } else if (!commonCheck.CustCheck.checkNumber($('#number .p-content').text())) {
-            return false;
+        }
+        //选号开关
+        if(product.num_select_switch === 1){
+            if (!commonCheck.CustCheck.checkNumber($('#number .p-content').text())) {
+                return false;
+            }
         }
         return true;
     };
@@ -1038,8 +1042,21 @@ $(function () {
     });
     $('#go_notice').click(function () {
         // $('#protocol-desc .protocol-desc').load('https://msgo.10010.com/newMsg/toDoor/html/notice.html').css('maxHeight', '22rem');
-        $('#protocol-desc .protocol-desc').load(API_interface + '/home/spread/com-collection-announcement').css('maxHeight', '22rem');
-        $('#protocol-desc .protocol-title').empty().text('关于客户个人信息收集、使用规则的公告');
+        let protocol_title_title = '关于客户个人信息收集、使用规则的公告';
+        let protocol_desc_url = '/home/spread/com-collection-announcement';
+        console.log('product:'+JSON.stringify(product));
+        if(product.cid === 2){
+            let protocol_title_title = '客户入网服务协议';
+            let protocol_desc_url = '/home/spread/tel-collection-announcement';
+        }else if(product.cid === 3){
+            let protocol_title_title = '移动客户入网服务协议';
+            let protocol_desc_url = '/home/spread/tel-collection-announcement';
+        }else if(product.cid === 4){
+            let protocol_title_title = '设备客户入网服务协议';
+            let protocol_desc_url = '/home/spread/tel-collection-announcement';
+        }
+        $('#protocol-desc .protocol-desc').load(API_interface + protocol_desc_url + '?id='+product.id).css('maxHeight', '22rem');
+        $('#protocol-desc .protocol-title').empty().text(protocol_title_title);
         $('#protocol-desc .content>.protocol').hide();
         $('#protocol-desc,.mask').show();
         $('html, body').addClass('no-scroll');

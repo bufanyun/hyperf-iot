@@ -9,8 +9,8 @@
                 <span></span>
             </uni-text><a href="#kefu">联系客服</a>
         </uni-button>
-        <uni-button data-v-1bcf673d="" class="detail-btn-home">
-            <a href="#立即申请" onclick="$('.buttonBox').click()">立即申请</a>
+        <uni-button data-v-1bcf673d="" class="detail-btn-home" onclick="$('.buttonBox').click()">
+            <a href="#立即申请" >立即申请</a>
         </uni-button>
     </div>
 </div>
@@ -19,9 +19,9 @@
     setTimeout(
         function () {
             $('#foot-kefu-show-order').slideDown("slow");
-        }, 2000);
+        }, (typeof delayed_time == "undefined") ? 2000 : delayed_time);
     setTimeout(
         function () {
             document.getElementById("foot-kefu-show-order").style.display="";
-        }, 5000);
+        }, (typeof delayed_time == "undefined") ? 2000 : delayed_time+3000);
 </script>

@@ -86,7 +86,7 @@
                     <div class="wk_display">
                         <img src="{{ $sale->icon }}" alt="">
                         <div>
-                            <div class="wk_biaoti">{{ $sale->name }}</div>
+                            <div class="wk_biaoti">{{ $sale->kind_name }}</div>
                             <div class="wk_wenan">{{ $sale->titile }}</div>
                             <div class="conduct">
                                 <a style="color: #ffffff;" href="/home/spread/product_show?sid={{ $sale->id }}&{{http_build_query($reqParam)}}">
@@ -111,7 +111,7 @@
                     <div class="wk_display">
                         <img src="{{ $sale->icon }}" alt="">
                         <div>
-                            <div class="wk_biaoti">{{ $sale->name }}</div>
+                            <div class="wk_biaoti">{{ $sale->kind_name }}</div>
                             <div class="wk_wenan">{{ $sale->titile }}</div>
                             <div class="conduct">
                                 <a style="color: #ffffff;" href="/home/spread/product_show?sid={{ $sale->id }}&{{http_build_query($reqParam)}}">
@@ -133,7 +133,7 @@
                     <div class="wk_display">
                         <img src="{{ $sale->icon }}" alt="">
                         <div>
-                            <div class="wk_biaoti">{{ $sale->name }}</div>
+                            <div class="wk_biaoti">{{ $sale->kind_name }}</div>
                             <div class="wk_wenan">{{ $sale->titile }}</div>
                             <div class="conduct">
                                 <a style="color: #ffffff;" href="/home/spread/product_show?sid={{ $sale->id }}&{{http_build_query($reqParam)}}">
@@ -155,7 +155,7 @@
                     <div class="wk_display">
                         <img src="{{ $sale->icon }}" alt="">
                         <div>
-                            <div class="wk_biaoti">{{ $sale->name }}</div>
+                            <div class="wk_biaoti">{{ $sale->kind_name }}</div>
                             <div class="wk_wenan">{{ $sale->titile }}</div>
                             <div class="conduct">
                                 <a style="color: #ffffff;" href="/home/spread/product_show?sid={{ $sale->id }}&{{http_build_query($reqParam)}}">

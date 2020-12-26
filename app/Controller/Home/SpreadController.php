@@ -120,6 +120,18 @@ class SpreadController extends BaseController
     }
 
     /**
+     * tel_collection_announcement
+     * 联通信息采集公告
+     * @RequestMapping(path="tel-collection-announcement")
+     *
+     * Middleware(SpreadMiddleware::class)
+     */
+    public function tel_collection_announcement()
+    {
+        return $this->view([],'/Home/common/tel-collection-announcement');
+    }
+
+    /**
      * suc
      * 提交成功
      * @RequestMapping(path="suc")
