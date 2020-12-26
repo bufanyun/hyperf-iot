@@ -44,6 +44,7 @@ class SpreadController extends BaseController
      */
     public function pool()
     {
+        $reqParam = $this->request->all();
         $classifys = Db::table('product_classify')
             ->where(['status' => 1])
             ->orderBy('product_classify.sort', 'DESC')
@@ -51,8 +52,9 @@ class SpreadController extends BaseController
         $sales = Db::table('product_sale')->where(['status' => 1, 'pid' => 0])
             ->orderBy('product_sale.sort', 'DESC')
             ->get();
+        unset($reqParam['sid']);
         return $this->view([
-            'job_number' => $this->request->input('job_number'),
+            'reqParam' => $reqParam,
             'sales' => $sales,
             'classifys' => $classifys,
         ]);
@@ -69,16 +71,17 @@ class SpreadController extends BaseController
     {
         $reqParam = $this->request->all();
         $product = Db::table('product_sale')
-            ->select('product_access.label', 'product_access.*')
+            ->select('product_access.label', 'product_sale.*')
             ->join('product_access', 'product_access.id', '=', 'product_sale.access')
             ->where(['product_sale.status' => 1, 'product_sale.id' => $reqParam['sid']])
             ->first();
         if($product == null){
             return $this->error(StatusCode::ERR_EXCEPTION,'商品不存在');
         }
+        unset($reqParam['sid']);
         return $this->view([
             'product' => $product,
-            'reqParam' => (object)$reqParam,
+            'reqParam' => $reqParam,
         ], '/Home/Spread/product_show/' . $product->label);
     }
     /**

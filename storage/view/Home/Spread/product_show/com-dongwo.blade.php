@@ -171,12 +171,15 @@
         <!---->
     </div>
 </div>
+
 <!-- <script type="text/javascript" src="https://res.mall.10010.cn/mall/scaffold-show/static/js/manifest.a88e8f54b23297ffbd25.js"></script> -->
 <!-- <script type="text/javascript" src="https://res.mall.10010.cn/mall/scaffold-show/static/js/vendor.4f45b38098e0c1f97494.js"></script> -->
 <!-- <script type="text/javascript" src="https://res.mall.10010.cn/mall/scaffold-show/static/js/app.b174da99d4dd631b1f12.js"></script> -->
 <script type="text/javascript" src="/static/home/public/assets/js/jquery.min.js"></script>
+@include('Home.common.kefu-order-show')
 <script type="text/javascript">
-    $(document).ready(function () {
+    let sku_str = "{{$product->id}}";
+ $(document).ready(function () {
         (function (doc, win) {
             var docEl = doc.documentElement,
                 resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
@@ -206,9 +209,9 @@
             return false
         })
     });
-    let sku_str = "{{$reqParam->sid}}";
+
     $('.buttonBox').on('click', function () {
-        location.href = '/home/spread/plat_apply?sid='+sku_str+'&job_number={{$reqParam->job_number}}';
+        location.href = '/home/spread/plat_apply?sid=' + sku_str + '&{!!http_build_query($reqParam)!!}';
     });
 </script>
 

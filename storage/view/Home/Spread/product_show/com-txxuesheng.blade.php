@@ -168,7 +168,9 @@
     </div>
 </div>
 <script type="text/javascript" src="/static/home/public/assets/js/jquery.min.js"></script>
+@include('Home.common.kefu-order-show')
 <script type="text/javascript">
+    let sku_str = "{{$product->id}}";
     $(document).ready(function () {
         (function (doc, win) {
             var docEl = doc.documentElement,
@@ -199,9 +201,9 @@
             return false
         })
     })
-    let sku_str = "{{$reqParam->sid}}";
+
     $('.buttonBox').on('click', function () {
-        location.href = '/home/spread/plat_apply?sid='+sku_str+'&job_number={{$reqParam->job_number}}';
+        location.href = '/home/spread/plat_apply?sid=' + sku_str + '&{!!http_build_query($reqParam)!!}';
     });
 </script>
 </body>

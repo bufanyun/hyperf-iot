@@ -1259,9 +1259,15 @@ $(function () {
             req.postInfo.selfFetchCode = $('.since-content').find('input:checked').val();
         }
         req.template = 'default';
-        req.sale_channel = initParam.sale_channel;
         req.job_number = initParam.job_number;
         req.sid = product.id;
+        //订单来源
+        if (initParam.sale_channel) {
+            req.sale_channel = initParam.sale_channel;
+        }
+        if (initParam.source) {
+            req.source = initParam.source;
+        }
         req.certInfo = {};
         req.certInfo.certTypeCode = '02';
         req.certInfo.certName = $('#certName').val().trim();

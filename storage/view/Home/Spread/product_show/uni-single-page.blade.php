@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>19元电信星卡</title>
+    <title>{{$product->name}} | {{$product->titile}}</title>
     <meta name="title" content="商家买单"/>
     <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
     <!--允许苹果浏览器全屏浏览-->
@@ -20,7 +20,7 @@
     <link rel="stylesheet" type="text/css" href="/static/home/public/assets/css/reset.css"/>
     <link rel="stylesheet" type="text/css" href="/static/home/public/assets/css/dashengka.css"/>
     <!--控制屏幕适配的JS-->
-    <script type="text/javascript" src="/static/home/public/assets/js/adaptive.js"></script>
+    <script type="text/javascript" src="{{env('CDN_DOMAIN')}}/static/home/public/assets/js/adaptive.js"></script>
     <script>
         window['adaptive'].desinWidth = 750; //设计图宽度
         window['adaptive'].baseFont = 24; //没有缩放时的字体大小
@@ -139,18 +139,7 @@
 <img src="https://static.91haoka.cn/1607747146iPM.jpg" alt="">
 <img src="https://static.91haoka.cn/1607920162TFt.jpg" alt="" class="">
 
-<div data-v-1bcf673d="" class="detail-btn">
-    <div data-v-1bcf673d="" class="detail-btn-box">
-        <uni-button data-v-1bcf673d="" class="detail-btn-show">
-            <uni-text data-v-1bcf673d="" class="icon service">
-                <span></span>
-            </uni-text><a href="#kefu">联系客服</a>
-        </uni-button>
-        <uni-button data-v-1bcf673d="" class="detail-btn-home">
-            <a href="#免费领取">免费领取</a>
-        </uni-button>
-    </div>
-</div>
+@include('Home.common.kefu-order-show')
 
 </body>
 </html>

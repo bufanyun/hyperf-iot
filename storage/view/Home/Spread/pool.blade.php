@@ -90,7 +90,7 @@
                             <div class="wk_biaoti">{{ $sale->name }}</div>
                             <div class="wk_wenan">{{ $sale->titile }}</div>
                             <div class="conduct">
-                                <a style="color: #ffffff;" href="/home/spread/product_show?sid={{ $sale->id }}&job_number={{$job_number}}">
+                                <a style="color: #ffffff;" href="/home/spread/product_show?sid={{ $sale->id }}&{{http_build_query($reqParam)}}">
                                     <div>立即办理</div>
                                 </a>
                             </div>
@@ -115,7 +115,7 @@
                             <div class="wk_biaoti">{{ $sale->name }}</div>
                             <div class="wk_wenan">{{ $sale->titile }}</div>
                             <div class="conduct">
-                                <a style="color: #ffffff;" href="/home/spread/product_show?sid={{ $sale->id }}&job_number={{$job_number}}">
+                                <a style="color: #ffffff;" href="/home/spread/product_show?sid={{ $sale->id }}&{{http_build_query($reqParam)}}">
                                     <div>立即办理</div>
                                 </a>
                             </div>
@@ -137,7 +137,7 @@
                             <div class="wk_biaoti">{{ $sale->name }}</div>
                             <div class="wk_wenan">{{ $sale->titile }}</div>
                             <div class="conduct">
-                                <a style="color: #ffffff;" href="/home/spread/product_show?sid={{ $sale->id }}&job_number={{$job_number}}">
+                                <a style="color: #ffffff;" href="/home/spread/product_show?sid={{ $sale->id }}&{{http_build_query($reqParam)}}">
                                     <div>立即办理</div>
                                 </a>
                             </div>
@@ -159,7 +159,7 @@
                             <div class="wk_biaoti">{{ $sale->name }}</div>
                             <div class="wk_wenan">{{ $sale->titile }}</div>
                             <div class="conduct">
-                                <a style="color: #ffffff;" href="/home/spread/product_show?sid={{ $sale->id }}&job_number={{$job_number}}">
+                                <a style="color: #ffffff;" href="/home/spread/product_show?sid={{ $sale->id }}&{{http_build_query($reqParam)}}">
                                     <div>立即办理</div>
                                 </a>
                             </div>
