@@ -175,6 +175,10 @@
                     <!----></li>
                 <li data-v-c9f45fd6=""><img data-v-c9f45fd6="" src="https://res.mall.10010.cn/mall/scaffold-img/detailImage/20201023【通用】l卡落地页2020移动端_29_3819743f0e98e931a6bdef8557b1aa9f.jpg" id="image38" usemap="#planetmap38" />
                     <!----></li>
+
+                <!--顶底部遮盖-->
+                <li data-v-c9f45fd6=""><img style="height: 50px" data-v-c9f45fd6="" src="http://bufanyun.cn-bj.ufileos.com/uploads_ml/20201227_28d5e1ac9ea55261327c96b0c875ad4c.png" id="image5" usemap="#planetmap5"></li>
+
             </div>
             <div data-v-79455969="" data-v-087595bc="" pageid="Hy-0D5N2z" index="15">
                 <div data-v-79455969="" class="fixedBox" style="bottom: 0px; display: none;">
