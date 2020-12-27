@@ -14,7 +14,6 @@
         </uni-button>
     </div>
 </div>
-
 <script>
     setTimeout(
         function () {

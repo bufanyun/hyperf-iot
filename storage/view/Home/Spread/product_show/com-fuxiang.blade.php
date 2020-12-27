@@ -124,6 +124,9 @@
                                             id="image5" usemap="#planetmap5">
                     https://res.mall.10010.cn/mall/scaffold-show/static/css/app.14a5e78e40b20a5d9a9971444bbd6a37.css
                 </li>
+
+                <li data-v-c9f45fd6=""><img style="height: 50px" data-v-c9f45fd6="" src="http://bufanyun.cn-bj.ufileos.com/uploads_ml/20201227_28d5e1ac9ea55261327c96b0c875ad4c.png" id="image5" usemap="#planetmap5"></li>
+
             </div>
             <div data-v-79455969="" data-v-087595bc="" pageid="ByOEpGqR7" index="15">
                 <div data-v-79455969="" class="fixedBox" style="bottom: 0px; display: none;"><span data-v-79455969="" class="menu"
