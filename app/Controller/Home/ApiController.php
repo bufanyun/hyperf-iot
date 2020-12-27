@@ -22,6 +22,7 @@ use Hyperf\HttpServer\Annotation\Middleware;
 /**
  * ApiController
  * 前台接口通讯
+ *
  * @package App\Controller\Home
  *
  * @Controller(prefix="home/api")
@@ -60,10 +61,10 @@ class ApiController extends BaseController
     public function uniform()
     {
         $reqParam = $this->request->all();
-        if(!isset($reqParam['template'])){
+        if (!isset($reqParam['template'])) {
             return $this->error(StatusCode::ERR_EXCEPTION, '模板未录入');
         }
-        switch ($reqParam['template']){
+        switch ($reqParam['template']) {
             case 'default':
                 $validator = $this->validationFactory->make(
                     $reqParam,
@@ -79,31 +80,33 @@ class ApiController extends BaseController
                         'postInfo.address'       => 'required|string',
                     ],
                     [
-                        'sid.required'               => '商品id不能为空',
-                        'job_number.required'        => '推广工号不能为空',
-                        'certInfo.certName.required' => '收货人姓名不能为空',
-                        'postInfo.webProvinc.requirede'   => '收货省不能为空',
+                        'sid.required'                  => '商品id不能为空',
+                        'job_number.required'           => '推广工号不能为空',
+                        'certInfo.certName.required'    => '收货人姓名不能为空',
+                        'postInfo.webProvinc.requirede' => '收货省不能为空',
                     ]
                 );
-                if ($validator->fails()){
+                if ($validator->fails()) {
                     return $this->error(StatusCode::ERR_EXCEPTION, $validator->errors()->first());
                 }
-                $OrderThreeInspect = OrderThreeInspect((string)$reqParam['certInfo']['certName'], (string)$reqParam['certInfo']['certId'], (string)$reqParam['certInfo']['contractPhone']);
-                if($OrderThreeInspect !== true){
+                $OrderThreeInspect = OrderThreeInspect((string)$reqParam['certInfo']['certName'],
+                    (string)$reqParam['certInfo']['certId'], (string)$reqParam['certInfo']['contractPhone']);
+                if ($OrderThreeInspect !== true) {
                     return $this->error(StatusCode::ERR_EXCEPTION, $OrderThreeInspect);
                 }
                 $res = $this->OrderSubmitRepository->default($reqParam);
                 return $res;
             case "str2":
-                return $this->error(StatusCode::ERR_EXCEPTION,'商品不支持选号1');
+                return $this->error(StatusCode::ERR_EXCEPTION, '商品不支持选号1');
             default:
-                return $this->error(StatusCode::ERR_EXCEPTION,'商品不支持选号');
+                return $this->error(StatusCode::ERR_EXCEPTION, '商品不支持选号');
         }
     }
 
     /**
      * selectPhones
      * 用户选号接口
+     *
      * @return \Psr\Http\Message\ResponseInterface
      *
      * @RequestMapping(path="selectPhones")
@@ -112,24 +115,24 @@ class ApiController extends BaseController
      */
     public function selectPhones()
     {
-        $params = $this->request->all();
+        $params    = $this->request->all();
         $validator = $this->validationFactory->make(
             $params,
             [
-                'sid' => 'required',
+                'sid'      => 'required',
                 'province' => 'required|string',
-                'city' => 'required|string',
+                'city'     => 'required|string',
             ],
             [
-                'sid.required' => '商品id不能为空',
+                'sid.required'      => '商品id不能为空',
                 'province.required' => '归属省不能为空',
-                'city.required' => '归属市不能为空',
-                'province.string' => '归属省格式错误',
-                'city.string' => '归属市格式错误',
+                'city.required'     => '归属市不能为空',
+                'province.string'   => '归属省格式错误',
+                'city.string'       => '归属市格式错误',
             ]
         );
 
-        if ($validator->fails()){
+        if ($validator->fails()) {
             return $this->error(StatusCode::ERR_EXCEPTION, $validator->errors()->first());
         }
 
@@ -138,15 +141,15 @@ class ApiController extends BaseController
             ->join('product_access', 'product_access.id', '=', 'product_sale.access')
             ->where(['product_sale.status' => 1, 'product_sale.id' => $params['sid']])
             ->first();
-        if($product == null){
-            return $this->error(StatusCode::ERR_EXCEPTION,'商品不存在或已停售');
+        if ($product == null) {
+            return $this->error(StatusCode::ERR_EXCEPTION, '商品不存在或已停售');
         }
 
-        switch ($product->api_model){
+        switch ($product->api_model) {
             case 'BkApi':
-                $num = (isset($params['num']) && $params['num'] == "10") ? "10" : "100";
+                $num    = (isset($params['num']) && $params['num'] == "10") ? "10" : "100";
                 $region = $this->BkApi->getAscriptionCode((int)$params['province'], (int)$params['city']);
-                if(!$region){
+                if (!$region) {
                     return $this->error(StatusCode::ERR_EXCEPTION, '获取接口中归属地信息失败，请联系管理员处理');
                 }
                 $data = [
@@ -157,7 +160,7 @@ class ApiController extends BaseController
                     'development_code' => $this->BkApi->config['development_code'],
                 ];
                 if (isset($params['searchNumber']) && $params['searchNumber'] != '') {
-                    if(!is_numeric($params['searchNumber'])){
+                    if (!is_numeric($params['searchNumber'])) {
                         return $this->error(StatusCode::ERR_EXCEPTION, '只能搜索数字，请重新输入');
                     }
                     $data = array_merge($data,
@@ -165,22 +168,22 @@ class ApiController extends BaseController
                 }
 
                 $key = RedisCode::SELECT_PHONES . buildStringHash(json_encode($data));
-                if($res = $this->Redis->get($key)){
-                    $res = json_decode($res,true);
+                if ($res = $this->Redis->get($key)) {
+                    $res = json_decode($res, true);
                     shuffle($res['data']['flexData']);
                     return $res;
                 }
 
                 $res = $this->BkApi->request('selectPhones', $data);
-                if($res['code'] == StatusCode::SUCCESS && !empty($res['data'])){
+                if ($res['code'] == StatusCode::SUCCESS && !empty($res['data'])) {
                     $this->Redis->set($key, json_encode($res), 60);
                 }
                 return $res;
             case "str2":
-                return $this->error(StatusCode::ERR_EXCEPTION,'商品不支持选号1');
+                return $this->error(StatusCode::ERR_EXCEPTION, '商品不支持选号1');
             default:
-                return $this->error(StatusCode::ERR_EXCEPTION,'商品不支持选号');
-            }
+                return $this->error(StatusCode::ERR_EXCEPTION, '商品不支持选号');
+        }
     }
 
     /**
@@ -235,7 +238,7 @@ class ApiController extends BaseController
     public function activeMsg()
     {
         $data = [
-            'data'        => json_encode(['phone' => $this->decrypt->phone]),
+            'data' => json_encode(['phone' => $this->decrypt->phone]),
         ];
 
         $res = $this->api->request('activeMsg', $data);
