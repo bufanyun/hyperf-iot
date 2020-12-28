@@ -30,15 +30,6 @@
             console.log("接收到uin发来的消息--event.data:", JSON.stringify(event.data)+'---event:'+JSON.stringify(event.origin))
         }
 
-    })
+    });
 
-    // .nvue 直接调用函数
-    function setBirDay(data) {
-
-    }
-
-    // .nvue 直接调用函数
-    function setBirDayInit(day) {
-
-    }
 </script>

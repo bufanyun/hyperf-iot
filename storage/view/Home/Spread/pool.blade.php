@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
-
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>号卡中心</title>
@@ -25,16 +24,15 @@
         window['adaptive'].desinWidth = 750; //设计图宽度
         window['adaptive'].baseFont = 24; //没有缩放时的字体大小
         window['adaptive'].maxWidth = 480; // 页面最大宽度 默认540
-        //window['adaptive'].scaleType = 2; // iphone下缩放，retina显示屏下能精确还原1px;
+        window['adaptive'].scaleType = 2; // iphone下缩放，retina显示屏下能精确还原1px;
         window['adaptive'].init();
     </script>
     <!--常用库-->
     <script type="text/javascript" src="{{env('CDN_DOMAIN')}}/static/home/public/assets/js/jquery-1.10.1.min.js"></script>
     <script type="text/javascript" src="{{env('CDN_DOMAIN')}}/static/home/public/assets/js/slider.js"></script>
-    <style>
-    </style>
 </head>
 
+@include('Home.common.loading')
 
 <body>
 <!-- banner -->
