@@ -31,10 +31,13 @@
     <!--常用库-->
     <script type="text/javascript" src="{{env('CDN_DOMAIN')}}/static/home/public/assets/js/jquery-1.10.1.min.js"></script>
     <script type="text/javascript" src="{{env('CDN_DOMAIN')}}/static/home/public/assets/js/slider.js"></script>
-    <style>
 
+    @include('Home.common.uinapp-sdk')
+    
+    <style>
     </style>
 </head>
+
 
 <body>
 <!-- banner -->
@@ -170,7 +173,7 @@
     @endforeach
 </div>
 </body>
-</html>
+
 <script>
     $(document).ready(function () {
         $('#tab1').show();
@@ -183,3 +186,5 @@
         });
     })
 </script>
+
+</html>
