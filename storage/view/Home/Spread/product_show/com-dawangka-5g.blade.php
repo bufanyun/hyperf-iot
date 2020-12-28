@@ -99,25 +99,8 @@
 </section>
 <a id="toTop"></a>
 <script type="text/javascript" src="{{env('CDN_DOMAIN')}}/static/home/spread/product_show/wangka-5g/common-b.js"></script>
-<script type="text/javascript" src="{{env('CDN_DOMAIN')}}/static/home/spread/product_show/wangka-5g/head-card.js"></script> {{--
-  <script type="text/javascript" src="{{env('CDN_DOMAIN')}}/static/home/spread/product_show/wangka-5g/commonImport.js"></script>--}} {{--
-  <script type="text/javascript" src="{{env('CDN_DOMAIN')}}/static/home/spread/product_show/wangka-5g/inspect_v1.js"></script>--}}
-{{--<script type="text/javascript">const el = document.getElementById("delivery"); if(el) el.addEventListener("click", function(e) {window.scroll(0, 0);});</script>--}}
-{{--<div style="position: static; display: none; width: 0px; height: 0px; border: none; padding: 0px; margin: 0px;">--}}
-{{-- <div id="trans-tooltip">--}}
-{{--  <div id="tip-left-top" style="background: url(&quot;chrome-extension://edhchknefojhifoiebpcbkhcjlkkklci/imgs/map/tip-left-top.png&quot;);"></div>--}}
-{{--  <div id="tip-top" style="background: url(&quot;chrome-extension://edhchknefojhifoiebpcbkhcjlkkklci/imgs/map/tip-top.png&quot;) repeat-x;"></div>--}}
-{{--  <div id="tip-right-top" style="background: url(&quot;chrome-extension://edhchknefojhifoiebpcbkhcjlkkklci/imgs/map/tip-right-top.png&quot;);"></div>--}}
-{{--  <div id="tip-right" style="background: url(&quot;chrome-extension://edhchknefojhifoiebpcbkhcjlkkklci/imgs/map/tip-right.png&quot;) repeat-y;"></div>--}}
-{{--  <div id="tip-right-bottom" style="background: url(&quot;chrome-extension://edhchknefojhifoiebpcbkhcjlkkklci/imgs/map/tip-right-bottom.png&quot;);"></div>--}}
-{{--  <div id="tip-bottom" style="background: url(&quot;chrome-extension://edhchknefojhifoiebpcbkhcjlkkklci/imgs/map/tip-bottom.png&quot;) repeat-x;"></div>--}}
-{{--  <div id="tip-left-bottom" style="background: url(&quot;chrome-extension://edhchknefojhifoiebpcbkhcjlkkklci/imgs/map/tip-left-bottom.png&quot;);"></div>--}}
-{{--  <div id="tip-left" style="background: url(&quot;chrome-extension://edhchknefojhifoiebpcbkhcjlkkklci/imgs/map/tip-left.png&quot;);"></div>--}}
-{{--  <div id="trans-content"></div>--}}
-{{-- </div>--}}
-{{-- <div id="tip-arrow-bottom" style="background: url(&quot;chrome-extension://edhchknefojhifoiebpcbkhcjlkkklci/imgs/map/tip-arrow-bottom.png&quot;);"></div>--}}
-{{-- <div id="tip-arrow-top" style="background: url(&quot;chrome-extension://edhchknefojhifoiebpcbkhcjlkkklci/imgs/map/tip-arrow-top.png&quot;);"></div>--}}
-{{--</div>--}}
+<script type="text/javascript" src="{{env('CDN_DOMAIN')}}/static/home/spread/product_show/wangka-5g/head-card.js"></script>
+
 <div style="display: none" class="buttonBox"></div>
 <script type="text/javascript" src="{{env('CDN_DOMAIN')}}/static/home/public/assets/js/jquery.min.js"></script>
 <script>
@@ -146,5 +129,6 @@
   });
  });
 </script>
+@include('Home.common.uinapp-sdk')
 </body>
 </html>

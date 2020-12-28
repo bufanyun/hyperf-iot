@@ -45,5 +45,6 @@
 </script>
 
 @include('Home.common.kefu-order-show')
+@include('Home.common.uinapp-sdk')
 </body>
 </html>

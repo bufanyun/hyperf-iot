@@ -237,6 +237,6 @@
         location.href = '/home/spread/plat_apply?sid=' + sku_str + '&{!!http_build_query($reqParam)!!}';
     });
 </script>
+@include('Home.common.uinapp-sdk')
 </body>
-
 </html>

@@ -4,12 +4,15 @@
     document.addEventListener('UniAppJSBridgeReady', function() {
         // 监听按钮事件
         // document.getElementById('to_shiming').addEventListener('click', function() {
-            let data_shiming = {
-                action: '1'
-            }
+
             // // .nvue 可以接收的事件
             uni.postMessage({
-                data: data_shiming
+                data: {
+                    action: 'setNavigationBarTitle',
+                    data :{
+                        title : document.title
+                    },
+                }
             });
             //
             // // .vue 可以接收的事件

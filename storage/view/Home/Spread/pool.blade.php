@@ -31,9 +31,6 @@
     <!--常用库-->
     <script type="text/javascript" src="{{env('CDN_DOMAIN')}}/static/home/public/assets/js/jquery-1.10.1.min.js"></script>
     <script type="text/javascript" src="{{env('CDN_DOMAIN')}}/static/home/public/assets/js/slider.js"></script>
-
-    @include('Home.common.uinapp-sdk')
-    
     <style>
     </style>
 </head>
@@ -186,5 +183,5 @@
         });
     })
 </script>
-
+@include('Home.common.uinapp-sdk')
 </html>

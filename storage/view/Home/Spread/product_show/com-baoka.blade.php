@@ -290,6 +290,6 @@
     });
 </script>
 
-
+@include('Home.common.uinapp-sdk')
 </body>
 </html>

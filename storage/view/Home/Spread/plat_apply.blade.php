@@ -247,4 +247,5 @@
         $('#number').slideDown("slow");
     }
 </script>
+@include('Home.common.uinapp-sdk')
 </html>
