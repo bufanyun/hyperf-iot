@@ -1,7 +1,37 @@
+
 <script type="text/javascript" src="https://js.cdn.aliyun.dcloud.net.cn/dev/uni-app/uni.webview.1.5.2.js"></script>
 <script type="text/javascript">
     //js SDK  加载成功
     document.addEventListener('UniAppJSBridgeReady', function() {
+        $('#order_query').click(function () {
+            uni.postMessage({  //跳转订单查询
+                data: {
+                    action: 'jumpOrderQuery',
+                    data :{},
+                }
+            });
+        });
+        $('#liang_shop').click(function () {
+            uni.postMessage({  //跳转订单查询
+                data: {
+                    action: 'uToast',
+                    data :{
+                        msg:'暂未开放，敬请期待~',
+                    },
+                }
+            });
+        });
+        $('#action_card').click(function () {
+            uni.postMessage({  //跳转订单查询
+                data: {
+                    action: 'uToast',
+                    data :{
+                        msg:'请前往营运商微信公众号进行号卡激活',
+                    },
+                }
+            });
+        });
+
         /**
          * 更新title
          */
