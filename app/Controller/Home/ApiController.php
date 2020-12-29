@@ -78,6 +78,7 @@ class ApiController extends BaseController
             return $this->error(StatusCode::ERR_EXCEPTION,
                 '没到查到历史订单，请检查手机号是否输入正确。');
         }
+        var_export($lists);
         $lists = $lists->toArray();
         foreach ($lists as $k => $v) {
             $lists[$k] = (array)$v;
