@@ -61,10 +61,10 @@ class ApiController extends BaseController
     public function order_query()
     {
         $reqParam = $this->request->all();
-        if ( ! isset($reqParam['phone'])) {
+        if (!isset($reqParam['phone'])) {
             return $this->error(StatusCode::ERR_EXCEPTION, '请输入手机号码');
         }
-        if ( ! isMobileNum($reqParam['phone'])) {
+        if (!isMobileNum($reqParam['phone'])) {
             return $this->error(StatusCode::ERR_EXCEPTION, '请输入正确的手机号码');
         }
         $lists = Db::table('product_order')
@@ -73,15 +73,13 @@ class ApiController extends BaseController
                 'product_order.status', 'product_order.created_at')
             ->join('product_sale', 'product_sale.id', '=', 'product_order.sid')
             ->where(['product_order.phone' => $reqParam['phone']])
-            ->get();
-        if ($lists === null) {
+            ->get()->toArray();
+        if (empty($lists)) {
             return $this->error(StatusCode::ERR_EXCEPTION,
                 '没到查到历史订单，请检查手机号是否输入正确。');
         }
-        var_export($lists);
-        $lists = $lists->toArray();
         foreach ($lists as $k => $v) {
-            $lists[$k] = (array)$v;
+            $lists[$k]           = (array)$v;
             $lists[$k]['status'] = ProductOrderCode::getMessage($v->status);
         }
         unset($v);
