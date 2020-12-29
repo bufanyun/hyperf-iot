@@ -2,23 +2,31 @@
 <script type="text/javascript">
     //js SDK  加载成功
     document.addEventListener('UniAppJSBridgeReady', function() {
-        // 监听按钮事件
-        // document.getElementById('to_shiming').addEventListener('click', function() {
+        /**
+         * 更新title
+         */
+        uni.postMessage({
+            data: {
+                action: 'setNavigationBarTitle',
+                data :{
+                    title : document.title
+                },
+            }
+        });
+        /**
+         * 记录历史路由
+         */
+        uni.postMessage({
+            data: {
+                action: 'setUrlHistory',
+                data :{
+                    data : 'r={{$routePath}}&{!!http_build_query($reqParam)!!}'
+                },
+            }
+        });
 
-            // // .nvue 可以接收的事件
-            uni.postMessage({
-                data: {
-                    action: 'setNavigationBarTitle',
-                    data :{
-                        title : document.title
-                    },
-                }
-            });
-            //
-            // // .vue 可以接收的事件
-            // window.parent.postMessage(data_shiming, '*')
-
-        // });
+        // // .vue 可以接收的事件
+        // window.parent.postMessage(data_shiming, '*')
     });
 
     //接收来自 .vue  的数据 和 参数  间接 调用 函数
@@ -26,9 +34,9 @@
         // event.origin --发送者的源
         // event.source --发送者的window对象
         // event.data --数据
-        if (event.data) {
-            console.log("接收到uin发来的消息--event.data:", JSON.stringify(event.data)+'---event:'+JSON.stringify(event.origin))
-        }
+        // if (event.data) {
+        //     console.log("接收到uin发来的消息--event.data:", JSON.stringify(event.data)+'---event:'+JSON.stringify(event.origin))
+        // }
 
     });
 

@@ -78,7 +78,29 @@ abstract class AbstractController
             $view_path = $name;
         }
 
-        var_export($view_path);
+//        var_export("模板路径：" . $view_path . "\r\n");
         return view($view_path, $params);
+    }
+
+
+    /**
+     * 接口服务信息
+     * getServiceInfo
+     *
+     * @return array
+     * author MengShuai <133814250@qq.com>
+     * date 2020/12/29 10:14
+     */
+    protected function getServiceInfo() : array
+    {
+        $config = [
+            'routePath'       => '/'.$this->request->path(),  //请求路由
+            'interfaceDomain' => $this->request->getHeaders()['host'][0] ??
+                env('API_HOME_INTERFACE'),  //前台域名
+            'url'             => $this->request->url(),
+            'fullUrl'         => $this->request->fullUrl(),
+        ];
+//        var_export(['getServiceInfo' => $config]);
+        return $config;
     }
 }

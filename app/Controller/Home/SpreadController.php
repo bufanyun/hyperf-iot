@@ -52,11 +52,12 @@ class SpreadController extends BaseController
         $sales = Db::table('product_sale')->where(['status' => 1, 'pid' => 0])
             ->orderBy('product_sale.sort', 'DESC')
             ->get();
-        unset($reqParam['sid']);
+        unset($reqParam['sid'], $reqParam['r']);
         return $this->view([
             'reqParam' => $reqParam,
             'sales' => $sales,
             'classifys' => $classifys,
+            'routePath' => '/' . $this->request->path(),
         ]);
     }
 
@@ -78,10 +79,11 @@ class SpreadController extends BaseController
         if($product == null){
             return $this->error(StatusCode::ERR_EXCEPTION,'商品不存在');
         }
-        unset($reqParam['sid']);
+        unset($reqParam['r']);
         return $this->view([
             'product' => $product,
             'reqParam' => $reqParam,
+            'routePath' => '/' . $this->request->path(),
         ], '/Home/Spread/product_show/' . $product->label);
     }
 
@@ -104,7 +106,14 @@ class SpreadController extends BaseController
         if($product == null){
            return $this->error(StatusCode::ERR_EXCEPTION,'商品不存在');
         }
-        return $this->view(['product' => $product, 'reqParam' => (object)$reqParam]);
+        unset($reqParam['r']);
+        return $this->view([
+            'product'         => $product,
+            'reqParam'        => (object)$reqParam,
+            'routePath'       => '/'.$this->request->path(),
+            'interfaceDomain' => $this->request->getHeaders()['host'][0] ??
+                env('API_HOME_INTERFACE'),
+        ]);
     }
 
     /**

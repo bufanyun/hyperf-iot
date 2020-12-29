@@ -418,7 +418,7 @@ $(function () {
     }
     // 获取短信验证码
     $('#captcha').on('click', function () {
-        console.log(numberTxtAfter);
+        // console.log(numberTxtAfter);
         // 当电话号码为空时，跳出函数
         if (!commonCheck.CustCheck.checkPhone(numberTxtAfter) || numberTxtAfter === '') {
             return;
@@ -755,7 +755,7 @@ $(function () {
         $('#province li, #city li').removeClass('selected org');
         $('#province').find('li[data-code=' + provinceCode + ']').addClass('selected org');
         var cityList = [];
-        console.log(pCode, city[pCode]);
+        // console.log(pCode, city[pCode]);
         city[pCode].forEach(function (c) {
             cityList.push('<li data-code=' + c.ESS_CITY_CODE + '>' + c.CITY_NAME + '</li>');
         });
@@ -834,19 +834,19 @@ $(function () {
         console.log('provinceCode_1212', provinceCode);
         // 广东订单
         if (provinceCode == '51' && is_other_plat == 1 && is_move == 1) {
-            console.log('change guangdong');
+            // console.log('change guangdong');
             req.u = initParam.u = g_u;
             req.p = initParam.p = g_p;
             req.c = initParam.c = g_c;
             req.plat_num = initParam.plat_num = g_num;
         } else {
-            console.log('change no guangdong');
+            // console.log('change no guangdong');
             req.u = initParam.u = u;
             req.p = initParam.p = p;
             req.c = initParam.c = c;
             req.plat_num = initParam.plat_num = plat_num;
         }
-        console.log(initParam, req);
+        // console.log(initParam, req);
     }
 
     // 邮寄地市切换
@@ -1041,31 +1041,15 @@ $(function () {
         $.showProtocal(protocolParam, '/scene-buy/scene/protocol', verify);
     });
 
-    if(product.cid === 1){
-        let protocol_title_title = '《信息收集和使用规则公告》';
-        let protocol_desc_url = '/home/spread/com-collection-announcement';
-    }else if(product.cid === 2){
-        let protocol_title_title = '《客户信息收集、入网服务协议》';
-        let protocol_desc_url = '/home/spread/tel-collection-announcement';
-    }else if(product.cid === 3){
-        let protocol_title_title = '《移动客户入网服务协议》';
-        let protocol_desc_url = '/home/spread/tel-collection-announcement';
-    }else if(product.cid === 4){
-        let protocol_title_title = '《设备客户入网服务协议》';
-        let protocol_desc_url = '/home/spread/tel-collection-announcement';
-    }
     $('#go_notice').click(function () {
-        // $('#protocol-desc .protocol-desc').load('https://msgo.10010.com/newMsg/toDoor/html/notice.html').css('maxHeight', '22rem');
-        $('#protocol-desc .protocol-desc').load(API_interface + protocol_desc_url + '?id='+product.id).css('maxHeight', '22rem');
-        $('#protocol-desc .protocol-title').empty().text(protocol_title_title);
+        // console.log('this.attr("data-load"):'+$(this).attr("data-load"));
+        $('#protocol-desc .protocol-desc').load('http://'+$(this).attr("data-load")).css('maxHeight', '22rem');
+        // $('#protocol-desc .protocol-title').empty().text(protocol_title_title);
         $('#protocol-desc .content>.protocol').hide();
         $('#protocol-desc,.mask').show();
         $('html, body').addClass('no-scroll');
         $('#protocol').click();
     });
-    setTimeout(function () {
-        $('#go_notice').text(protocol_title_title);
-    }, 50);
 
     // 关闭弹出层
     $('.popup-close').on('click', function (e) {
@@ -1099,8 +1083,8 @@ $(function () {
     });
     // 刷新号码
     $('#refresh').on('click', function () {
-        console.log('numberParam.current:'+numberParam.current);
-        console.log('numberParam.max:'+numberParam.max);
+        // console.log('numberParam.current:'+numberParam.current);
+        // console.log('numberParam.max:'+numberParam.max);
         if (numberParam.current > numberParam.max) {
             // 重新获取号码
             setNumber();
@@ -1346,12 +1330,12 @@ $(function () {
             provinceCode: initParam.p
         };
         var succCallback = function (data) {
-            console.log('dataLLL'+JSON.stringify(data));
+            // console.log('dataLLL'+JSON.stringify(data));
             if (data.rspCode == '0000') {
                 if (data.rspBody != '') {
                     $('#successClose').css('display', 'none');
                     setTimeout(function () {
-                        console.log('5666');
+                        // console.log('5666');
                         // window.location.href = data.rspBody;
                     }, 5000);
                 }
@@ -1378,7 +1362,7 @@ $(function () {
             data: reqData,
             contentType: 'application/json',
             success: function (data) {
-                console.log('data:'+JSON.stringify(data));
+                // console.log('data:'+JSON.stringify(data));
                 $('.subLoad').hide();
                 $('#since').hide();
                 subStatus = true;

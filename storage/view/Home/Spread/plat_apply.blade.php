@@ -7,6 +7,7 @@
     <meta name="format-detection" content="telephone=no"/>
     <title>资料填写</title>
     <link rel="stylesheet" href="{{env('CDN_DOMAIN')}}/static/home/public/assets/css/fill.css">
+    @include('Home.common.loading')
 </head>
 <body>
 <section class="fill-wrapper">
@@ -79,7 +80,31 @@
     <div class="protocol-div">
         <p class="protocol agree" id="protocol">
             <i class="protocol-radio"></i>我已阅读并同意
-            <a href="javascript:;" id="go_notice">《信息收集和使用规则公告》</a>
+                @if ($product->cid === 1)
+                <a href="javascript:;" id="go_notice"
+                data-load="{{$interfaceDomain}}/home/spread/com-collection-announcement?id={{$product->id}}">《
+                信息收集和使用规则公告 》
+
+                @elseif ($product->cid === 2)
+                <a href="javascript:;" id="go_notice"
+                data-load="{{$interfaceDomain}}/home/spread/com-collection-announcement?id={{$product->id}}">《
+                客户信息收集、入网服务协议 》
+
+                @elseif ($product->cid === 3)
+                <a href="javascript:;" id="go_notice"
+                data-load="{{$interfaceDomain}}/home/spread/com-collection-announcement?id={{$product->id}}">《
+                移动客户入网服务协议 》
+
+                @elseif ($product->cid === 4)
+                <a href="javascript:;" id="go_notice"
+                data-load="{{$interfaceDomain}}/home/spread/com-collection-announcement?id={{$product->id}}">《
+                设备客户入网服务协议 》
+
+                @else
+                <a href="javascript:;" id="go_notice"
+                data-load="{{$interfaceDomain}}/home/spread/com-collection-announcement?id={{$product->id}}">《
+                信息收集和使用规则公告 》
+                @endif
 {{--            <a href="javascript:;" id="go-protocol">《客户入网服务协议及业务协议》</a>--}}
         </p>
 {{--        <p class="protocol"><a href="javascript:;" id="go_notice">《关于客户个人信息收集、使用规则的公告》</a></p>--}}
@@ -208,7 +233,7 @@
 <div class="mask" hidden></div>
 </body>
 <script>
-    let API_interface = '{{env('API_HOME_INTERFACE')}}';
+    let API_interface = '{{$interfaceDomain}}';
     let product = @json($product, JSON_PRETTY_PRINT);
     let u = "xwku2YAd9bm%20h/khvLl6dw==";
     let p = "51";
