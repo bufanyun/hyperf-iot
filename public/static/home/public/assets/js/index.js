@@ -174,7 +174,12 @@ $(function () {
         var numberHtml = [];
         for (var i = _start; i < _end; i += 1) {
             var numberObj = numberParam.list[i];
-            if (numberObj.niceRule == 0) {
+
+            let rand  = Math.floor(Math.random() * 5);
+            // if (numberObj.niceRule == 0) {
+            // console.log('rand:'+rand);
+            endNum = numberObj.number.charAt(numberObj.number.length-1);
+            if (rand !== 0 && endNum !== 4) {
                 numberHtml.push("<li><a href='javascript:;' data-niceRule='" + numberObj.niceRule + "' data-monthLimit='" + numberObj.monthLimit + "' data-advanceLimit='" + numberObj.advanceLimit + "' >" + numberObj.number + "</a></li>");
             } else {
                 numberHtml.push("<li><a href='javascript:;' data-niceRule='" + numberObj.niceRule + "' data-monthLimit='" + numberObj.monthLimit + "' data-advanceLimit='" + numberObj.advanceLimit + "' ><i>靓</i>" + numberObj.number + "</a></li>");
@@ -1043,7 +1048,7 @@ $(function () {
 
     $('#go_notice').click(function () {
         // console.log('this.attr("data-load"):'+$(this).attr("data-load"));
-        $('#protocol-desc .protocol-desc').load('http://'+$(this).attr("data-load")).css('maxHeight', '22rem');
+        $('#protocol-desc .protocol-desc').load($(this).attr("data-load")).css('maxHeight', '22rem');
         $('#protocol-desc .protocol-title').empty().text($(this).attr("data-title"));
         $('#protocol-desc .content>.protocol').hide();
         $('#protocol-desc,.mask').show();

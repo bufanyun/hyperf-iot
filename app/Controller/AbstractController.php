@@ -82,25 +82,34 @@ abstract class AbstractController
         return view($view_path, $params);
     }
 
-
     /**
      * 接口服务信息
      * getServiceInfo
+     * @param  array  $key
      *
      * @return array
      * author MengShuai <133814250@qq.com>
-     * date 2020/12/29 10:14
+     * date 2020/12/29 10:42
      */
-    protected function getServiceInfo() : array
+    protected function getServiceInfo(array $key = []): array
     {
         $config = [
             'routePath'       => '/'.$this->request->path(),  //请求路由
             'interfaceDomain' => $this->request->getHeaders()['host'][0] ??
                 env('API_HOME_INTERFACE'),  //前台域名
-            'url'             => $this->request->url(),
-            'fullUrl'         => $this->request->fullUrl(),
+            'url'             => $this->request->url(), //http://www.xx.com
+            'fullUrl'         => $this->request->fullUrl(), //http://www.xx.com?asd=123
         ];
-//        var_export(['getServiceInfo' => $config]);
+
+        if ( ! empty($key)) {
+            foreach ($config as $k => $vo) {
+                if ( ! in_array($k, $key)) {
+                    unset($config[$k]);
+                }
+            }
+            unset($vo);
+        }
+        //        var_export(['getServiceInfo' => $config]);
         return $config;
     }
 }

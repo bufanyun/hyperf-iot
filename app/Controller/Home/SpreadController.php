@@ -111,8 +111,7 @@ class SpreadController extends BaseController
             'product'         => $product,
             'reqParam'        => (object)$reqParam,
             'routePath'       => '/'.$this->request->path(),
-            'interfaceDomain' => $this->request->getHeaders()['host'][0] ??
-                env('API_HOME_INTERFACE'),
+            'interfaceDomain' => isset($this->request->getHeaders()['host'][0]) ? 'http://'.$this->request->getHeaders()['host'][0] : env('API_HOME_INTERFACE'),
         ]);
     }
 
@@ -148,6 +147,18 @@ class SpreadController extends BaseController
      * Middleware(SpreadMiddleware::class)
      */
     public function suc()
+    {
+        return $this->view(['name' => 'ms']);
+    }
+
+    /**
+     * order_query
+     * 订单查询
+     * @RequestMapping(path="order_query")
+     *
+     * Middleware(SpreadMiddleware::class)
+     */
+    public function order_query()
     {
         return $this->view(['name' => 'ms']);
     }
