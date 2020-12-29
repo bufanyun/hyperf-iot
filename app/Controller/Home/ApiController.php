@@ -6,6 +6,7 @@ namespace App\Controller\Home;
 
 use App\Constants\RedisCode;
 use App\Constants\StatusCode;
+use App\Constants\ProductOrderCode;
 use App\Controller\BaseController;
 use Hyperf\HttpServer\Annotation\Controller;
 use Hyperf\HttpServer\Annotation\RequestMapping;
@@ -80,6 +81,7 @@ class ApiController extends BaseController
         $lists = $lists->toArray();
         foreach ($lists as $k => $v) {
             $lists[$k] = (array)$v;
+            $lists[$k]['status'] = ProductOrderCode::getMessage($v->status);
         }
         unset($v);
         return $this->success($lists, '操作成功');
