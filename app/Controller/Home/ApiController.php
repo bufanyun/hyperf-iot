@@ -59,8 +59,24 @@ class ApiController extends BaseController
      */
     public function order_query()
     {
-//        $this->success(StatusCode::SUCCESS, '操作成功');
-        return $this->error(StatusCode::ERR_EXCEPTION, '没数据');
+        $reqParam = $this->request->all();
+        if (!isset($reqParam['phone'])) {
+            return $this->error(StatusCode::ERR_EXCEPTION, '请输入手机号码');
+        }
+        if(!isMobileNum($reqParam['phone'])){
+            return $this->error(StatusCode::ERR_EXCEPTION, '请输入正确的手机号码');
+        }
+
+        $lists = Db::table('product_order')
+            ->select('product_sale.name', 'product_sale.titile', 'product_sale.icon','product_order.price','product_order.status', 'product_order.created_at')
+            ->join('product_sale', 'product_sale.id', '=', 'product_order.sid')
+            ->where(['product_order.phone' => $reqParam['phone']])
+            ->select();
+
+//        var_export();
+
+        return $this->success($lists, '操作成功');
+        return $this->error(StatusCode::ERR_EXCEPTION, '没到查到历史订单，请检查手机号是否输入正确。');
     }
 
     /**
