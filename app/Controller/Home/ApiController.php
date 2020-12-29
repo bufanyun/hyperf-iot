@@ -51,6 +51,19 @@ class ApiController extends BaseController
     private $BkApi;
 
     /**
+     * order_query
+     * 订单查询
+     * @RequestMapping(path="order_query")
+     *
+     * Middleware(SpreadMiddleware::class)
+     */
+    public function order_query()
+    {
+//        $this->success(StatusCode::SUCCESS, '操作成功');
+        return $this->error(StatusCode::ERR_EXCEPTION, '没数据');
+    }
+
+    /**
      * uniform
      * 提交订单
      * @RequestMapping(path="uniform")

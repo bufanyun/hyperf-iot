@@ -151,16 +151,5 @@ class SpreadController extends BaseController
         return $this->view(['name' => 'ms']);
     }
 
-    /**
-     * order_query
-     * 订单查询
-     * @RequestMapping(path="order_query")
-     *
-     * Middleware(SpreadMiddleware::class)
-     */
-    public function order_query()
-    {
-        return $this->view(['name' => 'ms']);
-    }
 
 }
