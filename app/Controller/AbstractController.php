@@ -78,7 +78,7 @@ abstract class AbstractController
             $view_path = $name;
         }
 
-//        var_export($view_path);
+        var_export($view_path);
         return view($view_path, $params);
     }
 }
