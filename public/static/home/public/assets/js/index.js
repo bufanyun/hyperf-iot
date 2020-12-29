@@ -1044,7 +1044,7 @@ $(function () {
     $('#go_notice').click(function () {
         // console.log('this.attr("data-load"):'+$(this).attr("data-load"));
         $('#protocol-desc .protocol-desc').load('http://'+$(this).attr("data-load")).css('maxHeight', '22rem');
-        // $('#protocol-desc .protocol-title').empty().text(protocol_title_title);
+        $('#protocol-desc .protocol-title').empty().text($(this).attr("data-title"));
         $('#protocol-desc .content>.protocol').hide();
         $('#protocol-desc,.mask').show();
         $('html, body').addClass('no-scroll');

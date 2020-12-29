@@ -81,27 +81,27 @@
         <p class="protocol agree" id="protocol">
             <i class="protocol-radio"></i>我已阅读并同意
                 @if ($product->cid === 1)
-                <a href="javascript:;" id="go_notice"
+                <a href="javascript:;" id="go_notice" data-title="信息收集和使用规则公告"
                 data-load="{{$interfaceDomain}}/home/spread/com-collection-announcement?id={{$product->id}}">《
                 信息收集和使用规则公告 》
 
                 @elseif ($product->cid === 2)
-                <a href="javascript:;" id="go_notice"
+                <a href="javascript:;" id="go_notice" data-title="客户信息收集、入网服务协议"
                 data-load="{{$interfaceDomain}}/home/spread/com-collection-announcement?id={{$product->id}}">《
                 客户信息收集、入网服务协议 》
 
                 @elseif ($product->cid === 3)
-                <a href="javascript:;" id="go_notice"
+                <a href="javascript:;" id="go_notice" data-title="移动客户入网服务协议"
                 data-load="{{$interfaceDomain}}/home/spread/com-collection-announcement?id={{$product->id}}">《
                 移动客户入网服务协议 》
 
                 @elseif ($product->cid === 4)
-                <a href="javascript:;" id="go_notice"
+                <a href="javascript:;" id="go_notice" data-title="设备客户入网服务协议"
                 data-load="{{$interfaceDomain}}/home/spread/com-collection-announcement?id={{$product->id}}">《
                 设备客户入网服务协议 》
 
                 @else
-                <a href="javascript:;" id="go_notice"
+                <a href="javascript:;" id="go_notice" data-title="信息收集和使用规则公告"
                 data-load="{{$interfaceDomain}}/home/spread/com-collection-announcement?id={{$product->id}}">《
                 信息收集和使用规则公告 》
                 @endif

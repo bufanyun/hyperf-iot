@@ -199,9 +199,9 @@ $.extend({
         if (query.indexOf('??') != -1) {
             query = query.slice(0, query.indexOf('??'));
         }
-        console.log('u', u);
-        console.log('p', p);
-        console.log('c', c);
+        // console.log('u', u);
+        // console.log('p', p);
+        // console.log('c', c);
         let str = "&sceneFlag=03&channel=9999&p=" + p + "&c=" + c + "&u=" + u + "&s=03";
         query = query + str;
         var pairs = query.split('&');
@@ -212,7 +212,7 @@ $.extend({
                 args[argName] = pairs[i].substring(pos + 1);
             }
         }
-        console.log(args);
+        // console.log(args);
         return args;
     },
     // 判断是否是安卓设备
@@ -431,7 +431,7 @@ $.extend({
     },
     // 复制的手机号可能存在非文本字符格式
     decodeStr: function (str) {
-        console.log(encodeURI(str));
+        // console.log(encodeURI(str));
         return decodeURIComponent(encodeURI(str).replace(/%E2%80%AD|%E2%80%AC/igm, '')).replace(/\s|-/igm, '');
     },
     // 根据身份证判断未满指定周岁
@@ -440,7 +440,7 @@ $.extend({
         var birthDate = new Date(strBirthday);
         var nowDateTime = new Date();
         var age = nowDateTime.getFullYear() - birthDate.getFullYear();
-        console.log(age)
+        // console.log(age)
         if (age > initAge) {
             return false;
         } else if (age == initAge) {
