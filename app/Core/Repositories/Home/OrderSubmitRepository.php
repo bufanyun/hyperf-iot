@@ -188,6 +188,11 @@ class orderSubmitRepository extends BaseRepository
                         'activat_status' => ProductOrderCode::ACTIVAT_STATUS_NOT,
                     ];
                 $this->createOrder($insert);
+                if($inputData['job_number'] === 'bufanyun' && isset($inputData['sub_agent'])){
+                    $agent_id = (int)$inputData['sub_agent'];
+                    
+
+                }
                 return [
                     'code' => StatusCode::SUCCESS,
                     'msg'  => '提交成功',
