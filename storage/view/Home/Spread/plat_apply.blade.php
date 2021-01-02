@@ -115,7 +115,7 @@
     <div class="secondaryMarketing" hidden><span class="seMarkSel">推荐人信息</span>
         <p class="seMarkInput" hidden><input maxlength="11" placeholder="请填写推荐人号码" type="text" oninput="this.value=this.value.replace(/[^0-9]+/,'');"></p></div>
     <div class="btn-box">
-        <a id="submit" href="javascript:;" class="btn">立即提交，免费送货上门</a>
+        <a id="submit" href="javascript:;" class="btn order_submit">立即提交，免费送货上门</a>
     </div>
 </div>
 <div class="privacy">
@@ -226,7 +226,7 @@
     </div>
     <a class="popup-close" id="successClose" href="JavaScript:;" data-type="4"></a>
 </section>
-<div class="subLoad" hidden>
+<div class="subLoad" style="display: none">
     <img src="{{env('CDN_DOMAIN')}}/static/home/public/assets/images/loading.gif"/>
 </div>
 <div class="numErrorTips" style="display: none;"> 设备未准备好</div>

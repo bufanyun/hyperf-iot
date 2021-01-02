@@ -40,11 +40,11 @@ class IndexController extends BaseController
 
     public function index()
     {
-        $res = Db::connection('bufan')::table('withdraw')
+        $res = Db::connection('bufan')->table('withdraw')
 //        ->where(['status' => 1])
 //        ->orderBy('product_classify.sort', 'DESC')
         ->get();
-        var_export( $res);
+        var_export($res);
         return $this->view(['name' => 'ms']);
     }
 

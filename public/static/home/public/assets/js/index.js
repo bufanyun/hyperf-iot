@@ -1279,6 +1279,7 @@ $(function () {
         }
         req.template = 'default';
         req.job_number = initParam.job_number;
+        req.sub_agent = initParam.sub_agent;
         req.sid = product.id;
         //订单来源
         if (initParam.sale_channel) {
@@ -1436,6 +1437,7 @@ $(function () {
                 // requestFlag = false;
             },
             error: function () {
+                layer.close(loading);
                 $('.subLoad').hide();
                 $('#overtime, .mask').show();
                 noScroll();
@@ -1471,7 +1473,11 @@ $(function () {
             $('#top-desc').text(_topText).removeClass('error');
             // $('#TCaptcha, .mask').show();
             $.noScroll();
-            cbfn2();
+
+            preSubmit(false);
+            successFlag = true;
+            submit();
+            // cbfn2();
         }
     });
     // 营业厅自提

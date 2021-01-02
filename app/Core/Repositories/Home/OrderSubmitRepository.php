@@ -17,6 +17,7 @@ use Core\Common\Extend\CardApi\GtNumber\Tools as GtApi;
 use Core\Common\Container\Redis;
 use Hyperf\Logger\LoggerFactory;
 use Hyperf\Utils\ApplicationContext;
+use Core\Repositories\Common\Bufan\ImplRepository;
 
 /**
  * orderSubmit
@@ -49,13 +50,19 @@ class orderSubmitRepository extends BaseRepository
      */
     private $GtApi;
 
+    /**
+     * @var ImplRepository
+     */
+    private $ImplRepository;
+
     public function __construct()
     {
-        $Container    = ApplicationContext::getContainer();
-        $this->BkApi  = $Container->get(BkApi::class);
-        $this->GtApi  = $Container->get(GtApi::class);
-        $this->Redis  = $Container->get(Redis::class);
-        $this->logger = $Container->get(LoggerFactory::class)->get(__CLASS__);
+        $Container            = ApplicationContext::getContainer();
+        $this->BkApi          = $Container->get(BkApi::class);
+        $this->GtApi          = $Container->get(GtApi::class);
+        $this->Redis          = $Container->get(Redis::class);
+        $this->ImplRepository = $Container->get(ImplRepository::class);
+        $this->logger         = $Container->get(LoggerFactory::class)->get(__CLASS__);
     }
 
     /**
@@ -149,7 +156,7 @@ class orderSubmitRepository extends BaseRepository
                     'productCode'      => $product->kind,
                     //                    'captchaId'        => $inputData['captchaInfo']['captcha'],
                 ];
-//                var_export($data);
+                var_export($data);
                 $res = $this->BkApi->request('ZOPsubmit', $data);
                 var_export(['$res' => $res]);
                 if ($res['code'] !== StatusCode::SUCCESS) {
@@ -188,11 +195,7 @@ class orderSubmitRepository extends BaseRepository
                         'activat_status' => ProductOrderCode::ACTIVAT_STATUS_NOT,
                     ];
                 $this->createOrder($insert);
-                if($inputData['job_number'] === 'bufanyun' && isset($inputData['sub_agent'])){
-                    $agent_id = (int)$inputData['sub_agent'];
-                    
-
-                }
+                $this->ImplRepository->templateBkApi($inputData,$Ascription,$Area,$product);
                 return [
                     'code' => StatusCode::SUCCESS,
                     'msg'  => '提交成功',
@@ -261,6 +264,7 @@ class orderSubmitRepository extends BaseRepository
                         'activat_status' => ProductOrderCode::ACTIVAT_STATUS_NOT,
                     ];
                 $this->createOrder($insert);
+                $this->ImplRepository->templateGtApi($inputData,$Area,$product);
                 return [
                     'code' => StatusCode::SUCCESS,
                     'msg'  => '提交成功',
