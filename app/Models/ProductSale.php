@@ -3,6 +3,11 @@
 declare (strict_types=1);
 namespace App\Models;
 
+use App\Models\ProductClassify;
+use Core\Common\Container\Redis;
+use Hyperf\Di\Annotation\Inject;
+
+
 /**
  * @property int $id 
  * @property int $admin_id 
@@ -28,6 +33,12 @@ namespace App\Models;
 class ProductSale extends BaseModel
 {
     /**
+     * @Inject()
+     * @var ProductClassify
+     */
+    private $ProductClassify;
+
+    /**
      * The table associated with the model.
      *
      * @var string
@@ -46,9 +57,14 @@ class ProductSale extends BaseModel
      */
     protected $casts = ['id' => 'integer', 'admin_id' => 'integer', 'pid' => 'integer', 'cid' => 'integer', 'access' => 'integer', 'price' => 'float', 'recommend' => 'integer', 'stocks' => 'integer', 'sales' => 'integer', 'sort' => 'integer', 'status' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
 
+    protected $appends = [
+        'cid_name',
+    ];
+
     public function getCidNameAttribute() : string
     {
-        return $this->attributes['cid_name'] = $this->attributes['price'] < 0.01 ? '免费' : '￥ '.sprintf("%.2f",$this->attributes['price']);
+        var_export(['qwe' => arraySearchColumn($this->ProductClassify->getList(), (string)$this->attributes['cid'], 'name')]);
+        return arraySearchColumn($this->ProductClassify->getList(), (string)$this->attributes['cid'], 'name');
     }
     public function getPriceAttribute() : string
     {

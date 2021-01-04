@@ -1242,3 +1242,34 @@ if(!function_exists('str_rand')) {
         return $string;
     }
 }
+
+if(!function_exists('arraySearchColumn')) {
+    /**
+     * 多维数组查找，不选择返回字段时直接返回找到的索引key
+     * arraySearchColumn
+     * @param  array  $array
+     * @param  string  $key
+     * @param  string  $value
+     * @param  string  $field
+     *
+     * @return array|bool|false|int|string
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/04 15:20
+     */
+    function arraySearchColumn(array $array, string $key, string $value, string $field = '')
+    {
+        var_export([$array, $key, $value,  $field]);
+        if(empty($array)){
+            return $field=='' ? '' : [];
+        }
+        $keys = array_column($array, $key);
+        $i = array_search($value, $keys);
+        if(!isset($array[$i]) || empty($array[$i])){
+            return $field=='' ? '' : [];
+        }
+        if($field==''){
+            return $i;
+        }
+        return isset($array[$i][$field]) ? $array[$i][$field] : '';
+    }
+}

@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 namespace Core\Common\Extend\Tools;
 
 use App\Constants\StatusCode;

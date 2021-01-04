@@ -22,22 +22,25 @@ class RedisCode extends AbstractConstants
     /**
      * @Message("选号哈希，缓存归属地号单60秒，防止客户重复请求")
      */
-    const SELECT_PHONES = 'select_phones:';
-
+    public const SELECT_PHONES = 'select_phones:';
+    /**
+     * @Message("产品分类列表")
+     */
+    public const CLASSIFY_LIST = 'classify_list';
     /**
      * @Message("设备信息_*")
      */
-    const DEVICE = 'device_';
+    public const DEVICE = 'device_';
 
     /**
      * @Message("锁前缀")
      */
-    const LOCK = 'lock:';
+    public const LOCK = 'lock:';
 
     /**
      * @Message("掉线通知_*")
      */
-    const DROPNOTICE = 'dropnotice_';
+    public const DROPNOTICE = 'dropnotice_';
 
 
 
