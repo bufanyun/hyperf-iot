@@ -1258,7 +1258,6 @@ if(!function_exists('arraySearchColumn')) {
      */
     function arraySearchColumn(array $array, string $key, string $value, string $field = '')
     {
-        var_export([$array, $key, $value,  $field]);
         if(empty($array)){
             return $field=='' ? '' : [];
         }

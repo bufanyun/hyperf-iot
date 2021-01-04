@@ -8,16 +8,16 @@ use App\Constants\RedisCode;
 use Hyperf\Di\Annotation\Inject;
 
 /**
- * @property int $id 
- * @property int $admin_id 
- * @property string $name 
- * @property string $icon 
- * @property string $title 
- * @property int $sort 
- * @property int $status 
- * @property \Carbon\Carbon $created_at 
- * @property \Carbon\Carbon $updated_at 
- * @property string $deleted_at 
+ * @property int $id
+ * @property int $admin_id
+ * @property string $name
+ * @property string $icon
+ * @property string $title
+ * @property int $sort
+ * @property int $status
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property string $deleted_at
  */
 class ProductClassify extends BaseModel
 {
@@ -59,9 +59,9 @@ class ProductClassify extends BaseModel
         if ($res = $this->Redis->get($key)) {
             return json_decode($res, true);
         }
-        $res = $this->query()->where(['status' => 1])->orderBy($this->table . '.sort', 'orderBy')->get();
+        $res = $this->query()->where(['status' => 1])->orderBy($this->table .'.sort', 'orderBy')->get();
         $res = $res ? $res->toArray() : [];
-        if (!empty($res)) {
+        if ( ! empty($res)) {
             $this->Redis->set($key, json_encode($res), 3600);
         }
         return $res;

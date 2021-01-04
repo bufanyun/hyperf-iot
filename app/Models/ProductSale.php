@@ -49,22 +49,31 @@ class ProductSale extends BaseModel
      *
      * @var array
      */
-    protected $fillable = ['id', 'admin_id', 'pid', 'cid', 'access', 'kind_name', 'name', 'titile', 'price', 'icon', 'recommend', 'stocks', 'sales', 'penalty', 'first_desc', 'sort', 'status', 'created_at', 'updated_at', 'deleted_at'];
+    protected $fillable = ['id', 'admin_id', 'pid', 'cid', 'access', 'kind_name', 'name', 'titile', 'price', 'icon', 'recommend', 'stocks', 'sales', 'penalty', 'first_desc', 'sort', 'status', 'created_at', 'updated_at', 'deleted_at','commission'];
     /**
      * The attributes that should be cast to native types.
      *
      * @var array
      */
-    protected $casts = ['id' => 'integer', 'admin_id' => 'integer', 'pid' => 'integer', 'cid' => 'integer', 'access' => 'integer', 'price' => 'float', 'recommend' => 'integer', 'stocks' => 'integer', 'sales' => 'integer', 'sort' => 'integer', 'status' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
+    protected $casts = ['id' => 'integer', 'admin_id' => 'integer', 'pid' => 'integer', 'commission' => 'integer',  'cid' => 'integer', 'access' => 'integer', 'price' => 'float', 'recommend' => 'integer', 'stocks' => 'integer', 'sales' => 'integer', 'sort' => 'integer', 'status' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
 
     protected $appends = [
         'cid_name',
     ];
-
+    public function getKindNameAttribute() : string
+    {
+//        echo "\r\n";
+//       if(!isset($this->attributes['pid'])){
+//           var_export(['异常' => $this->attributes]);
+//           return '';
+//       }
+//       $value = $this->attributes['pid']==0 ? $this->attributes['kind_name'] : $this->getPidKindName($this->attributes['pid']);
+       var_export(['正常' => $this->attributes]);
+       return $value = '';
+    }
     public function getCidNameAttribute() : string
     {
-        var_export(['qwe' => arraySearchColumn($this->ProductClassify->getList(), (string)$this->attributes['cid'], 'name')]);
-        return arraySearchColumn($this->ProductClassify->getList(), (string)$this->attributes['cid'], 'name');
+        return arraySearchColumn($this->ProductClassify->getList(), 'id', (string)$this->attributes['cid'], 'name');
     }
     public function getPriceAttribute() : string
     {
@@ -93,5 +102,20 @@ class ProductSale extends BaseModel
     {
         //$value 代表字段的值
         //        $this->attributes['title'] = empty($value) ? '0' : $value;
+    }
+
+    /**
+     * 获取父类卡种名称
+     * getPidKindName
+     * @param  int  $pid
+     *
+     * @return string
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/04 15:47
+     */
+    public function getPidKindName(int $pid) : string
+    {
+       $name = $this->query()->where(['id' => $pid])->value('kind_name');
+       return isset($name) ? (string)$name : '';
     }
 }
