@@ -63,14 +63,8 @@ class ProductSale extends BaseModel
     ];
     public function getPidNameAttribute() : string
     {
-        echo "\r\n";
-       if(!isset($this->attributes['pid'])){
-           var_export(['异常' => $this->attributes]);
-           return '';
-       }
-       $value = $this->attributes['pid']==0 ? $this->attributes['kind_name'] : $this->getPidKindName($this->attributes['pid']);
-       var_export(['正常' => $this->attributes]);
-       return $value;
+        $v= $this->attributes['pid']>0 ? $this->getPidKindName($this->attributes['pid']) : $this->attributes['kind_name'];
+        return $v;
     }
     public function getCidNameAttribute() : string
     {

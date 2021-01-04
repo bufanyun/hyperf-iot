@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
 namespace Core\Common\Extend\CardApi\Bk;
 
 use Core\Common\Extend\CardApi\Bk\Method;
 use Core\Common\Extend\CardApi\Bk\Aes;
 use Core\Common\Extend\CardApi\Bk\districtInspection;
-use Core\Common\Extend\Tools\Curl;
+use Core\Common\Extend\Helpers\CurlHelpers;
 use Hyperf\Di\Annotation\Inject;
 use App\Constants\StatusCode;
 use Hyperf\Utils\ApplicationContext;
@@ -25,7 +26,7 @@ class Tools
      */
     private $districtInspection;
 
-    private ?Curl $Curl = null;
+    private ?CurlHelpers $Curl = null;
 
     public $config = [
         'appID'  => '',
@@ -40,7 +41,7 @@ class Tools
             'AES'              => env('BK_CONFIG_AES', ''),
             'development_code' => env('BK_CONFIG_DEVELOPMENT_CODE', ''),
         ]);
-        $this->Curl   = (ApplicationContext::getContainer())->get(Curl::class);
+        $this->Curl   = (ApplicationContext::getContainer())->get(CurlHelpers::class);
     }
 
     /**

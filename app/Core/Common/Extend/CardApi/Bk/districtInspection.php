@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 namespace Core\Common\Extend\CardApi\Bk;
 
 use Hyperf\DbConnection\Db;

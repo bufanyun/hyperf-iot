@@ -1,7 +1,7 @@
 <?php
 
 declare(strict_types=1);
-namespace Core\Common\Extend\Tools;
+namespace Core\Common\Extend\Helpers;
 
 use App\Constants\StatusCode;
 use App\Exception\BusinessException;
@@ -15,7 +15,7 @@ use Swoole\Coroutine\Http\Client;
  * author MengShuai <133814250@qq.com>
  * date 2020/12/26 23:11
  */
-class CUrl
+class CurlHelpers
 {
     /**
      * 最大重试次数

@@ -60,7 +60,6 @@ class PassportController extends BaseController
                 'password.required' => '密码不能为空',
             ]
         );
-        var_export($inputData);
         if ($validator->fails()){
             $errorMessage = $validator->errors()->first();
             throw new BusinessException(StatusCode::ERR_EXCEPTION_USER,$errorMessage);

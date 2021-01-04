@@ -27,7 +27,7 @@ use Core\Repositories\Common\Bufan\ImplRepository;
  *
  * @property \Core\Services\AttachmentService $attachmentService
  */
-class orderSubmitRepository extends BaseRepository
+class OrderSubmitRepository extends BaseRepository
 {
 
     /**

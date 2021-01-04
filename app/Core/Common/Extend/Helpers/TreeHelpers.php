@@ -9,15 +9,15 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
-namespace Core\Common\Extend\Tools;
+namespace Core\Common\Extend\Helpers;
 
 
 /**
- * Class Tree
+ * Class TreeHelpers
  * 通用的树型类
- * @package Core\Common\Extend\Tools
+ * @package Core\Common\Extend\Helpers
  */
-class Tree
+class TreeHelpers
 {
     protected static $instance;
     //默认配置
@@ -48,7 +48,7 @@ class Tree
      * 初始化
      * @access public
      * @param array $options 参数
-     * @return Tree
+     * @return TreeHelpers
      */
     public static function instance($options = [])
     {
@@ -73,7 +73,7 @@ class Tree
      *      )
      * @param string $pidname 父字段名称
      * @param string $nbsp    空格占位符
-     * @return Tree
+     * @return TreeHelpers
      */
     public function init($arr = [], $pidname = null, $nbsp = null)
     {

@@ -1,11 +1,9 @@
 <?php
 
+declare(strict_types=1);
 namespace Core\Common\Extend\CardApi\GtNumber;
 
-use Core\Common\Extend\CardApi\Bk\Method;
-use Core\Common\Extend\CardApi\Bk\Aes;
-use Core\Common\Extend\CardApi\Bk\districtInspection;
-use Core\Common\Extend\Tools\Curl;
+use Core\Common\Extend\Helpers\CurlHelpers;
 use App\Constants\StatusCode;
 use Hyperf\Utils\ApplicationContext;
 
@@ -18,7 +16,7 @@ class Tools
 {
     private array $config = [];
 
-    private ?Curl $Curl = null;
+    private ?CurlHelpers $Curl = null;
 
     public function __construct()
     {
@@ -27,7 +25,7 @@ class Tools
             'api_domian' => env('GT_NUMBER_PLACE_ORDER_URL'),  //下单
             'api_chadan' => env('GT_NUMBER_CHECK_LIST_URL'),  //订单查询
         ];
-        $this->Curl   = (ApplicationContext::getContainer())->get(Curl::class);
+        $this->Curl   = (ApplicationContext::getContainer())->get(CurlHelpers::class);
     }
 
     /**
