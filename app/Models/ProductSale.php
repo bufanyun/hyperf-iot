@@ -45,6 +45,15 @@ class ProductSale extends BaseModel
      * @var array
      */
     protected $casts = ['id' => 'integer', 'admin_id' => 'integer', 'pid' => 'integer', 'cid' => 'integer', 'access' => 'integer', 'price' => 'float', 'recommend' => 'integer', 'stocks' => 'integer', 'sales' => 'integer', 'sort' => 'integer', 'status' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
+
+    public function getCidNameAttribute() : string
+    {
+        return $this->attributes['cid_name'] = $this->attributes['price'] < 0.01 ? '免费' : '￥ '.sprintf("%.2f",$this->attributes['price']);
+    }
+    public function getPriceAttribute() : string
+    {
+        return $this->attributes['price'] = $this->attributes['price'] < 0.01 ? '免费' : '￥ '.sprintf("%.2f",$this->attributes['price']);
+    }
     public function getStatusAttribute() : bool
     {
         return $this->attributes['status'] = $this->attributes['status'] ? true : false;
