@@ -25,6 +25,7 @@ use App\Middleware\LoginAuthMiddleware;
 use App\Middleware\AdminAuthMiddleware;
 use Hyperf\HttpServer\Annotation\RequestMapping;
 use App\Models\User;
+use Hyperf\Di\Annotation\Inject;
 
 /**
  * UserController
@@ -118,26 +119,26 @@ class UserController extends BaseController
         return $this->success(['switch' => $update]);
     }
 
-    /**
-     * index
-     * 用户列表，用户管理
-     * User：YM
-     * Date：2020/2/5
-     * Time：下午4:05
-     * @return \Psr\Http\Message\ResponseInterface
-     *
-     * @GetMapping(path="list")
-     */
-    public function index()
-    {
-        $reqParam = $this->request->all();
-        $list = $this->userRepo->getUserList(filterParams($reqParam));
-        $data = [
-            'pages' => $list['pages'],
-            'list' => $list['data'],
-        ];
-        return $this->success($data);
-    }
+//    /**
+//     * index
+//     * 用户列表，用户管理
+//     * User：YM
+//     * Date：2020/2/5
+//     * Time：下午4:05
+//     * @return \Psr\Http\Message\ResponseInterface
+//     *
+//     * @GetMapping(path="list")
+//     */
+//    public function index()
+//    {
+//        $reqParam = $this->request->all();
+//        $list = $this->userRepo->getUserList(filterParams($reqParam));
+//        $data = [
+//            'pages' => $list['pages'],
+//            'list' => $list['data'],
+//        ];
+//        return $this->success($data);
+//    }
 
 
     /**

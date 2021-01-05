@@ -3,6 +3,8 @@
 declare (strict_types=1);
 namespace App\Models;
 
+use App\Constants\UserCode;
+
 /**
  * @property string $id 
  * @property string $mobile 
@@ -48,7 +50,40 @@ class User extends BaseModel
      *
      * @var array
      */
-    protected $searchFields = ['id', 'mobile', 'username'];
+    protected $searchFields = ['id', 'mobile', 'username', 'nickname', 'job_number', 'admin_id'];
+
+    protected $appends = [
+        'admin_name'
+    ];
+
+    public function getLevelAttribute() : string
+    {
+        $level = UserCode::getLevelMap()[$this->attributes['level']];
+        return isset($level) ? $level : '未知';
+    }
+    public function getAdminNameAttribute() : string
+    {
+        return $this->getAdminName((string)$this->attributes['admin_id']);
+    }
+
+    /**
+     * 获取指定用户用户名
+     * getAdminName
+     * @param  string  $id
+     *
+     * @return string
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/05 14:08
+     */
+    public function getAdminName(string $id) : string
+    {
+        if(empty($id)){
+            return '平台';
+        }
+        $name = $this->query()->where(['id' => $id])->value('username');
+        return isset($name) ? (string)$name : '';
+    }
+
     /**
      * getList
      * 获取系统用户列表
