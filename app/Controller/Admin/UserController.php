@@ -26,6 +26,7 @@ use App\Middleware\AdminAuthMiddleware;
 use Hyperf\HttpServer\Annotation\RequestMapping;
 use App\Models\User;
 use Hyperf\Di\Annotation\Inject;
+use Core\Common\Container\Auth;
 
 /**
  * UserController
@@ -46,7 +47,11 @@ use Hyperf\Di\Annotation\Inject;
  */
 class UserController extends BaseController
 {
-
+    /**
+     * @Inject()
+     * @var Auth
+     */
+    private $auth;
 
     /**
      *
@@ -168,12 +173,12 @@ class UserController extends BaseController
      */
     public function Info()
     {
+        $currUser = $this->auth->check();
         return $this->success([
             'roles' => ['admin'],
-            'introduction' => 'I am a super administrator',
-            'avatar' =>   'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-            'name' =>  'Super Admin',
-        ]);
+            'introduction' => '千里号卡，正规卡推广系统，平台源码5000，提供渠道接口对接，有意者联系：15303830571',
+            'name' =>  $currUser['nickname'],
+        ]+$currUser);
     }
 
 
