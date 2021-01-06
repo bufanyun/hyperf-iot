@@ -26,7 +26,7 @@ hyperf-iot基于Hyperf v2.1、VUE+Prime Pro开发的前后分离管理后台，�
 ![列表](https://images.gitee.com/uploads/images/2021/0106/162247_3a970594_5102272.png "屏幕截图.png")
 
 ## 注
-本项目目前还在持续开发中，遇到问题请联系作者！
+本项目还在持续开发中，遇到问题请联系作者！
 
 ## 环境要求
 

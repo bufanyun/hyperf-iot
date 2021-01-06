@@ -15,13 +15,11 @@ namespace App\Models;
  * @property string $pay_ip 
  * @property string $price 
  * @property int $status 
- * @property string $auto_msg 
- * @property string $admin_msg 
+ * @property string $auto_msg
  * @property string $province 
  * @property string $city 
  * @property string $district 
- * @property string $address 
- * @property string $stay 
+ * @property string $address
  * @property string $name 
  * @property string $phone 
  * @property string $sim_identity 
@@ -53,7 +51,7 @@ class ProductOrder extends BaseModel
      *
      * @var array
      */
-    protected $fillable = ['id', 'sid', 'admin_id', 'dock_order_id', 'order_id', 'pay_id', 'pay_type', 'pay_status', 'pay_ip', 'price', 'status', 'auto_msg', 'admin_msg', 'province', 'city', 'district', 'address', 'stay', 'name', 'phone', 'sim_identity', 'sim_hold', 'sim_just', 'sim_back', 'express', 'express_no', 'app_province', 'app_city', 'app_number', 'activat_status', 'sale_channel', 'source', 'created_at', 'updated_at', 'deleted_at'];
+    protected $fillable = ['id', 'sid', 'admin_id', 'dock_order_id', 'order_id', 'pay_id', 'pay_type', 'pay_status', 'pay_ip', 'price', 'status', 'auto_msg', 'province', 'city', 'district', 'address','name', 'phone', 'sim_identity', 'sim_hold', 'sim_just', 'sim_back', 'express', 'express_no', 'app_province', 'app_city', 'app_number', 'activat_status', 'sale_channel', 'source', 'created_at', 'updated_at', 'deleted_at'];
     /**
      * The attributes that should be cast to native types.
      *

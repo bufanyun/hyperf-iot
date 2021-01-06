@@ -23,6 +23,7 @@ use function Hyperf\ViewEngine\view;
 use Hyperf\HttpServer\Router\Dispatched;
 use Hyperf\Utils\ApplicationContext;
 use Core\Common\Container\Auth;
+use Hyperf\DbConnection\Db;
 
 abstract class AbstractController
 {
@@ -91,6 +92,43 @@ abstract class AbstractController
 
 //        var_export("模板路径：" . $view_path . "\r\n");
         return view($view_path, $params);
+    }
+
+    /**
+     * 获取数据限制条件
+     * getDataLimitField
+     * @param \App\Models\BaseModel|null $model
+     * @return array
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/06 17:04
+     */
+    protected function getDataLimitField($model = null)
+    {
+        $admin_id = $this->auth->check(false);
+        $field    = 'admin_id';
+        if (env('SUPER_ADMIN') === $admin_id) {
+            return [];
+        }
+        if (isset($model) && ($model instanceof \App\Models\BaseModel)) {
+            $field = $model->getTable() . '.' . $field;
+        }
+        return [$field => $admin_id];
+    }
+
+    /**
+     * 判断管理员是否是超管
+     * isSuperAdmin
+     * @param null $admin_id
+     * @return bool
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/06 17:16
+     */
+    protected function isSuperAdmin($admin_id = null)
+    {
+        if (isset($admin_id)) {
+            return (env('SUPER_ADMIN') === $admin_id) ?? false;
+        }
+        return (env('SUPER_ADMIN') === $this->auth->check(false)) ?? false;
     }
 
     /**
