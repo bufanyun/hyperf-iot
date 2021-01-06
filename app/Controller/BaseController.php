@@ -81,12 +81,6 @@ class BaseController extends AbstractController
             $filename = BASE_PATH."/app/Core/Repositories/{$key}.php";
             $className = "Core\\Repositories\\{$key}";
         }
-//        var_export([
-//            '$key' => $key,
-//            '$module' => $module,
-//            '$filename' => $filename,
-//            'file_exists($filename)' => file_exists($filename),
-//        ]);
         if (file_exists($filename)) {
             return $this->container->get($className);
         } else {
@@ -126,7 +120,6 @@ class BaseController extends AbstractController
      */
     public function success($data = [], string $msg = null)
     {
-
         return $this->response->success($data, $msg);
 
         $msg = $msg ?? StatusCode::getMessage(StatusCode::SUCCESS);
@@ -152,7 +145,6 @@ class BaseController extends AbstractController
      */
     public function error($code = StatusCode::ERR_EXCEPTION, $msg = null)
     {
-
         return $this->response->error($code, $msg);
         $msg = $msg ?? StatusCode::getMessage(StatusCode::ERR_EXCEPTION);
         $data = ['code' => $code, 'msg' => $msg, 'data' => []];
@@ -164,7 +156,4 @@ class BaseController extends AbstractController
         $logger->error($msg, getLogArguments($executionTime, $rbs));
         return $response;
     }
-
-
-
 }

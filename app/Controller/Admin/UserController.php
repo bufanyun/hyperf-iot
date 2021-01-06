@@ -1,19 +1,8 @@
 <?php
 
 declare(strict_types=1);
-/**
- * Created by PhpStorm.
- *​
- * UserController.php
- *
- * User：YM
- * Date：2020/2/5
- * Time：下午4:04
- */
-
 
 namespace App\Controller\Admin;
-
 
 use App\Controller\BaseController;
 use Hyperf\HttpServer\Annotation\Controller;
@@ -26,7 +15,7 @@ use App\Middleware\AdminAuthMiddleware;
 use Hyperf\HttpServer\Annotation\RequestMapping;
 use App\Models\User;
 use Hyperf\Di\Annotation\Inject;
-use Core\Common\Container\Auth;
+
 
 /**
  * UserController
@@ -48,12 +37,6 @@ use Core\Common\Container\Auth;
 class UserController extends BaseController
 {
     /**
-     * @Inject()
-     * @var Auth
-     */
-    private $auth;
-
-    /**
      *
      * @Inject()
      * @var User
@@ -69,7 +52,7 @@ class UserController extends BaseController
     public function list()
     {
         $reqParam = $this->request->all();
-        $query = $this->model->query();
+        $query    = $this->model->query();
 
         [$querys, $sort, $order, $offset, $limit] = $this->model->buildTableParams($reqParam, $query);
         $where = []; //额外条件
@@ -87,13 +70,13 @@ class UserController extends BaseController
         //        var_export(Db::getQueryLog());
 
         $list = $list ? $list->toArray() : [];
-        if(!empty($list)){
+        if (!empty($list)) {
             foreach ($list as $k => $v) {
                 //                $list[$k]['status'] = $v['status'] === 0 ? false : true;
             }
             unset($v);
         }
-        $result = array("total" => $total, "rows" => $list);
+        $result = ["total" => $total, "rows" => $list];
         return $this->success($result);
     }
 
@@ -106,11 +89,11 @@ class UserController extends BaseController
     public function switch()
     {
         $reqParam = $this->request->all();
-        if ( ! isset($reqParam['key'])) {
+        if (!isset($reqParam['key'])) {
             return $this->error(StatusCode::ERR_EXCEPTION, '缺少更新开关的参数');
         }
         $primaryKey = $this->model->getKeyName();
-        if ( ! isset($reqParam[$primaryKey])) {
+        if (!isset($reqParam[$primaryKey])) {
             return $this->error(StatusCode::ERR_EXCEPTION, '缺少更新开关的条件');
         }
         $query = $this->model->query();
@@ -160,7 +143,7 @@ class UserController extends BaseController
     public function store()
     {
         $reqParam = $this->request->all();
-        $id = $this->userRepo->saveUser($reqParam);
+        $id       = $this->userRepo->saveUser($reqParam);
 
         return $this->success($id);
     }
@@ -171,14 +154,16 @@ class UserController extends BaseController
      *
      * @GetMapping(path="info")
      */
-    public function Info()
+    public function info()
     {
-        $currUser = $this->auth->check();
+        $currUser        = $this->auth->check();
+        $permission_menu = [['test' => 6]];   //权限菜单
         return $this->success([
-            'roles' => ['admin'],
-            'introduction' => '千里号卡，正规卡推广系统，平台源码5000，提供渠道接口对接，有意者联系：15303830571',
-            'name' =>  $currUser['nickname'],
-        ]+$currUser);
+                'roles'           => ['admin'],
+                'introduction'    => '千里号卡，正规卡推广系统，平台源码5000，提供渠道接口对接，有意者联系：15303830571',
+                'name'            => $currUser['nickname'],
+                'permission_menu' => $permission_menu,
+            ] + $currUser);
     }
 
 
@@ -195,8 +180,8 @@ class UserController extends BaseController
     public function getInfo()
     {
         $reqParam = $this->request->all();
-        $info = $this->userRepo->getInfo($reqParam['id']);
-        $data = [
+        $info     = $this->userRepo->getInfo($reqParam['id']);
+        $data     = [
             'info' => $info,
         ];
 

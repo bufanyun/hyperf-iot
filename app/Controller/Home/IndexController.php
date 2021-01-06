@@ -29,7 +29,6 @@ class IndexController extends BaseController
 {
 
 
-
     /**
      * index
      * 微信扫码设备
@@ -43,7 +42,7 @@ class IndexController extends BaseController
         $res = Db::connection('bufan')->table('withdraw')
 //        ->where(['status' => 1])
 //        ->orderBy('product_classify.sort', 'DESC')
-        ->get();
+            ->get();
         var_export($res);
         return $this->view(['name' => 'ms']);
     }
@@ -62,34 +61,34 @@ class IndexController extends BaseController
         $method = $this->request->input('method', 'AgentTrade/checkOrder', false);
         $params = [
             'method' => !$method ? 'AgentTrade/checkOrder' : $method,
-            'data'   => json_encode([
+            'data' => json_encode([
                 'test' => 1,
             ]),
         ];  //订单扫描
 
-        if($method == 'AgentTrade/addOrder') {
+        if ($method == 'AgentTrade/addOrder') {
             $params = [
                 'method' => $method,
-                'data'  => json_encode([
+                'data' => json_encode([
                     'client' => 'system',
                     'source' => 'tmt',
-                    'price'  => $this->request->input('price', '0.01'),
-                    'type'   => $this->request->input('type', '0'),
-                    'qrurl'  => 'https://qr.alipay.com/fkx10920stvogcastck55c5?t=1604627435932', //小辉
-                    'orderid'   => uniqid(),
+                    'price' => $this->request->input('price', '0.01'),
+                    'type' => $this->request->input('type', '0'),
+                    'qrurl' => 'https://qr.alipay.com/fkx10920stvogcastck55c5?t=1604627435932', //小辉
+                    'orderid' => uniqid(),
                     'device_id' => '868019047358743', //小米7 -2
                 ]),
             ];
         }
 
         $sign = config('payment_sign');
-        $host = 'ws://127.0.0.1:1888?' . $sign['key']  . "=" . encrypt($params, $sign['encryption']);
+        $host = 'ws://127.0.0.1:1888?' . $sign['key'] . "=" . encrypt($params, $sign['encryption']);
         $client = $this->clientFactory->create($host);
         /** @var Frame $msg */
         $msg = $client->recv(3)->data ?? null;
-        if ($msg == null){
+        if ($msg == null) {
             var_export(['$msg' => $msg]);
-            return $this->error(StatusCode::ERR_EXCEPTION,'获取信息失败-1');
+            return $this->error(StatusCode::ERR_EXCEPTION, '获取信息失败-1');
         }
         $result = json_decode($msg, true);
         if (isset($result['code']) && $result['code'] == 0) {

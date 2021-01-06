@@ -36,9 +36,9 @@ class ImplRepository extends BaseRepository
     /**
      * bk模版 -- 创建订单
      * templateBkApi
-     * @param array  $inputData
-     * @param array  $Ascription
-     * @param array  $Area
+     * @param array $inputData
+     * @param array $Ascription
+     * @param array $Area
      * @param object $product
      * author MengShuai <133814250@qq.com>
      * date 2021/01/02 21:54
@@ -71,16 +71,14 @@ class ImplRepository extends BaseRepository
     /**
      * gt模版 -- 创建订单
      * templateGtApi
-     * @param array  $inputData
-     * @param array  $Area
+     * @param array $inputData
+     * @param array $Area
      * @param object $product
      * author MengShuai <133814250@qq.com>
      * date 2021/01/02 22:26
      */
     public function templateGtApi(array $inputData, array $Area, object $product): void
     {
-
-        var_export($inputData);
         if ($inputData['job_number'] === 'bufanyun' && isset($inputData['sub_agent'])) {
             $agent_id = Db::connection('bufan')->table('admin')->where(['id' => (int)$inputData['sub_agent']])->exists() ? (int)$inputData['sub_agent'] : 1;
             $insert   = [
@@ -97,7 +95,6 @@ class ImplRepository extends BaseRepository
                 'address'     => $inputData['postInfo']['address'],
                 'addtime'     => time(),
             ];
-            var_export($insert );
             $this->createOrder($insert);
         }
     }

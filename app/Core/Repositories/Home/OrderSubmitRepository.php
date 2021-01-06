@@ -193,9 +193,10 @@ class OrderSubmitRepository extends BaseRepository
                         'created_at'     => date("Y-m-d H:i:s"),
                         'status'         => ProductOrderCode::STATUS_TO_EXAMINE,
                         'activat_status' => ProductOrderCode::ACTIVAT_STATUS_NOT,
+                        'pay_status'     => ProductOrderCode::PAY_STATUS_SUCCESSFUL,
                     ];
                 $this->createOrder($insert);
-                $this->ImplRepository->templateBkApi($inputData,$Ascription,$Area,$product);
+                $this->ImplRepository->templateBkApi($inputData, $Ascription, $Area, $product);
                 return [
                     'code' => StatusCode::SUCCESS,
                     'msg'  => '提交成功',
@@ -262,9 +263,10 @@ class OrderSubmitRepository extends BaseRepository
                         'created_at'     => date("Y-m-d H:i:s"),
                         'status'         => ProductOrderCode::STATUS_TO_EXAMINE,
                         'activat_status' => ProductOrderCode::ACTIVAT_STATUS_NOT,
+                        'pay_status'     => ProductOrderCode::PAY_STATUS_SUCCESSFUL,
                     ];
                 $this->createOrder($insert);
-                $this->ImplRepository->templateGtApi($inputData,$Area,$product);
+                $this->ImplRepository->templateGtApi($inputData, $Area, $product);
                 return [
                     'code' => StatusCode::SUCCESS,
                     'msg'  => '提交成功',

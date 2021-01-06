@@ -17,7 +17,7 @@ class Redis
 
     public function __construct()
     {
-        if($this->cacheInstance == null){
+        if ($this->cacheInstance == null) {
             $this->cacheInstance = $this->getCacheInstance();
         }
     }
@@ -26,10 +26,10 @@ class Redis
      * 获取缓存驱动实例
      * @return \Hyperf\Redis\Redis|mixed
      */
-    private function getCacheInstance() :? \Hyperf\Redis\Redis
+    private function getCacheInstance(): ?\Hyperf\Redis\Redis
     {
         $container = ApplicationContext::getContainer();
-        $redis = $container->get(\Hyperf\Redis\Redis::class);
+        $redis     = $container->get(\Hyperf\Redis\Redis::class);
         return $redis;
     }
 

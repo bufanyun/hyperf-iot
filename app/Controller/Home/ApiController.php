@@ -45,7 +45,6 @@ class ApiController extends BaseController
     private $Redis;
 
     /**
-     *
      * @Inject()
      * @var BkApi
      */

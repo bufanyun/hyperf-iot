@@ -61,10 +61,9 @@ class NotifyController extends BaseController
 
         $container = ApplicationContext::getContainer();
         $redis = $container->get(\Hyperf\Redis\Redis::class);
-        $redis->set('qwe',0);
+        $redis->set('qwe', 0);
 
-        return $this->response->json(['n'=>$row]);
-
+        return $this->response->json(['n' => $row]);
 
 
 //        return $row;
@@ -82,7 +81,6 @@ class NotifyController extends BaseController
 //            return $this->error($data);
 //        }
     }
-
 
 
     /**
@@ -103,12 +101,12 @@ class NotifyController extends BaseController
 
 
         $body = $this->request->getBody();
-        if($body){
+        if ($body) {
             $content = $body->getContents();
             parse_str($content, $inputData);
             $ret = $this->attachmentRepository->saveAttachment($inputData);
             return $this->success($ret);
-        }else{
+        } else {
             $data = ["state" => "fail"];
             return $this->error($data);
         }

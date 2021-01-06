@@ -22,6 +22,7 @@ use Hyperf\Validation\Contract\ValidatorFactoryInterface;
 use function Hyperf\ViewEngine\view;
 use Hyperf\HttpServer\Router\Dispatched;
 use Hyperf\Utils\ApplicationContext;
+use Core\Common\Container\Auth;
 
 abstract class AbstractController
 {
@@ -55,6 +56,11 @@ abstract class AbstractController
      */
     protected $validation;
 
+    /**
+     * @Inject()
+     * @var Auth
+     */
+    protected $auth;
 
     /**
      * 模板渲染

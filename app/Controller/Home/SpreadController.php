@@ -20,7 +20,7 @@ use Hyperf\Validation\Contract\ValidatorFactoryInterface;
 /**
  * SpreadController
  * 推广下单
- * 推广页面的接口提供
+ *
  * @package App\Controller\Home
  *
  * @Controller(prefix="home/spread")
@@ -64,6 +64,7 @@ class SpreadController extends BaseController
     /**
      * product_show
      * 产品展示页
+     *
      * @RequestMapping(path="product_show")
      *
      * @Middleware(SpreadMiddleware::class)
@@ -76,8 +77,8 @@ class SpreadController extends BaseController
             ->join('product_access', 'product_access.id', '=', 'product_sale.access')
             ->where(['product_sale.status' => 1, 'product_sale.id' => $reqParam['sid']])
             ->first();
-        if($product == null){
-            return $this->error(StatusCode::ERR_EXCEPTION,'商品不存在');
+        if ($product == null) {
+            return $this->error(StatusCode::ERR_EXCEPTION, '商品不存在');
         }
         unset($reqParam['r']);
         return $this->view([
@@ -90,6 +91,7 @@ class SpreadController extends BaseController
     /**
      * plat_apply
      * 资料填写
+     *
      * @RequestMapping(path="plat_apply")
      *
      * @Middleware(SpreadMiddleware::class)
@@ -98,50 +100,53 @@ class SpreadController extends BaseController
     {
         $reqParam = $this->request->all();
         $product = Db::table('product_sale')
-            ->select('product_access.label','product_access.captcha_switch','product_access.area_switch','product_access.num_select_switch',
-                'product_sale.id','product_sale.name','product_sale.titile','product_sale.price','product_sale.icon','product_sale.first_desc','product_sale.recommend','product_sale.cid')
+            ->select('product_access.label', 'product_access.captcha_switch', 'product_access.area_switch', 'product_access.num_select_switch',
+                'product_sale.id', 'product_sale.name', 'product_sale.titile', 'product_sale.price', 'product_sale.icon', 'product_sale.first_desc', 'product_sale.recommend', 'product_sale.cid')
             ->join('product_access', 'product_access.id', '=', 'product_sale.access')
             ->where(['product_sale.status' => 1, 'product_sale.id' => $reqParam['sid']])
             ->first();
-        if($product == null){
-           return $this->error(StatusCode::ERR_EXCEPTION,'商品不存在');
+        if ($product == null) {
+            return $this->error(StatusCode::ERR_EXCEPTION, '商品不存在');
         }
         unset($reqParam['r']);
         return $this->view([
-            'product'         => $product,
-            'reqParam'        => (object)$reqParam,
-            'routePath'       => '/'.$this->request->path(),
-            'interfaceDomain' => isset($this->request->getHeaders()['host'][0]) ? 'http://'.$this->request->getHeaders()['host'][0] : env('API_HOME_INTERFACE'),
+            'product' => $product,
+            'reqParam' => (object)$reqParam,
+            'routePath' => '/' . $this->request->path(),
+            'interfaceDomain' => isset($this->request->getHeaders()['host'][0]) ? 'http://' . $this->request->getHeaders()['host'][0] : env('API_HOME_INTERFACE'),
         ]);
     }
 
     /**
      * com_collection_announcement
      * 联通信息采集公告
+     *
      * @RequestMapping(path="com-collection-announcement")
      *
      * Middleware(SpreadMiddleware::class)
      */
     public function com_collection_announcement()
     {
-        return $this->view([],'/Home/common/com-collection-announcement');
+        return $this->view([], '/Home/common/com-collection-announcement');
     }
 
     /**
      * tel_collection_announcement
      * 联通信息采集公告
+     *
      * @RequestMapping(path="tel-collection-announcement")
      *
      * Middleware(SpreadMiddleware::class)
      */
     public function tel_collection_announcement()
     {
-        return $this->view([],'/Home/common/tel-collection-announcement');
+        return $this->view([], '/Home/common/tel-collection-announcement');
     }
 
     /**
      * suc
      * 提交成功
+     *
      * @RequestMapping(path="suc")
      *
      * Middleware(SpreadMiddleware::class)
@@ -150,6 +155,5 @@ class SpreadController extends BaseController
     {
         return $this->view(['name' => 'ms']);
     }
-
 
 }

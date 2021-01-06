@@ -122,8 +122,8 @@ class AppExceptionHandler extends ExceptionHandler
     //    }
 
 
-    public function isValid(Throwable $throwable)
-    : bool {
+    public function isValid(Throwable $throwable): bool
+    {
         return true;
     }
 

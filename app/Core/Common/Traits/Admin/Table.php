@@ -9,6 +9,7 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
+
 namespace Core\Common\Traits\Admin;
 
 use App\Exception\BusinessException;
@@ -17,7 +18,7 @@ use Hyperf\DbConnection\Db;
 
 /**
  * Trait Table
- * 表表操作类
+ * 表格操作类
  * @package Core\Common\Traits\Admin
  */
 trait Table
@@ -26,7 +27,7 @@ trait Table
     /**可操作的开关字段白名单
      * @var array
      */
-    protected $switchList = ['status', ];
+    protected $switchList = ['status',];
 
     /**
      * 添加数据
@@ -37,7 +38,7 @@ trait Table
      * author MengShuai <133814250@qq.com>
      * date 2020/11/27 20:18
      */
-    public function add(array $params = [], $query = null) : void
+    public function add(array $params = [], $query = null): void
     {
         $model = make(get_called_class());
         if ($query == null) {
@@ -67,7 +68,7 @@ trait Table
                 $ex->getMessage());
         }
 
-        if ( ! $res) {
+        if (!$res) {
             throw new BusinessException(StatusCode::ERR_EXCEPTION_USER,
                 '添加失败，稍后重试');
         }
@@ -78,15 +79,15 @@ trait Table
      * 编辑/更新信息
      * edit
      *
-     * @param  array  $where
-     * @param  array  $params
-     * @param  null   $query
+     * @param array $where
+     * @param array $params
+     * @param null $query
      *
      * @return int|mixed
      * author MengShuai <133814250@qq.com>
      * date 2020/11/27 11:24
      */
-    public function edit(array $where, array $params = [], $query = null) : void
+    public function edit(array $where, array $params = [], $query = null): void
     {
         $model = make(get_called_class());
         if ($query == null) {
@@ -106,7 +107,7 @@ trait Table
                 '没有提交任何更新内容');
         }
         $exists = $query->where($where)->exists();
-        if ( ! $exists) {
+        if (!$exists) {
             throw new BusinessException(StatusCode::ERR_EXCEPTION_USER,
                 '没有找到需要更新的数据');
         }
@@ -120,7 +121,7 @@ trait Table
                 $ex->getMessage());
         }
 
-        if ( ! $res) {
+        if (!$res) {
             throw new BusinessException(StatusCode::ERR_EXCEPTION_USER,
                 '更新失败，稍后重试');
         }
@@ -131,31 +132,31 @@ trait Table
      * 状态类开关
      * switch
      *
-     * @param  array  $where
-     * @param  array  $params
-     * @param  null   $query
+     * @param array $where
+     * @param array $params
+     * @param null $query
      *
      * @return int|mixed
      * author MengShuai <133814250@qq.com>
      * date 2020/11/27 11:24
      */
-    public function switch(array $where, array $params = [], $query = null) : int
+    public function switch(array $where, array $params = [], $query = null): int
     {
         $model = make(get_called_class());
         if ($query == null) {
             $query = clone $model;
         }
-        if ( ! isset($params['key'])) {
+        if (!isset($params['key'])) {
             throw new BusinessException(StatusCode::ERR_EXCEPTION_USER,
                 '没有提及需要更新的参数');
         }
-        if ( !in_array($params['key'], $this->switchList)) {
+        if (!in_array($params['key'], $this->switchList)) {
             throw new BusinessException(StatusCode::ERR_EXCEPTION_USER,
-                '参数:'.$params['key'].' 不在白名单');
+                '参数:' . $params['key'] . ' 不在白名单');
         }
         $info = $query->select($params['key'])
             ->where($where)
-            ->orderBy($model->getTable().'.'.$model->getKeyName(), 'DESC')
+            ->orderBy($model->getTable() . '.' . $model->getKeyName(), 'DESC')
             ->first();
         if ($info === null || empty($info->toArray())) {
             throw new BusinessException(StatusCode::ERR_EXCEPTION_USER,
@@ -179,7 +180,7 @@ trait Table
                 $ex->getMessage());
         }
 
-        if ( ! $res) {
+        if (!$res) {
             throw new BusinessException(StatusCode::ERR_EXCEPTION_USER,
                 '更新失败，稍后重试');
         }
@@ -204,7 +205,7 @@ trait Table
         //排序，默认使用主键
         $order = [$model->getKeyName() => 'DESC'];
         //分页
-        $pageSize = 10;
+        $pageSize    = 10;
         $currentPage = 1;
         if (isset($params['page_size'])) {
             $pageSize = $params['page_size'] > 0 ? $params['page_size'] : $pageSize;
@@ -247,15 +248,15 @@ trait Table
         }
 
         //总数
-        $que = clone $query;
+        $que   = clone $query;
         $count = $que->count();
 
         $query = $query->offset($offset)->limit($pageSize);
         $query = $query->get();
-        $list = $query ? $query->toArray() : [];
+        $list  = $query ? $query->toArray() : [];
         return [
             'count' => $count ?? 0,
-            'list' => $list,
+            'list'  => $list,
         ];
     }
 
@@ -263,57 +264,38 @@ trait Table
     /**
      * 生成表格类查询所需要的条件,排序方式
      * buildTableParams
-     * @param  array  $params
-     * @param  null  $query
+     * @param array $params
+     * @param null $query
      *
      * @return array
      * author MengShuai <133814250@qq.com>
      * date 2020/12/09 15:54
      */
-    public function buildTableParams(array $params = [], $query = null) : array
+    public function buildTableParams(array $params = [], $query = null): array
     {
         $model = make(get_called_class());
         if ($query == null) {
             $query = clone $model;
         }
 
-//        $relationSearch = is_null($relationSearch) ? $this->relationSearch : $relationSearch; //关联查询
-        $search = isset($params['search']) ? $params['search'] : '';
-        $filter = isset($params['filter']) ? $params['filter'] : '';
-
-        $op = isset($params['op']) ? trim($params['op']) : '';
-        $sort = isset($params['sort']) ? $params['sort'] : $model->getKeyName();
-        $order = isset($params['order']) ? $params['order'] : 'DESC';
-        $offset = isset($params['offset']) ? $params['offset'] : 0;
-        $limit = isset($params['limit']) ? $params['limit'] : 10;
-        $filter = (array)json_decode($filter, true);
-        $op = (array)json_decode($op, true);
-        $filter = $filter ? $filter : [];
+        $search    = isset($params['search']) ? $params['search'] : '';
+        $filter    = isset($params['filter']) ? $params['filter'] : '';
+        $op        = isset($params['op']) ? trim($params['op']) : '';
+        $sort      = isset($params['sort']) ? $params['sort'] : $model->getKeyName();
+        $order     = isset($params['order']) ? $params['order'] : 'DESC';
+        $offset    = isset($params['offset']) ? $params['offset'] : 0;
+        $limit     = isset($params['limit']) ? $params['limit'] : 10;
+        $filter    = (array)json_decode($filter, true);
+        $op        = (array)json_decode($op, true);
+        $filter    = $filter ? $filter : [];
         $tableName = $model->getTable();
 
-//        if ($relationSearch) {
-//            if (!empty($this->model)) {
-//                $name = \think\Loader::parseName(basename(str_replace('\\', '/', get_class($this->model))));
-//                $name = $this->model->getTable();
-//                $tableName = $name . '.';
-//            }
-//            $sortArr = explode(',', $sort);
-//            foreach ($sortArr as $index => & $item) {
-//                $item = stripos($item, ".") === false ? $tableName . trim($item) : $  item;
-//            }
-//            unset($item);
-//            $sort = implode(',', $sortArr);
-//        }
-//        $adminIds = $this->getDataLimitAdminIds();
-//        if (is_array($adminIds)) {
-//            $where[] = [$tableName . $this->dataLimitField, 'in', $adminIds];
-//        }
-        if ($search && ! empty($this->searchFields)) {  //允许快捷搜索的字段
+        if ($search && !empty($this->searchFields)) {  //允许快捷搜索的字段
             $searchFields = is_array($this->searchFields) ? $this->searchFields : explode(',', $this->searchFields);
-            if ( ! empty($searchFields)) {
+            if (!empty($searchFields)) {
                 $query->where(function ($query) use ($searchFields, $tableName, $search) {
                     foreach ($searchFields as $k => $v) {
-                        $v = stripos($v, ".") === false ? $tableName.'.'.$v : $v;
+                        $v = stripos($v, ".") === false ? $tableName . '.' . $v : $v;
                         $query->orWhere($v, 'like', "%{$search}%");
                     }
                     unset($v);
@@ -324,7 +306,7 @@ trait Table
         if (isset($model->fillable) && is_array($model->fillable)) {
             $legalKeys = array_intersect(array_keys($filter), $model->fillable);
             foreach ($filter as $k => $v) {
-                if ( ! in_array($k, $legalKeys) || $filter[$k] == '') {
+                if (!in_array($k, $legalKeys) || $filter[$k] == '') {
                     unset($filter[$k]);
                 }
             }
@@ -338,7 +320,7 @@ trait Table
             if (stripos($k, ".") === false) {
                 $k = $tableName . '.' . $k;
             }
-            $v = !is_array($v) ? trim($v) : $v;
+            $v   = !is_array($v) ? trim($v) : $v;
             $sym = strtoupper(isset($op[$k]) ? $op[$k] : $sym);
             switch ($sym) {
                 case '=':
@@ -357,11 +339,6 @@ trait Table
                 case '<=':
                     $query->where($k, $sym, intval($v));
                     break;
-//                case 'FINDIN':  //关联查询
-//                case 'FINDINSET':
-//                case 'FIND_IN_SET':
-//                    $where[] = "FIND_IN_SET('{$v}', " . ($relationSearch ? $k : '`' . str_replace('.', '`.`', $k) . '`') . ")";
-//                    break;
                 case 'IN':
                 case 'IN(...)':
                 case 'NOT IN':
@@ -372,15 +349,14 @@ trait Table
                 case 'NOT BETWEEN':
                     $arr = array_slice(explode(',', $v), 0, 2);
                     if (stripos($v, ',') === false || !array_filter($arr)) {
-                        var_export(['$v' => $v , '$arr' => $arr]);
+                        var_export(['$v' => $v, '$arr' => $arr]);
                         continue 2;
                     }
-                    if($arr[0] !== '' && $arr[1] !== ''){
+                    if ($arr[0] !== '' && $arr[1] !== '') {
                         $m = $sym == 'BETWEEN' ? 'whereBetween' : 'whereNotBetween';
                         $query->$m($k, $arr);
                         break;
                     }
-
                     //当出现一边为空时改变操作符
                     if ($arr[0] === '') {
                         $sym = $sym == 'BETWEEN' ? '<=' : '>=';
@@ -389,22 +365,21 @@ trait Table
                         $sym = $sym == 'BETWEEN' ? '>=' : '=<';
                         $arr = $arr[0];
                     }
-
                     $query->where($k, $sym, $arr);
                     break;
                 case 'RANGE':
                 case 'NOT RANGE':
-                    $v = str_replace(' - ', ',', $v);
+                    $v   = str_replace(' - ', ',', $v);
                     $arr = array_slice(explode(',', $v), 0, 2);
                     if (stripos($v, ',') === false || !array_filter($arr)) {
                         continue 2;
                     }
-                    if($sym=='NOT RANGE') {  //判断方法
+                    if ($sym == 'NOT RANGE') {  //判断方法
                         $m = 'whereNotBetween';
-                    }else{
+                    } else {
                         $m = 'whereBetween';
                     }
-                    $query->$m($k,$arr);
+                    $query->$m($k, $arr);
                     break;
                 case 'LIKE':
                 case 'LIKE %...%':

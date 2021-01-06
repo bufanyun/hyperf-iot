@@ -48,8 +48,8 @@ class Response
     /**
      * 成功返回请求结果
      * success
-     * @param  array  $res
-     * @param  string|null  $msg
+     * @param array $res
+     * @param string|null $msg
      *
      * @return \Psr\Http\Message\ResponseInterface
      * author MengShuai <133814250@qq.com>
@@ -81,18 +81,16 @@ class Response
     /**
      * 业务相关错误结果返回
      * error
-     * @param  int  $code
-     * @param  string|null  $msg
+     * @param int $code
+     * @param string|null $msg
      *
      * @return \Psr\Http\Message\ResponseInterface
      * author MengShuai <133814250@qq.com>
      * date 2021/01/04 17:37
      */
-    public function error(
-        int $code = StatusCode::ERR_EXCEPTION,
-        string $msg = null
-    ) {
-        $msg = $msg ?? StatusCode::getMessage(StatusCode::ERR_EXCEPTION);
+    public function error(int $code = StatusCode::ERR_EXCEPTION, string $msg = null)
+    {
+        $msg  = $msg ?? StatusCode::getMessage(StatusCode::ERR_EXCEPTION);
         $data = [
             'code' => $code,
             'msg'  => $msg,
@@ -140,17 +138,14 @@ class Response
      * Date：2019/12/16
      * Time：下午5:00
      *
-     * @param  string  $url
-     * @param  string  $schema
-     * @param  int  $status
+     * @param string $url
+     * @param string $schema
+     * @param int $status
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function redirect(
-        string $url,
-        string $schema = 'http',
-        int $status = 302
-    ) {
+    public function redirect(string $url, string $schema = 'http', int $status = 302)
+    {
         return $this->response->redirect($url, $status, $schema);
     }
 
@@ -161,8 +156,8 @@ class Response
      * Date：2019/12/16
      * Time：下午5:04
      *
-     * @param  string  $file
-     * @param  string  $name
+     * @param string $file
+     * @param string $name
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
@@ -178,38 +173,29 @@ class Response
      * Date：2019/12/16
      * Time：下午10:17
      *
-     * @param  string  $name
-     * @param  string  $value
-     * @param  int  $expire
-     * @param  string  $path
-     * @param  string  $domain
-     * @param  bool  $secure
-     * @param  bool  $httpOnly
-     * @param  bool  $raw
-     * @param  null|string  $sameSite
+     * @param string $name
+     * @param string $value
+     * @param int $expire
+     * @param string $path
+     * @param string $domain
+     * @param bool $secure
+     * @param bool $httpOnly
+     * @param bool $raw
+     * @param null|string $sameSite
      */
-    public function cookie(
-        string $name,
-        string $value = '',
-        $expire = 0,
-        string $path = '/',
-        string $domain = '',
-        bool $secure = false,
-        bool $httpOnly = true,
-        bool $raw = false,
-        ?string $sameSite = null
-    ) {
+    public function cookie(string $name, string $value = '', $expire = 0, string $path = '/', string $domain = '', bool $secure = false, bool $httpOnly = true, bool $raw = false, ?string $sameSite = null)
+    {
         // convert expiration time to a Unix timestamp
         if ($expire instanceof \DateTimeInterface) {
             $expire = $expire->format('U');
-        } elseif ( ! is_numeric($expire)) {
+        } elseif (!is_numeric($expire)) {
             $expire = strtotime($expire);
             if ($expire === false) {
                 throw new \RuntimeException('The cookie expiration time is not valid.');
             }
         }
 
-        $cookie = new Cookie($name, $value, $expire, $path, $domain, $secure,
+        $cookie   = new Cookie($name, $value, $expire, $path, $domain, $secure,
             $httpOnly, $raw, $sameSite);
         $response = $this->response->withCookie($cookie);
         Context::set(PsrResponseInterface::class, $response);

@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /**
  * Created by PhpStorm.
  *​
@@ -46,7 +47,7 @@ if (!function_exists('container')) {
 }
 
 
-if (! function_exists('requestEntry')) {
+if (!function_exists('requestEntry')) {
     /**
      * 根据异常返回信息，获取请求入口（模块-控制器-方法）
      * requestEntry
@@ -60,31 +61,31 @@ if (! function_exists('requestEntry')) {
     {
         $moduleName = '';
         foreach ($backTrace as $v) {
-            if (isset($v['file']) && stripos($v['file'],'CoreMiddleware.php')) {
-                $tmp = array_reverse(explode('\\',trim($v['class'])));
-                if (substr(strtolower($tmp[0]),-10) == 'controller') {
-                    $module = str_replace('controller','',strtolower($tmp[1]));
-                    $class = str_replace('controller','',strtolower($tmp[0]));
-                    $function = $v['function'];
-                    $moduleName = $class.'-'.$function;
+            if (isset($v['file']) && stripos($v['file'], 'CoreMiddleware.php')) {
+                $tmp = array_reverse(explode('\\', trim($v['class'])));
+                if (substr(strtolower($tmp[0]), -10) == 'controller') {
+                    $module     = str_replace('controller', '', strtolower($tmp[1]));
+                    $class      = str_replace('controller', '', strtolower($tmp[0]));
+                    $function   = $v['function'];
+                    $moduleName = $class . '-' . $function;
                     if ($module) {
-                        $moduleName = $module.'-'.$moduleName;
+                        $moduleName = $module . '-' . $moduleName;
                     }
                     break;
                 }
             }
         }
         if (!$moduleName) {
-            $request = ApplicationContext::getContainer()->get(RequestInterface::class);
-            $uri = $request->getRequestUri();
-            $moduleName = str_replace('/','-',ltrim($uri,'/'));
+            $request    = ApplicationContext::getContainer()->get(RequestInterface::class);
+            $uri        = $request->getRequestUri();
+            $moduleName = str_replace('/', '-', ltrim($uri, '/'));
         }
-        $moduleName = $moduleName??'hyperf';
+        $moduleName = $moduleName ?? 'hyperf';
         return $moduleName;
     }
 }
 
-if (! function_exists('getCoId')) {
+if (!function_exists('getCoId')) {
     /**
      * 获取当前协程id
      * getCoId
@@ -98,7 +99,7 @@ if (! function_exists('getCoId')) {
     }
 }
 
-if (! function_exists('getClientInfo')) {
+if (!function_exists('getClientInfo')) {
     /**
      * 获取请求客户端信息，获取连接的信息
      * getClientInfo
@@ -109,13 +110,13 @@ if (! function_exists('getClientInfo')) {
     function getClientInfo()
     {
         // 得从协程上下文取出请求
-        $request =  Context::get(ServerRequestInterface::class);
-        $server = make(SwooleServer::class);
+        $request = Context::get(ServerRequestInterface::class);
+        $server  = make(SwooleServer::class);
         return $server->getClientInfo($request->getSwooleRequest()->fd);
     }
 }
 
-if (! function_exists('getServerLocalIp')) {
+if (!function_exists('getServerLocalIp')) {
     /**
      * getServerLocalIp
      * 获取服务端内网ip地址
@@ -126,7 +127,7 @@ if (! function_exists('getServerLocalIp')) {
      */
     function getServerLocalIp()
     {
-        $ip = '127.0.0.1';
+        $ip  = '127.0.0.1';
         $ips = array_values(swoole_get_local_ip());
         foreach ($ips as $v) {
             if ($v && $v != $ip) {
@@ -139,7 +140,7 @@ if (! function_exists('getServerLocalIp')) {
     }
 }
 
-if (! function_exists('setCookies')) {
+if (!function_exists('setCookies')) {
     /**
      * setCookie
      * 设置cookie
@@ -161,21 +162,21 @@ if (! function_exists('setCookies')) {
         // convert expiration time to a Unix timestamp
         if ($expire instanceof \DateTimeInterface) {
             $expire = $expire->format('U');
-        } elseif (! is_numeric($expire)) {
+        } elseif (!is_numeric($expire)) {
             $expire = strtotime($expire);
             if ($expire === false) {
                 throw new \RuntimeException('The cookie expiration time is not valid.');
             }
         }
         $response = ApplicationContext::getContainer()->get(ResponseInterface::class);
-        $cookie = new HyperfCookie($key, (string)$value, $expire, $path, $domain, $secure, $httpOnly, $raw, $sameSite);
+        $cookie   = new HyperfCookie($key, (string)$value, $expire, $path, $domain, $secure, $httpOnly, $raw, $sameSite);
         $response = $response->withCookie($cookie);
         Context::set(PsrResponseInterface::class, $response);
         return;
     }
 }
 
-if (! function_exists('getCookie')) {
+if (!function_exists('getCookie')) {
     /**
      * getCookie
      * 获取cookie
@@ -186,14 +187,14 @@ if (! function_exists('getCookie')) {
      * @param null|string $default
      * @return mixed
      */
-    function getCookie(string $key,?string $default = null)
+    function getCookie(string $key, ?string $default = null)
     {
         $request = ApplicationContext::getContainer()->get(RequestInterface::class);
         return $request->cookie($key, $default);
     }
 }
 
-if (! function_exists('hasCookie')) {
+if (!function_exists('hasCookie')) {
     /**
      * hasCookie
      * 判断cookie是否存在
@@ -210,7 +211,7 @@ if (! function_exists('hasCookie')) {
     }
 }
 
-if (! function_exists('delCookie')) {
+if (!function_exists('delCookie')) {
     /**
      * delCookie
      * 删除cookie
@@ -220,19 +221,19 @@ if (! function_exists('delCookie')) {
      * @param string $key
      * @return bool
      */
-    function delCookie(string $key) :bool
+    function delCookie(string $key): bool
     {
         if (!hasCookie($key)) {
             return false;
         }
 
-        setCookies($key,'', time()-1);
+        setCookies($key, '', time() - 1);
 
         return true;
     }
 }
 
-if (! function_exists('setSessionId')) {
+if (!function_exists('setSessionId')) {
     /**
      * setSessionId
      * 设置sessionid
@@ -245,11 +246,11 @@ if (! function_exists('setSessionId')) {
     {
         $session = ApplicationContext::getContainer()->get(SessionInterface::class);
         $session->setId($id);
-        return ;
+        return;
     }
 }
 
-if (! function_exists('getSessionId')) {
+if (!function_exists('getSessionId')) {
     /**
      * getSessionId
      * 获取sessionid
@@ -259,12 +260,12 @@ if (! function_exists('getSessionId')) {
      */
     function getSessionId()
     {
-        $session =  ApplicationContext::getContainer()->get(SessionInterface::class);
+        $session = ApplicationContext::getContainer()->get(SessionInterface::class);
         return $session->getId();
     }
 }
 
-if (! function_exists('setSession')) {
+if (!function_exists('setSession')) {
     /**
      * setSession
      * 设置session
@@ -274,15 +275,15 @@ if (! function_exists('setSession')) {
      * @param string $k
      * @param $v
      */
-    function setSession(string $k,$v)
+    function setSession(string $k, $v)
     {
         $session = ApplicationContext::getContainer()->get(SessionInterface::class);
-        $session->set($k,$v);
-        return ;
+        $session->set($k, $v);
+        return;
     }
 }
 
-if (! function_exists('getSession')) {
+if (!function_exists('getSession')) {
     /**
      * getSession
      * 获取session
@@ -293,14 +294,14 @@ if (! function_exists('getSession')) {
      * @param null $default
      * @return mixed
      */
-    function getSession(string $k,$default = null)
+    function getSession(string $k, $default = null)
     {
         $session = ApplicationContext::getContainer()->get(SessionInterface::class);
-        return $session->get($k,$default=0);
+        return $session->get($k, $default = 0);
     }
 }
 
-if (! function_exists('getAllSession')) {
+if (!function_exists('getAllSession')) {
     /**
      * getAllSession
      * 获取所有session
@@ -317,7 +318,7 @@ if (! function_exists('getAllSession')) {
 }
 
 
-if (! function_exists('hasSession')) {
+if (!function_exists('hasSession')) {
     /**
      * hasSession
      * 判断session是否存在
@@ -334,7 +335,7 @@ if (! function_exists('hasSession')) {
     }
 }
 
-if (! function_exists('removeSession')) {
+if (!function_exists('removeSession')) {
     /**
      * removeSession
      * 从 Session 中获取并删除一条数据
@@ -351,7 +352,7 @@ if (! function_exists('removeSession')) {
     }
 }
 
-if (! function_exists('forgetSession')) {
+if (!function_exists('forgetSession')) {
     /**
      * forgetSession
      * 从session中删除一条或多条数据
@@ -368,7 +369,7 @@ if (! function_exists('forgetSession')) {
     }
 }
 
-if (! function_exists('clearSession')) {
+if (!function_exists('clearSession')) {
     /**
      * clearSession
      * 清空当前 Session 里的所有数据
@@ -383,7 +384,7 @@ if (! function_exists('clearSession')) {
     }
 }
 
-if (! function_exists('destroySession')) {
+if (!function_exists('destroySession')) {
     /**
      * destroySession
      * 销毁session
@@ -432,7 +433,8 @@ if (!function_exists('getClientIp')) {
     }
 }
 
-if (! function_exists('getLogArguments')) {
+
+if (!function_exists('getLogArguments')) {
     /**
      * getLogArguments
      * 获取要存储的日志部分字段，monolog以外的业务信息
@@ -443,62 +445,62 @@ if (! function_exists('getLogArguments')) {
      * @param int $rbs 响应包体大小，初始化0，只有正常请求响应才有值
      * @return array
      */
-    function getLogArguments($executionTime = null,$rbs = 0)
+    function getLogArguments($executionTime = null, $rbs = 0)
     {
-        $request = ApplicationContext::getContainer()->get(RequestInterface::class);
+        $request        = ApplicationContext::getContainer()->get(RequestInterface::class);
         $requestHeaders = $request->getHeaders();
-        $serverParams = $request->getServerParams();
-        $arguments = $request->all();
+        $serverParams   = $request->getServerParams();
+        $arguments      = $request->all();
         if (isset($arguments['password'])) {
             unset($arguments['password']);
         }
 
-        $auth = ApplicationContext::getContainer()->get(Auth::class);
+        $auth   = ApplicationContext::getContainer()->get(Auth::class);
         $userId = $auth->check(false);
-        $uuid = getCookie('HYPERF_SESSION_ID');
-        $url = $request->fullUrl();
+        $uuid   = getCookie('HYPERF_SESSION_ID');
+        $url    = $request->fullUrl();
 
         $agent = new Agent();
-        $agent->setUserAgent($requestHeaders['user-agent'][0]??'');
-        $ip = $requestHeaders['x-real-ip'][0]??$requestHeaders['x-forwarded-for'][0]??'';
+        $agent->setUserAgent($requestHeaders['user-agent'][0] ?? '');
+        $ip = $requestHeaders['x-real-ip'][0] ?? $requestHeaders['x-forwarded-for'][0] ?? '';
         // ip转换地域
-        if($ip && ip2long($ip) != false){
+        if ($ip && ip2long($ip) != false) {
             $location = getIpLocation($ip);
-            $cityId = $location['city_id']??0;
-        }else{
+            $cityId   = $location['city_id'] ?? 0;
+        } else {
             $cityId = 0;
         }
 
         return [
 //            'qid' => $requestHeaders['qid'][0]??'',
-            'server_name' => $requestHeaders['host'][0]??'',
-            'server_addr' => getServerLocalIp()??'',
-            'remote_addr' => $serverParams['remote_addr']??'',
-            'forwarded_for' => $requestHeaders['x-forwarded-for'][0]??'',
-            'real_ip' => $ip,
-            'city_id' => $cityId,
-            'user_agent' => $requestHeaders['user-agent'][0]??'',
-            'platform' => $agent->platform()??'',
-            'device' => $agent->device()??'',
-            'browser' => $agent->browser()??'',
-            'url' => $url,
-            'uri' => $serverParams['request_uri']??'',
-            'arguments' => $arguments?json_encode($arguments):'',
-            'method' => $serverParams['request_method']??'',
-            'execution_time' => $executionTime,
-            'request_body_size' => $requestHeaders['content-length'][0]??'',
+            'server_name'        => $requestHeaders['host'][0] ?? '',
+            'server_addr'        => getServerLocalIp() ?? '',
+            'remote_addr'        => $serverParams['remote_addr'] ?? '',
+            'forwarded_for'      => $requestHeaders['x-forwarded-for'][0] ?? '',
+            'real_ip'            => $ip,
+            'city_id'            => $cityId,
+            'user_agent'         => $requestHeaders['user-agent'][0] ?? '',
+            'platform'           => $agent->platform() ?? '',
+            'device'             => $agent->device() ?? '',
+            'browser'            => $agent->browser() ?? '',
+            'url'                => $url,
+            'uri'                => $serverParams['request_uri'] ?? '',
+            'arguments'          => $arguments ? json_encode($arguments) : '',
+            'method'             => $serverParams['request_method'] ?? '',
+            'execution_time'     => $executionTime,
+            'request_body_size'  => $requestHeaders['content-length'][0] ?? '',
             'response_body_size' => $rbs,
-            'uuid' => $uuid,
-            'user_id' => $userId??'',
-            'referer' => $requestHeaders['referer'][0]??'',
-            'unix_time' => $serverParams['request_time']??'',
-            'time_day' => isset($serverParams['request_time'])?date('Y-m-d',$serverParams['request_time']):'',
-            'time_hour' => isset($serverParams['request_time'])?date('Y-m-d H:00:00',$serverParams['request_time']):'',
+            'uuid'               => $uuid,
+            'user_id'            => $userId ?? '',
+            'referer'            => $requestHeaders['referer'][0] ?? '',
+            'unix_time'          => $serverParams['request_time'] ?? '',
+            'time_day'           => isset($serverParams['request_time']) ? date('Y-m-d', $serverParams['request_time']) : '',
+            'time_hour'          => isset($serverParams['request_time']) ? date('Y-m-d H:00:00', $serverParams['request_time']) : '',
         ];
     }
 }
 
-if (! function_exists('getIpLocation')) {
+if (!function_exists('getIpLocation')) {
     /**
      * getIpLocation
      * 获取ip对应的城市信息
@@ -510,14 +512,14 @@ if (! function_exists('getIpLocation')) {
      */
     function getIpLocation($ip)
     {
-        $dbFile = BASE_PATH . '/app/Core/Common/Container/ip2region.db';
+        $dbFile       = BASE_PATH . '/app/Core/Common/Container/ip2region.db';
         $ip2regionObj = new Ip2Region($dbFile);
-        $ret = $ip2regionObj->binarySearch($ip);
+        $ret          = $ip2regionObj->binarySearch($ip);
         return $ret;
     }
 }
 
-if (! function_exists('isStdoutLog')) {
+if (!function_exists('isStdoutLog')) {
     /**
      * isStdoutLog
      * 判断日志类型是否允许输出
@@ -534,7 +536,7 @@ if (! function_exists('isStdoutLog')) {
     }
 }
 
-if (! function_exists('isMobileNum')) {
+if (!function_exists('isMobileNum')) {
     /**
      * isMobileNum
      * 判断是否为手机号
@@ -555,7 +557,7 @@ if (! function_exists('isMobileNum')) {
     }
 }
 
-if (! function_exists('encryptPassword')) {
+if (!function_exists('encryptPassword')) {
     /**
      * encryptPassword
      * 加密密码
@@ -569,7 +571,7 @@ if (! function_exists('encryptPassword')) {
     }
 }
 
-if (! function_exists('checkPassword')) {
+if (!function_exists('checkPassword')) {
     /**
      * checkPassword
      * 检测密码
@@ -590,7 +592,7 @@ if (! function_exists('checkPassword')) {
     }
 }
 
-if (! function_exists('getUserUniqueId')) {
+if (!function_exists('getUserUniqueId')) {
     /**
      * getUserUniqueId
      * 获取用户唯一标示，用户ID生成规则，32位
@@ -608,34 +610,32 @@ if (! function_exists('getUserUniqueId')) {
         //根据当前时间生成的随机字符串11位
         $uniqid = substr(uniqid(), 2);
         //当前服务器ip后4位
-        $ip = getServerLocalIp();
+        $ip     = getServerLocalIp();
         $ipList = explode('.', $ip);
-        if(empty($ipList) || count($ipList) < 4 ){
+        if (empty($ipList) || count($ipList) < 4) {
             $ipStr = '01';
-        }else{
-            $ipStr = $ipList[2].$ipList[3];
+        } else {
+            $ipStr = $ipList[2] . $ipList[3];
         }
         $ip = dechex($ipStr);
         $ip = str_pad($ip, 6, 'f', STR_PAD_LEFT);
-        if(PHP_SAPI != 'cli'){
+        if (PHP_SAPI != 'cli') {
             $ip = substr($ip, -4);
-        }else{
-            $ip = 'z'.substr($ip, -3);
+        } else {
+            $ip = 'z' . substr($ip, -3);
         }
 
         //总共32位字符串
-        return strtolower($prefix.$ip.$rand.$uniqid);
+        return strtolower($prefix . $ip . $rand . $uniqid);
     }
 }
 
-if(!function_exists('handleTreeList')) {
+if (!function_exists('handleTreeList')) {
     /**
      * handleTreeList
      * 建立数组树结构列表
      *
      * @datetime 2019/1/8 下午5:56
-     * @author YM
-     * @access public
      * @param $arr 数组
      * @param int $pid 父级id
      * @param int $depth 增加深度标识
@@ -643,17 +643,19 @@ if(!function_exists('handleTreeList')) {
      * @param string $d_sub 深度别名
      * @param string $c_sub 子集别名
      * @return array
+     * @author YM
+     * @access public
      */
-    function handleTreeList($arr,$pid=0,$depth=0,$p_sub='parent_id',$c_sub='children',$d_sub='depth')
+    function handleTreeList($arr, $pid = 0, $depth = 0, $p_sub = 'parent_id', $c_sub = 'children', $d_sub = 'depth')
     {
         $returnArray = [];
-        if(is_array($arr) && $arr) {
-            foreach($arr as $k => $v) {
-                if($v[$p_sub] == $pid) {
+        if (is_array($arr) && $arr) {
+            foreach ($arr as $k => $v) {
+                if ($v[$p_sub] == $pid) {
                     $v[$d_sub] = $depth;
-                    $tempInfo = $v;
+                    $tempInfo  = $v;
                     unset($arr[$k]); // 减少数组长度，提高递归的效率，否则数组很大时肯定会变慢
-                    $temp = handleTreeList($arr,$v['id'],$depth+1,$p_sub,$c_sub,$d_sub);
+                    $temp = handleTreeList($arr, $v['id'], $depth + 1, $p_sub, $c_sub, $d_sub);
                     if ($temp) {
                         $tempInfo[$c_sub] = $temp;
                     }
@@ -665,7 +667,7 @@ if(!function_exists('handleTreeList')) {
     }
 }
 
-if ( ! function_exists('recur')) {
+if (!function_exists('recur')) {
     /**
      * 生成LayUI—tree
      * 参考：https://blog.csdn.net/qq_40205116/article/details/100180581
@@ -673,7 +675,7 @@ if ( ! function_exists('recur')) {
      *
      * @param       $arrs
      * @param       $category
-     * @param  int  $parent_id
+     * @param int $parent_id
      *
      * @return mixed
      * author MengShuai <133814250@qq.com>
@@ -684,7 +686,7 @@ if ( ! function_exists('recur')) {
         $spread = false; //是否展开
         foreach ($category as $k => $v) {
             if ($v['parent_id'] == $parent_id) {
-                $arr = [
+                $arr             = [
                     'title'    => $v["display_name"],
                     'id'       => $v['id'],
                     'spread'   => $spread,
@@ -699,7 +701,7 @@ if ( ! function_exists('recur')) {
 }
 
 
-if ( ! function_exists('generateMenu')) {
+if (!function_exists('generateMenu')) {
     /**
      * 生成LayUI—tree
      * 参考：https://blog.csdn.net/qq_40205116/article/details/100180581
@@ -707,7 +709,7 @@ if ( ! function_exists('generateMenu')) {
      *
      * @param       $arrs
      * @param       $category
-     * @param  int  $parent_id
+     * @param int $parent_id
      *
      * @return mixed
      * author MengShuai <133814250@qq.com>
@@ -718,7 +720,7 @@ if ( ! function_exists('generateMenu')) {
         $spread = false; //是否展开
         foreach ($category as $k => $v) {
             if ($v['parent_id'] == $parent_id) {
-                $arr = [
+                $arr             = [
                     'title'    => $v["display_name"],
                     'id'       => $v['id'],
                     'icon'     => $v['icon'],
@@ -734,14 +736,14 @@ if ( ! function_exists('generateMenu')) {
     }
 }
 
-if ( ! function_exists('array_pluck')) {
+if (!function_exists('array_pluck')) {
     /**
      * Pluck an array of values from an array.
      * 从数组中提取值组成新数组
      *
-     * @param  array   $array
-     * @param  string|array  $value
-     * @param  string|array|null  $key
+     * @param array $array
+     * @param string|array $value
+     * @param string|array|null $key
      * @return array
      */
     function array_pluck($array, $value, $key = null)
@@ -750,7 +752,7 @@ if ( ! function_exists('array_pluck')) {
     }
 }
 
-if (! function_exists('flushAnnotationCache')) {
+if (!function_exists('flushAnnotationCache')) {
     /**
      * flushAnnotationCache
      * 刷新注解缓存，清楚注解缓存
@@ -766,7 +768,7 @@ if (! function_exists('flushAnnotationCache')) {
         if (!$listener || !$keys) {
             throw new \RuntimeException('参数不正确！');
         }
-        $keys = is_array($keys)?$keys:[$keys];
+        $keys       = is_array($keys) ? $keys : [$keys];
         $dispatcher = ApplicationContext::getContainer()->get(EventDispatcherInterface::class);
         foreach ($keys as $key) {
             $dispatcher->dispatch(new DeleteListenerEvent($listener, [$key]));
@@ -775,7 +777,7 @@ if (! function_exists('flushAnnotationCache')) {
     }
 }
 
-if (! function_exists('clearCache')) {
+if (!function_exists('clearCache')) {
     /**
      * clearCache
      * 清空当前 缓存
@@ -786,12 +788,12 @@ if (! function_exists('clearCache')) {
     function clearCache()
     {
         $config = config('cache.default');
-        $cache = make(CacheDriver::class,['config'=>$config]);
+        $cache  = make(CacheDriver::class, ['config' => $config]);
         return $cache->clear();
     }
 }
 
-if (! function_exists('delCache')) {
+if (!function_exists('delCache')) {
     /**
      * delCache
      * 删除缓存，1条/多条
@@ -805,7 +807,7 @@ if (! function_exists('delCache')) {
     function delCache($keys = [])
     {
         $config = config('cache.default');
-        $cache = make(CacheDriver::class,['config'=>$config]);
+        $cache  = make(CacheDriver::class, ['config' => $config]);
         if (is_array($keys)) {
             $cache->deleteMultiple($keys);
         } else {
@@ -816,7 +818,7 @@ if (! function_exists('delCache')) {
     }
 }
 
-if (! function_exists('clearPrefixCache')) {
+if (!function_exists('clearPrefixCache')) {
     /**
      * clearPrefixCache
      * 根据前缀清楚缓存
@@ -830,13 +832,13 @@ if (! function_exists('clearPrefixCache')) {
     function clearPrefixCache($prefix = '')
     {
         $config = config('cache.default');
-        $cache = make(CacheDriver::class,['config'=>$config]);
+        $cache  = make(CacheDriver::class, ['config' => $config]);
         $cache->clearPrefix($prefix);
         return true;
     }
 }
 
-if (! function_exists('setCache')) {
+if (!function_exists('setCache')) {
     /**
      * setCache
      * 设置缓存
@@ -852,12 +854,12 @@ if (! function_exists('setCache')) {
     function setCache($key, $value, $ttl = null)
     {
         $config = config('cache.default');
-        $cache = make(CacheDriver::class,['config'=>$config]);
+        $cache  = make(CacheDriver::class, ['config' => $config]);
         return $cache->set($key, $value, $ttl);
     }
 }
 
-if (! function_exists('setMultipleCache')) {
+if (!function_exists('setMultipleCache')) {
     /**
      * setMultipleCache
      * 批量设置缓存
@@ -872,12 +874,12 @@ if (! function_exists('setMultipleCache')) {
     function setMultipleCache($values, $ttl = null)
     {
         $config = config('cache.default');
-        $cache = make(CacheDriver::class,['config'=>$config]);
+        $cache  = make(CacheDriver::class, ['config' => $config]);
         return $cache->setMultiple($values, $ttl);
     }
 }
 
-if (! function_exists('getCache')) {
+if (!function_exists('getCache')) {
     /**
      * getCache
      * 获取缓存
@@ -892,12 +894,12 @@ if (! function_exists('getCache')) {
     function getCache($key, $default = null)
     {
         $config = config('cache.default');
-        $cache = make(CacheDriver::class,['config'=>$config]);
+        $cache  = make(CacheDriver::class, ['config' => $config]);
         return $cache->get($key, $default);
     }
 }
 
-if (! function_exists('getMultipleCache')) {
+if (!function_exists('getMultipleCache')) {
     /**
      * getMultipleCache
      * 获取多个缓存
@@ -912,7 +914,7 @@ if (! function_exists('getMultipleCache')) {
     function getMultipleCache(array $keys, $default = null)
     {
         $config = config('cache.default');
-        $cache = make(CacheDriver::class,['config'=>$config]);
+        $cache  = make(CacheDriver::class, ['config' => $config]);
         return $cache->getMultiple($keys, $default);
     }
 }
@@ -930,11 +932,11 @@ if (!function_exists('formatBytes')) {
      */
     function formatBytes($bytes)
     {
-        if($bytes >= 1073741824) {
+        if ($bytes >= 1073741824) {
             $bytes = round($bytes / 1073741824 * 100) / 100 . 'GB';
-        } elseif($bytes >= 1048576) {
+        } elseif ($bytes >= 1048576) {
             $bytes = round($bytes / 1048576 * 100) / 100 . 'MB';
-        } elseif($bytes >= 1024) {
+        } elseif ($bytes >= 1024) {
             $bytes = round($bytes / 1024 * 100) / 100 . 'KB';
         } else {
             $bytes = $bytes . 'Bytes';
@@ -955,27 +957,27 @@ if (!function_exists('durationFormat')) {
      */
     function durationFormat($number)
     {
-        if (! $number) {
+        if (!$number) {
             return '0分钟';
         }
         $newTime = '';
-        if (floor($number/3600) > 0) {
-            $newTime .= floor($number/3600).'小时';
-            $number = $number%3600;
+        if (floor($number / 3600) > 0) {
+            $newTime .= floor($number / 3600) . '小时';
+            $number  = $number % 3600;
         }
-        if ($number/60 > 0) {
-            $newTime .= floor($number/60).'分钟';
-            $number = $number%60;
+        if ($number / 60 > 0) {
+            $newTime .= floor($number / 60) . '分钟';
+            $number  = $number % 60;
         }
         if ($number < 60) {
-            $newTime .= $number.'秒';
+            $newTime .= $number . '秒';
         }
         return $newTime;
     }
 }
 
 
-if (!function_exists('filterParams')){
+if (!function_exists('filterParams')) {
     /**
      * 请求参数过滤
      * filterParams
@@ -984,7 +986,7 @@ if (!function_exists('filterParams')){
      * @author MengShuai <133814250@qq.com>
      * @date 2020/11/03 12:55
      */
-    function filterParams(array $data) : array
+    function filterParams(array $data): array
     {
         if (empty($data)) {
             return $data;
@@ -993,11 +995,11 @@ if (!function_exists('filterParams')){
         /**
          * 兼容ok框架
          */
-        if (isset($data['page'])){
+        if (isset($data['page'])) {
             $data['current_page'] = $data['page'];
             unset($data['page']);
         }
-        if (isset($data['limit'])){
+        if (isset($data['limit'])) {
             $data['page_size'] = $data['limit'];
             unset($data['limit']);
         }
@@ -1016,7 +1018,7 @@ if (!function_exists('toArr')) {
      * author MengShuai <133814250@qq.com>
      * date 2020/11/27 21:03
      */
-    function toArr($arr) : array
+    function toArr($arr): array
     {
         return json_decode(json_encode($arr), true);
     }
@@ -1027,10 +1029,10 @@ if (!function_exists('redis')) {
      * 获取redis连接池对象
      * @return \Hyperf\Redis\Redis|null
      */
-    function redis() :? \Hyperf\Redis\Redis
+    function redis(): ?\Hyperf\Redis\Redis
     {
         $container = ApplicationContext::getContainer();
-        $redis = $container->get(\Hyperf\Redis\Redis::class);
+        $redis     = $container->get(\Hyperf\Redis\Redis::class);
         return $redis;
     }
 }
@@ -1042,7 +1044,7 @@ if (!function_exists('buildStringHash')) {
      * @param string $data
      * @return string
      */
-    function buildStringHash(string $data) : string
+    function buildStringHash(string $data): string
     {
         $data = hash('ripemd160', base64_encode(trim($data)));
         return $data;
@@ -1053,7 +1055,7 @@ if (!function_exists('isIdCard')) {
     /**
      * 身份证号验证
      * isIdCard
-     * @param  string  $id
+     * @param string $id
      *
      * @return bool
      * author MengShuai <133814250@qq.com>
@@ -1061,10 +1063,10 @@ if (!function_exists('isIdCard')) {
      */
     function isIdCard(string $id)
     {
-        $id = strtoupper($id);
-        $regx = "/(^\d{15}$)|(^\d{17}([0-9]|X)$)/";
+        $id        = strtoupper($id);
+        $regx      = "/(^\d{15}$)|(^\d{17}([0-9]|X)$)/";
         $arr_split = [];
-        if ( ! preg_match($regx, $id)) {
+        if (!preg_match($regx, $id)) {
             return false;
         }
         if (15 == strlen($id)) //检查15位
@@ -1073,8 +1075,8 @@ if (!function_exists('isIdCard')) {
 
             @preg_match($regx, $id, $arr_split);
             //检查生日日期是否正确
-            $dtm_birth = "19".$arr_split[2].'/'.$arr_split[3].'/'.$arr_split[4];
-            if ( ! strtotime($dtm_birth)) {
+            $dtm_birth = "19" . $arr_split[2] . '/' . $arr_split[3] . '/' . $arr_split[4];
+            if (!strtotime($dtm_birth)) {
                 return false;
             } else {
                 return true;
@@ -1083,8 +1085,8 @@ if (!function_exists('isIdCard')) {
         {
             $regx = "/^(\d{6})+(\d{4})+(\d{2})+(\d{2})+(\d{3})([0-9]|X)$/";
             @preg_match($regx, $id, $arr_split);
-            $dtm_birth = $arr_split[2].'/'.$arr_split[3].'/'.$arr_split[4];
-            if ( ! strtotime($dtm_birth)) //检查生日日期是否正确
+            $dtm_birth = $arr_split[2] . '/' . $arr_split[3] . '/' . $arr_split[4];
+            if (!strtotime($dtm_birth)) //检查生日日期是否正确
             {
                 return false;
             } else {
@@ -1092,15 +1094,15 @@ if (!function_exists('isIdCard')) {
                 //校验位按照ISO 7064:1983.MOD 11-2的规定生成，X可以认为是数字10。
                 $arr_int =
                     [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
-                $arr_ch =
+                $arr_ch  =
                     ['1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2'];
-                $sign = 0;
+                $sign    = 0;
                 for ($i = 0; $i < 17; $i++) {
-                    $b = (int)$id[$i];
-                    $w = $arr_int[$i];
+                    $b    = (int)$id[$i];
+                    $w    = $arr_int[$i];
                     $sign += $b * $w;
                 }
-                $n = $sign % 11;
+                $n       = $sign % 11;
                 $val_num = $arr_ch[$n];
                 if ($val_num != substr($id, 17, 1)) {
                     return false;
@@ -1112,11 +1114,11 @@ if (!function_exists('isIdCard')) {
     }
 }
 
-if(!function_exists('getIdCardAge')) {
+if (!function_exists('getIdCardAge')) {
     /**
      * 根据身份证号码获取年龄
      * getIdCardAge
-     * @param  string  $card_id
+     * @param string $card_id
      *
      * @return int
      * author MengShuai <133814250@qq.com>
@@ -1131,19 +1133,19 @@ if(!function_exists('getIdCardAge')) {
         return (int)$age;
     }
 }
-if(!function_exists('isMobile')) {
+if (!function_exists('isMobile')) {
     /**
      * 验证是否是正确的手机号
      * isMobile
-     * @param  string  $value
+     * @param string $value
      *
      * @return bool
      * author MengShuai <133814250@qq.com>
      * date 2020/12/25 17:12
      */
-    function isMobile(string $value) : bool
+    function isMobile(string $value): bool
     {
-        $rule = '/^0?(13|14|15|16|17|18|19)[0-9]{9}$/';
+        $rule   = '/^0?(13|14|15|16|17|18|19)[0-9]{9}$/';
         $result = preg_match($rule, $value);
         if ($result) {
             return true;
@@ -1153,17 +1155,18 @@ if(!function_exists('isMobile')) {
     }
 }
 
-if(!function_exists('isChineseName')) {
+if (!function_exists('isChineseName')) {
     /**
      * 判断中文姓名是否正确
      * isChineseName
-     * @param  string  $name
+     * @param string $name
      *
      * @return bool
      * author MengShuai <133814250@qq.com>
      * date 2020/12/25 17:12
      */
-    function isChineseName(string $name): bool {
+    function isChineseName(string $name): bool
+    {
         if (preg_match('/^([\xe4-\xe9][\x80-\xbf]{2}){2,4}$/', $name)) {
             return true;
         } else {
@@ -1172,13 +1175,13 @@ if(!function_exists('isChineseName')) {
     }
 }
 
-if(!function_exists('OrderThreeInspect')) {
+if (!function_exists('OrderThreeInspect')) {
     /**
      * 订单三要素格式检查
      * OrderThreeInspect
-     * @param  string  $name
-     * @param  int  $idCard
-     * @param  int  $phone
+     * @param string $name
+     * @param int $idCard
+     * @param int $phone
      *
      * @return bool|string
      * author MengShuai <133814250@qq.com>
@@ -1186,20 +1189,20 @@ if(!function_exists('OrderThreeInspect')) {
      */
     function OrderThreeInspect(string $name, string $idCard, string $phone)
     {
-        if (!isChineseName($name)){
+        if (!isChineseName($name)) {
             return '请输入正确的姓名';
         }
-        if (!isIdCard((string)$idCard)){
+        if (!isIdCard((string)$idCard)) {
             return '请输入正确的身份证号码：' . (string)$idCard;
         }
-        if (!isMobile($phone)){
+        if (!isMobile($phone)) {
             return '请输入正确的手机号';
         }
         return true;
     }
 }
 
-if(!function_exists('setLog')) {
+if (!function_exists('setLog')) {
     /**
      * 打印单独的错误日志
      * @param string $path
@@ -1207,8 +1210,8 @@ if(!function_exists('setLog')) {
      */
     function setLog(string $path, string $content): void
     {
-        co(function () use($path, $content){
-            co(function () use($path, $content) {
+        co(function () use ($path, $content) {
+            co(function () use ($path, $content) {
                 file_put_contents(
                     BASE_PATH . '/runtime/logs/' . $path,
                     '[' . date('Y-m-d H:i:s') . '] ' . $content . "\r\n",
@@ -1219,11 +1222,11 @@ if(!function_exists('setLog')) {
     }
 }
 
-if(!function_exists('str_rand')) {
+if (!function_exists('str_rand')) {
     /**
      * 随机字串符
      * str_rand
-     * @param int    $length
+     * @param int $length
      * @param string $char
      *
      * @return string
@@ -1243,14 +1246,14 @@ if(!function_exists('str_rand')) {
     }
 }
 
-if(!function_exists('arraySearchColumn')) {
+if (!function_exists('arraySearchColumn')) {
     /**
      * 多维数组查找，不选择返回字段时直接返回找到的索引key
      * arraySearchColumn
-     * @param  array  $array
-     * @param  string  $key
-     * @param  string  $value
-     * @param  string  $field
+     * @param array $array
+     * @param string $key
+     * @param string $value
+     * @param string $field
      *
      * @return array|bool|false|int|string
      * author MengShuai <133814250@qq.com>
@@ -1258,17 +1261,18 @@ if(!function_exists('arraySearchColumn')) {
      */
     function arraySearchColumn(array $array, string $key, string $value, string $field = '')
     {
-        if(empty($array)){
-            return $field=='' ? '' : [];
+        if (empty($array)) {
+            return $field == '' ? '' : [];
         }
         $keys = array_column($array, $key);
-        $i = array_search($value, $keys);
-        if(!isset($array[$i]) || empty($array[$i])){
-            return $field=='' ? '' : [];
+        $i    = array_search($value, $keys);
+        if (!isset($array[$i]) || empty($array[$i])) {
+            return $field == '' ? '' : [];
         }
-        if($field==''){
+        if ($field == '') {
             return $i;
         }
         return isset($array[$i][$field]) ? $array[$i][$field] : '';
     }
 }
+

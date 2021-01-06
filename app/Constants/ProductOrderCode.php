@@ -27,37 +27,6 @@ use Hyperf\Constants\Annotation\Constants;
  */
 class ProductOrderCode extends AbstractConstants
 {
-
-    /**
-     * @Message("未付款")
-     */
-    public const PAY_STATUS_UNPAID = 0;
-
-    /**
-     * @Message("已支付")
-     */
-    public const PAY_STATUS_SUCCESSFUL = 1;
-
-    /**
-     * @Message("微信支付")
-     */
-    public const PAY_TYPE_WXPAY = 1;
-
-    /**
-     * @Message("支付宝支付")
-     */
-    public const PAY_TYPE_ALIPAY = 2;
-
-    /**
-     * @Message("QQ钱包")
-     */
-    public const PAY_TYPE_QQPAY = 3;
-
-    /**
-     * @Message("余额支付")
-     */
-    public const PAY_TYPE_BALANCE = 4;
-
     /**
      * @Message("审核中")
      */
@@ -104,18 +73,48 @@ class ProductOrderCode extends AbstractConstants
     public const STATUS_STOP = 600;
 
     /**
+     * @Message("未付款")
+     */
+    public const PAY_STATUS_UNPAID = 1000;
+
+    /**
+     * @Message("已支付")
+     */
+    public const PAY_STATUS_SUCCESSFUL = 1001;
+
+    /**
+     * @Message("微信支付")
+     */
+    public const PAY_TYPE_WXPAY = 2001;
+
+    /**
+     * @Message("支付宝支付")
+     */
+    public const PAY_TYPE_ALIPAY = 2002;
+
+    /**
+     * @Message("QQ钱包")
+     */
+    public const PAY_TYPE_QQPAY = 2003;
+
+    /**
+     * @Message("余额支付")
+     */
+    public const PAY_TYPE_BALANCE = 2004;
+
+    /**
      * @Message("未激活")
      */
-    public const ACTIVAT_STATUS_NOT = 0;
+    public const ACTIVAT_STATUS_NOT = 3000;
 
     /**
      * @Message("已激活")
      */
-    public const ACTIVAT_STATUS_ALREADY = 1;
+    public const ACTIVAT_STATUS_ALREADY = 3001;
 
     /**
      * @Message("激活并充值")
      */
-    public const ACTIVAT_STATUS_RECHARGED = 2;
+    public const ACTIVAT_STATUS_RECHARGED = 3002;
 
 }
