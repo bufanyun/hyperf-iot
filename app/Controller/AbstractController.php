@@ -15,7 +15,7 @@ namespace App\Controller;
 use Core\Common\Container\Response;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Contract\RequestInterface;
-//use Hyperf\HttpServer\Contract\ResponseInterface;
+use Hyperf\HttpServer\Contract\ResponseInterface;
 use Psr\Container\ContainerInterface;
 use Hyperf\Contract\SessionInterface;
 use Hyperf\Validation\Contract\ValidatorFactoryInterface;
@@ -66,21 +66,26 @@ abstract class AbstractController
      * 模板渲染
      * /index/index/index : 绝对路径
      * index : 相对路径
-     * @author [MengShuai] [<133814250@qq.com>]
+     * view
+     * @param array $params
+     * @param string $name
+     * @return \Hyperf\ViewEngine\Contract\ViewInterface|null
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/06 16:39
      */
-    protected function view($params = [], $name = '') :? \Hyperf\ViewEngine\Contract\ViewInterface
+    protected function view(array $params = [], string $name = ''): ?\Hyperf\ViewEngine\Contract\ViewInterface
     {
         $action = $this->request->getAttribute(Dispatched::class)->handler->callback;
-        if(is_string($action) && strpos($action,'::')!==false){
-            $action = explode("::",$action);
+        if (is_string($action) && strpos($action, '::') !== false) {
+            $action = explode("::", $action);
         }
-        if(is_string($action) && strpos($action,'@')!==false){
-            $action = explode("@",$action);
+        if (is_string($action) && strpos($action, '@') !== false) {
+            $action = explode("@", $action);
         }
-        if(substr($name, 0, 1) != '/') {
+        if (substr($name, 0, 1) != '/') {
             $view_path = explode("App/Controller", strtr($action[0], "\\", "/"))[1] . '/' . (($name == '') ? $action[1] : $name);
-            $view_path = str_replace("Controller",'', $view_path);
-        }else{
+            $view_path = str_replace("Controller", '', $view_path);
+        } else {
             $view_path = $name;
         }
 
@@ -91,7 +96,7 @@ abstract class AbstractController
     /**
      * 接口服务信息
      * getServiceInfo
-     * @param  array  $key
+     * @param array $key
      *
      * @return array
      * author MengShuai <133814250@qq.com>
@@ -100,16 +105,15 @@ abstract class AbstractController
     protected function getServiceInfo(array $key = []): array
     {
         $config = [
-            'routePath'       => '/'.$this->request->path(),  //请求路由
-            'interfaceDomain' => $this->request->getHeaders()['host'][0] ??
-                env('API_HOME_INTERFACE'),  //前台域名
-            'url'             => $this->request->url(), //http://www.xx.com
-            'fullUrl'         => $this->request->fullUrl(), //http://www.xx.com?asd=123
+            'routePath'       => '/' . $this->request->path(),
+            'interfaceDomain' => $this->request->getHeaders()['host'][0] ?? env('API_HOME_INTERFACE'),
+            'url'             => $this->request->url(),
+            'fullUrl'         => $this->request->fullUrl(),
         ];
 
-        if ( ! empty($key)) {
+        if (!empty($key)) {
             foreach ($config as $k => $vo) {
-                if ( ! in_array($k, $key)) {
+                if (!in_array($k, $key)) {
                     unset($config[$k]);
                 }
             }
