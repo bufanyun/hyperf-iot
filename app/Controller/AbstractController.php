@@ -25,6 +25,22 @@ use Hyperf\Utils\ApplicationContext;
 use Core\Common\Container\Auth;
 use Hyperf\DbConnection\Db;
 
+/**
+ *
+ * 控制器基类继承
+ * Class AbstractController
+ *
+ * @package App\Controller
+ * author MengShuai <133814250@qq.com>
+ * date 2021/01/06 23:02
+ *
+ * @property ContainerInterface        $container
+ * @property RequestInterface          $request
+ * @property Response                  $response
+ * @property SessionInterface          $session
+ * @property ValidatorFactoryInterface $validation
+ * @property Auth                      $auth
+ */
 abstract class AbstractController
 {
     /**
@@ -68,8 +84,10 @@ abstract class AbstractController
      * /index/index/index : 绝对路径
      * index : 相对路径
      * view
-     * @param array $params
+     *
+     * @param array  $params
      * @param string $name
+     *
      * @return \Hyperf\ViewEngine\Contract\ViewInterface|null
      * author MengShuai <133814250@qq.com>
      * date 2021/01/06 16:39
@@ -84,25 +102,27 @@ abstract class AbstractController
             $action = explode("@", $action);
         }
         if (substr($name, 0, 1) != '/') {
-            $view_path = explode("App/Controller", strtr($action[0], "\\", "/"))[1] . '/' . (($name == '') ? $action[1] : $name);
+            $view_path = explode("App/Controller",
+                    strtr($action[0], "\\", "/"))[1] . '/' . (($name == '') ? $action[1] : $name);
             $view_path = str_replace("Controller", '', $view_path);
         } else {
             $view_path = $name;
         }
 
-//        var_export("模板路径：" . $view_path . "\r\n");
         return view($view_path, $params);
     }
 
     /**
      * 获取数据限制条件
      * getDataLimitField
+     *
      * @param \App\Models\BaseModel|null $model
+     *
      * @return array
      * author MengShuai <133814250@qq.com>
      * date 2021/01/06 17:04
      */
-    protected function getDataLimitField($model = null)
+    protected function getDataLimitField($model = null): array
     {
         $admin_id = $this->auth->check(false);
         $field    = 'admin_id';
@@ -118,12 +138,14 @@ abstract class AbstractController
     /**
      * 判断管理员是否是超管
      * isSuperAdmin
+     *
      * @param null $admin_id
+     *
      * @return bool
      * author MengShuai <133814250@qq.com>
      * date 2021/01/06 17:16
      */
-    protected function isSuperAdmin($admin_id = null)
+    protected function isSuperAdmin(string $admin_id = null): bool
     {
         if (isset($admin_id)) {
             return (env('SUPER_ADMIN') === $admin_id) ?? false;
@@ -134,6 +156,7 @@ abstract class AbstractController
     /**
      * 接口服务信息
      * getServiceInfo
+     *
      * @param array $key
      *
      * @return array
@@ -157,7 +180,7 @@ abstract class AbstractController
             }
             unset($vo);
         }
-        //        var_export(['getServiceInfo' => $config]);
+
         return $config;
     }
 }

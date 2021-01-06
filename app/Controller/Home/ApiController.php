@@ -10,7 +10,6 @@ use App\Constants\ProductOrderCode;
 use App\Controller\BaseController;
 use Hyperf\HttpServer\Annotation\Controller;
 use Hyperf\HttpServer\Annotation\RequestMapping;
-use App\Middleware\OssCallbackMiddleware;
 use Hyperf\DbConnection\Db;
 use Hyperf\Utils\ApplicationContext;
 use Hyperf\Di\Annotation\Inject;
@@ -21,14 +20,17 @@ use App\Middleware\SpreadMiddleware;
 use Hyperf\HttpServer\Annotation\Middleware;
 
 /**
- * ApiController
  * 前台接口通讯
+ * ApiController
  *
  * @package App\Controller\Home
  *
  * @Controller(prefix="home/api")
  *
- * @property \Core\Repositories\Home\AttachmentRepository $attachmentRepository
+ * @property ValidatorFactoryInterface                     $validationFactory
+ * @property Redis                                         $Redis
+ * @property BkApi                                         $BkApi
+ * @property \Core\Repositories\Home\OrderSubmitRepository $OrderSubmitRepository
  */
 class ApiController extends BaseController
 {
@@ -51,11 +53,11 @@ class ApiController extends BaseController
     private $BkApi;
 
     /**
-     * order_query
      * 订单查询
+     * order_query
+     *
      * @RequestMapping(path="order_query")
      *
-     * Middleware(SpreadMiddleware::class)
      */
     public function order_query()
     {
@@ -91,7 +93,6 @@ class ApiController extends BaseController
      * @RequestMapping(path="uniform")
      *
      * @Middleware(SpreadMiddleware::class)
-     * @property \Core\Repositories\Home\OrderSubmitRepository $orderSubmitRepository
      */
     public function uniform()
     {
@@ -142,7 +143,7 @@ class ApiController extends BaseController
      * selectPhones
      * 用户选号接口
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return mixed
      *
      * @RequestMapping(path="selectPhones")
      *
