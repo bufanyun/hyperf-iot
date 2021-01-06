@@ -25,11 +25,14 @@ use Core\Repositories\Common\Bufan\ImplRepository;
  *
  * @package Core\Repositories\Home
  *
- * @property \Core\Services\AttachmentService $attachmentService
+ * @property \Psr\Log\LoggerInterface $logger
+ * @property \Core\Common\Container\Redis $Redis
+ * @property \Core\Common\Extend\CardApi\Bk\Tools $BkApi
+ * @property \Core\Common\Extend\CardApi\GtNumber\Tools $GtApi
+ * @property \Core\Repositories\Common\Bufan\ImplRepository $ImplRepository
  */
 class OrderSubmitRepository extends BaseRepository
 {
-
     /**
      * @var \Psr\Log\LoggerInterface
      */
