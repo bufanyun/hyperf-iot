@@ -1,27 +1,35 @@
 # 基本介绍
 
-基于hyperf开发的物联网卡系统，saas云端智能架构，多营运商同行运维，支持市场几乎所有物联系统互通，资源无缝接入 
+hyperf-iot基于Hyperf v2.1、VUE+Prime Pro开发的前后分离管理后台，内容管理系统
+
+## 主要特性
+
+* 基于`Auth`验证的权限管理系统
+    * 支持无限级父子级权限继承，父级的管理员可任意增删改子级管理员及权限设置
+    * 支持单管理员多角色
+    * 支持管理子级数据或个人数据
+* 完善的前端功能组件开发
+    * 基于`Prime Pro`二次开发
+    * 基于`vue`开发，自适应手机、平板、PC
+    * 基于`Less`进行样式开发
+* 通用的会员模块和API模块
+* 共用同一账号体系的Web端会员中心权限验证和API接口会员权限验证
 
 
-# 主要实现
-
-无限三级客户群体，返佣管理，库存划卡，流量池通道，套餐自定义，卡板管理，订单管理，定时任务，卡板充值等核心功能
-
-
-# 注
-本项目非完全开源，只公开部分核心实现代码供于参考，如需完整版请联系作者！
-
+# 注意
+本项目目前还在持续开发中，遇到问题请联系作者！
 
 
 # 环境要求
 
  - PHP >= 7.2
- - Swoole PHP extension >= 4.4，and Disabled `Short Name`
+ - Swoole PHP extension >= 4.5，and Disabled `Short Name`
  - OpenSSL PHP extension
  - JSON PHP extension
  - PDO PHP extension （If you need to use MySQL Client）
  - Redis PHP extension （If you need to use Redis Client）
  - Protobuf PHP extension （If you need to use gRPC Server of Client）
+
 
 # Installation using Composer
 
@@ -40,6 +48,9 @@ This will start the cli-server on port `9501`, and bind it to all network interf
 
 which will bring up Hyperf default home page.
 
+
+
+  
 
 
   
