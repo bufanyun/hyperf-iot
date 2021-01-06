@@ -17,7 +17,7 @@ hyperf-iot基于Hyperf v2.1、VUE+Prime Pro开发的前后分离管理后台，�
 
 
 
-## 后台 - 页面展示
+## 页面展示
 
 * 控制台
 ![控制台](https://images.gitee.com/uploads/images/2021/0106/162041_4f4c0b7c_5102272.png "屏幕截图.png")
@@ -30,7 +30,7 @@ hyperf-iot基于Hyperf v2.1、VUE+Prime Pro开发的前后分离管理后台，�
 
 ## 环境要求
 
- - PHP >= 7.2
+ - PHP >= 7.3
  - Swoole PHP extension >= 4.5，and Disabled `Short Name`
  - OpenSSL PHP extension
  - JSON PHP extension
@@ -56,12 +56,6 @@ This will start the cli-server on port `9501`, and bind it to all network interf
 
 which will bring up Hyperf default home page.
 
-
-
-  
-
-
-  
 
 
   
