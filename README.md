@@ -16,11 +16,19 @@ hyperf-iot基于Hyperf v2.1、VUE+Prime Pro开发的前后分离管理后台，�
 * 共用同一账号体系的Web端会员中心权限验证和API接口会员权限验证
 
 
-# 注意
+
+## 后台 - 页面展示
+
+* 控制台
+![控制台](https://images.gitee.com/uploads/images/2021/0106/162041_4f4c0b7c_5102272.png "屏幕截图.png")
+
+* 列表
+![列表](https://images.gitee.com/uploads/images/2021/0106/162247_3a970594_5102272.png "屏幕截图.png")
+
+## 注
 本项目目前还在持续开发中，遇到问题请联系作者！
 
-
-# 环境要求
+## 环境要求
 
  - PHP >= 7.2
  - Swoole PHP extension >= 4.5，and Disabled `Short Name`
@@ -48,6 +56,9 @@ This will start the cli-server on port `9501`, and bind it to all network interf
 
 which will bring up Hyperf default home page.
 
+
+
+  
 
 
   

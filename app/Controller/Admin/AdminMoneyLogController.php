@@ -33,12 +33,11 @@ use App\Models\AdminMoneyLog;
  *     @Middleware(AdminAuthMiddleware::class),
  * })
  *
+ * @property \App\Models\AdminMoneyLog $model
  */
 class AdminMoneyLogController extends BaseController
 {
-
     /**
-     *
      * @Inject()
      * @var AdminMoneyLog
      */
