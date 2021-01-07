@@ -200,9 +200,9 @@ class FileUpload
      */
     private function getSavePath()
     {
-        $rootPath = rtrim($this->config['upload_path'],DS);
-        $uploadPath = trim($this->uploadPath,DS);
-        $savePath = $rootPath.DS.$uploadPath.DS;
+        $rootPath = rtrim($this->config['upload_path'],"/");
+        $uploadPath = trim($this->uploadPath,"/");
+        $savePath = $rootPath."/".$uploadPath."/";
         return $savePath;
     }
 
@@ -216,9 +216,9 @@ class FileUpload
      */
     private function getUploadPath()
     {
-        $attachments = trim($this->config['attachments'],DS);
+        $attachments = trim($this->config['attachments'],"/");
         $timePath = date('Ymd');
-        $uploadPath = $attachments.DS.$timePath.DS;
+        $uploadPath = $attachments."/".$timePath."/";
         return $uploadPath;
     }
 
@@ -325,7 +325,7 @@ class FileUpload
     {
         $this->fileInfo['id'] = $this->id;
         $this->fileInfo['state'] = $this->stateInfo;
-        $filePath =  DS.trim($this->uploadPath,DS).DS.$this->filename;
+        $filePath =  "/".trim($this->uploadPath,"/")."/".$this->filename;
         // 配置文件附件目录参数过滤，改参数不存库
         $attachments = $this->config['attachments'];
         if($attachments){

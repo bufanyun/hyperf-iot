@@ -79,7 +79,6 @@ class UploadController extends BaseController
             throw new BusinessException(StatusCode::ERR_EXCEPTION,'上传文件为空');
         }
         $res = $this->uploadRepo->uploadFiles($files,$reqParam);
-
         return $this->success($res);
     }
 }

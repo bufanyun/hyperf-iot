@@ -110,8 +110,9 @@ class AttachmentService extends BaseService
             $host = config('aliyun_oss.bucket.data.host');
             $host = substr($host,0,4) == 'http'?$host:'http://'.$host;
         } else {
-            $domain = config('app_domain');
-            $domain = substr($domain,0,4) == 'http'?$domain:'http://'.$domain;
+//            $domain = config('app_domain');
+//            $domain = substr($domain,0,4) == 'http'?$domain:'http://'.$domain;
+            $domain = env('CDN_DOMAIN');
             $attachments = ltrim(config('upload.attachments'),'/');
             $host = $domain.'/'.$attachments;
         }

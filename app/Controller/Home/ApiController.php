@@ -53,6 +53,19 @@ class ApiController extends BaseController
     private $BkApi;
 
     /**
+     * 图片上传
+     * upload
+     *
+     * @RequestMapping(path="upload")
+     *
+     */
+    public function upload()
+    {
+        var_export($this->request->all());
+        return $this->success([], '操作成功');
+    }
+
+    /**
      * 订单查询
      * order_query
      *

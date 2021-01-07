@@ -63,11 +63,17 @@ class ProductSale extends BaseModel
     ];
     public function getPidNameAttribute() : string
     {
+        if(empty($this->attributes['pid'])){
+            return '';
+        }
         $v= $this->attributes['pid']>0 ? $this->getPidKindName($this->attributes['pid']) : $this->attributes['kind_name'];
         return $v;
     }
     public function getCidNameAttribute() : string
     {
+        if(empty($this->attributes['cid'])){
+            return '';
+        }
         return arraySearchColumn($this->ProductClassify->getList(), 'id', (string)$this->attributes['cid'], 'name');
     }
     public function getPriceAttribute() : string

@@ -54,9 +54,8 @@ class NotifyController extends BaseController
 
     public function ossCallback()
     {
-
         $row = Db::table('ip_region')
-//            ->limit(1000)
+            ->limit(1000)
             ->get()->toArray();
 
         $container = ApplicationContext::getContainer();
@@ -64,22 +63,6 @@ class NotifyController extends BaseController
         $redis->set('qwe', 0);
 
         return $this->response->json(['n' => $row]);
-
-
-//        return $row;
-
-//        return $this->error('666');
-//
-//        $body = $this->request->getBody();
-//        if($body){
-//            $content = $body->getContents();
-//            parse_str($content, $inputData);
-//            $ret = $this->attachmentRepository->saveAttachment($inputData);
-//            return $this->success($ret);
-//        }else{
-//            $data = ["state" => "fail"];
-//            return $this->error($data);
-//        }
     }
 
 
@@ -97,9 +80,6 @@ class NotifyController extends BaseController
      */
     public function ossCallback2()
     {
-        return $this->error('666');
-
-
         $body = $this->request->getBody();
         if ($body) {
             $content = $body->getContents();
