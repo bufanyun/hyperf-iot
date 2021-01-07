@@ -254,13 +254,15 @@
     //  })();
 </script>
 <script src="{{env('CDN_DOMAIN')}}/static/home/public/assets/js/jquery-2.1.4.min.js"></script>
+<script src="http://static.ms521.cn/layui/layui.all.js"></script>
 <script src="{{env('CDN_DOMAIN')}}/static/home/public/assets/js/id_check.js"></script>
 <script src="{{env('CDN_DOMAIN')}}/static/home/public/assets/js/commonJs.js"></script>
 <script src="{{env('CDN_DOMAIN')}}/static/home/public/assets/js/areaInfo.js"></script>
 <script src="{{env('CDN_DOMAIN')}}/static/home/public/assets/js/commonCheckFill.js"></script>
 <script src="{{env('CDN_DOMAIN')}}/static/home/public/assets/js/index.js?r=8752134"></script>
 <script>
-    $('.eruda-entry-btn').hide();
+    // $('.eruda-entry-btn').hide();
+    // $('.subLoad').show();
     if(product.captcha_switch === 1){
         $('#apply-yzm').slideDown("slow");
     }
@@ -271,6 +273,7 @@
         $('#lianghao-title').slideDown("slow");
         $('#number').slideDown("slow");
     }
+
 </script>
 @include('Home.common.uinapp-sdk')
 </html>

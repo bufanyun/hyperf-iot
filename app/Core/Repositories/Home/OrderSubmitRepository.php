@@ -160,7 +160,9 @@ class OrderSubmitRepository extends BaseRepository
                     //                    'captchaId'        => $inputData['captchaInfo']['captcha'],
                 ];
                 var_export($data);
+                $this->logger->info('开始下单：' . json_encode($data, JSON_UNESCAPED_UNICODE) . "\r\n");
                 $res = $this->BkApi->request('ZOPsubmit', $data);
+                $this->logger->info('结束下单,返回结果：' . json_encode($res, JSON_UNESCAPED_UNICODE) . "\r\n");
                 var_export(['$res' => $res]);
                 if ($res['code'] !== StatusCode::SUCCESS) {
                     throw new BusinessException(StatusCode::ERR_EXCEPTION, $res['msg']);

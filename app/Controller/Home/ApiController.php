@@ -96,6 +96,7 @@ class ApiController extends BaseController
      */
     public function uniform()
     {
+
         $reqParam = $this->request->all();
         if (!isset($reqParam['template'])) {
             return $this->error(StatusCode::ERR_EXCEPTION, '模板未录入');

@@ -1356,19 +1356,27 @@ $(function () {
     // 提交请求
     function submit() {
         $('#TCaptcha,.mask').hide();
-        $('.subLoad').show();
+        // $('.subLoad').show();
+        var loading = layer.msg("正在提交订单，请稍候..",{
+            icon:16,
+            time:-1
+        })
         var succHtml;
         if(commonCheckFill.isEmpty($.trim(req.certInfo.contractPhone))){
             req.certInfo.contractPhone = $('#mobilePhone').val();
         }
         reqData = JSON.stringify(req);
-        $._ajaxSwitch({
-            type: 'post',
-            url: '/home/api/uniform',
+
+        $.ajax({
+            type: 'POST',
+            url: API_interface+'/home/api/uniform',
             data: reqData,
             contentType: 'application/json',
-            success: function (data) {
+            dataType: 'json',
+            async: true,
+            success: function(data) {
                 // console.log('data:'+JSON.stringify(data));
+                layer.close(loading);
                 $('.subLoad').hide();
                 $('#since').hide();
                 subStatus = true;
@@ -1436,7 +1444,7 @@ $(function () {
                 // subStatus = true;
                 // requestFlag = false;
             },
-            error: function () {
+            error: function(res) {
                 layer.close(loading);
                 $('.subLoad').hide();
                 $('#overtime, .mask').show();
@@ -1444,10 +1452,9 @@ $(function () {
                 $('#since').hide();
                 subStatus = true;
                 requestFlag = false;
-            },
-        });
+            }
+        })
     }
-
     // 提交
     $('#submit').on('click', function () {
         if ($('.seMarkSel').hasClass('seMarkChecked')) {
@@ -1471,7 +1478,7 @@ $(function () {
             getSince();
             requestFlag = true;
             $('#top-desc').text(_topText).removeClass('error');
-            // $('#TCaptcha, .mask').show();
+            $('#TCaptcha, .mask').show();
             $.noScroll();
 
             preSubmit(false);
@@ -1479,7 +1486,10 @@ $(function () {
             submit();
             // cbfn2();
         }
+
+
     });
+
     // 营业厅自提
     $('.sinceBtn').on('click', function () {
         if (subStatus) {

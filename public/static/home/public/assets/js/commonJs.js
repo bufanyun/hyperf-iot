@@ -67,6 +67,7 @@ $.extend({
             ajaxUrl = paramJson.url;
         }
         $.ajax({
+            timeout:20000,
             type: paramJson.type,
             url: ajaxUrl,
             data: paramJson.data,
@@ -246,6 +247,7 @@ $.extend({
         if (verify()) {
             // 协议请求
             $._ajaxSwitch({
+                timeout:20000,
                 type: 'post',
                 url: url,
                 dataType: 'json',
@@ -459,7 +461,7 @@ $.extend({
     /*if (location.href.indexOf('/gray/newMsg/replaceCard') > 0) {
       return;
     }*/
-    var src = '//res.mall.10010.cn/mall/mobile/alay/eruda.min.js';
-    document.write('<scr' + 'ipt src="' + src + '"></scr' + 'ipt>');
-    document.write('<scr' + 'ipt>eruda.init();</scr' + 'ipt>');
+    // var src = '//res.mall.10010.cn/mall/mobile/alay/eruda.min.js';
+    // document.write('<scr' + 'ipt src="' + src + '"></scr' + 'ipt>');
+    // document.write('<scr' + 'ipt>eruda.init();</scr' + 'ipt>');
 })();
