@@ -29,8 +29,10 @@ return [
     'allow_origins' => [
         'http://127.0.0.1',
         'http://localhost',
-        'http://api.iot.qvnidaye.com',
-        'http://iot.qvnidaye.com',
+//        'http://api.iot.qvnidaye.com',
+//        'http://iot.qvnidaye.com',
+//        'http://number.facms.cn',
+//        'http://admin.facms.cn',
     ],
     // 是否记录日志
     'app_log' => env('APP_LOG', false),

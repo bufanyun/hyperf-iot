@@ -63,7 +63,7 @@ class CorsMiddleware implements MiddlewareInterface
                     $response = Context::get(ResponseInterface::class);
                     $response = $response->withHeader('Access-Control-Allow-Origin', "{$origin}");
 //                    $response = $response->withHeader('Access-Control-Allow-Origin', "*");
-                    $response = $response->withHeader('Access-Control-Allow-Credentials', 'true');
+                    $response = $response->withHeader('Access-Control-Allow-Credentials', true);
                     $response = $response->withHeader('Access-Control-Allow-Headers', 'DNT,Keep-Alive,User-Agent,Cache-Control,Content-Type,hyperf-session-id');
                     Context::set(ResponseInterface::class, $response);
                     // 非简单跨域请求的"预检"请求处理
