@@ -21,9 +21,9 @@ return [
             'default' => 'single',
             'channels' => [
                 'single' => [
-                    'driver' => env('WECHAT_LOG_DRIVER', 'errorlog'),
-                    'level' => env('WECHAT_LOG_LEVEL', 'debug'),
-                    'path' => env('WECHAT_LOG_DRIVER', BASE_PATH . '/runtime/logs/hyperf.log'),
+                    'driver' => env('WECHAT_LOG_DRIVER', BASE_PATH . '/runtime/logs/wechat/errorlog.txt'),
+                    'level' => env('WECHAT_LOG_LEVEL', BASE_PATH . '/runtime/logs/wechat/debug.txt'),
+                    'path' => env('WECHAT_LOG_DRIVER', BASE_PATH . '/runtime/logs/wechat/log.txt'),
                 ],
             ],
         ],
@@ -32,11 +32,11 @@ return [
     'official_account' => [
         'default' => [
             // AppID
-            'app_id' => env('WECHAT_OFFICIAL_ACCOUNT_APPID', 'your-app-id'),
+            'app_id' => env('WECHAT_OFFICIAL_ACCOUNT_APPID', ''),
             // AppSecret
-            'secret' => env('WECHAT_OFFICIAL_ACCOUNT_SECRET', 'your-app-secret'),
+            'secret' => env('WECHAT_OFFICIAL_ACCOUNT_SECRET', ''),
             // Token
-            'token' => env('WECHAT_OFFICIAL_ACCOUNT_TOKEN', 'your-token'),
+            'token' => env('WECHAT_OFFICIAL_ACCOUNT_TOKEN', ''),
             // EncodingAESKey
             'aes_key' => env('WECHAT_OFFICIAL_ACCOUNT_AES_KEY', ''),
         ],
