@@ -12,16 +12,16 @@ use Hyperf\Di\Annotation\Inject;
 use Naixiaoxin\HyperfWechat\EasyWechat;
 
 /**
- *
+ * 微信公众号
  * Class WeChat
  * @package Core\Plugins
  * author MengShuai <133814250@qq.com>
  * date 2021/01/09 17:17
- * @property \Naixiaoxin\HyperfWechat\EasyWechat $app
+ * @property \EasyWeChat\OfficialAccount\Application $app
  */
 class OfficialAccount
 {
-    private $app;
+    private ? EasyWechat $app = null;
 
     public function __construct()
     {
@@ -32,9 +32,12 @@ class OfficialAccount
      * 生成短连接
      * shorten
      * @param string $url
+     *
      * @return array
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * author MengShuai <133814250@qq.com>
-     * date 2021/01/09 17:51
+     * date 2021/01/10 00:00
      */
     public function shorten(string $url) : array
     {
