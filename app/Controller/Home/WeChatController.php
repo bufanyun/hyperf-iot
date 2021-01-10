@@ -28,12 +28,9 @@ class WeChatController extends BaseController
      */
     public function serve()
     {
-        $OfficialAccount = make(OfficialAccount::class);
-        var_export(['res' => $OfficialAccount->shorten('https://easywechat.com')]);
         $reqParam = $this->request->all();
         var_export($reqParam);
         $app = EasyWechat::officialAccount();
-        $shortUrl = $app->url->shorten('https://easywechat.com');
         $app->server->push(function ($message) use($app){
             if(empty($message)){
                 return "你好，欢迎关注千里号卡！";
@@ -43,7 +40,7 @@ class WeChatController extends BaseController
             return "{$user['nickname']} 你好，欢迎关注千里号卡！";
         });
         $openId = 'ok1EU6l49YgIm66DzPqVzKYNiQvk';
-        $message = new Text('Hello world!');
+        $message = make(Text::class,['Hello world!!']);
         $result = $app->customer_service->message($message)->to($openId)->send();
         var_export(['$result' => $result]);
         // 一定要用Helper::Response去转换
