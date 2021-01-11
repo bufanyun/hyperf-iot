@@ -81,6 +81,7 @@ class SpreadController extends BaseController
             return $this->error(StatusCode::ERR_EXCEPTION, '商品不存在');
         }
         unset($reqParam['r']);
+        var_export($product);
         return $this->view([
             'product' => $product,
             'reqParam' => $reqParam,

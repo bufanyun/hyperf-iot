@@ -12,7 +12,7 @@ use App\Constants\StatusCode;
 use Hyperf\Utils\ApplicationContext;
 
 /**
- * 北滘联通 - 工具类
+ * BK联通 - 工具类
  * Class Tools
  *
  * @package extend\Bk

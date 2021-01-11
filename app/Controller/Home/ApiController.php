@@ -14,6 +14,7 @@ use Hyperf\DbConnection\Db;
 use Hyperf\Utils\ApplicationContext;
 use Hyperf\Di\Annotation\Inject;
 use Core\Common\Extend\CardApi\Bk\Tools as BkApi;
+use Core\Common\Extend\CardApi\Qh\Tools as QhApi;
 use Hyperf\Validation\Contract\ValidatorFactoryInterface;
 use Core\Common\Container\Redis;
 use App\Middleware\SpreadMiddleware;
@@ -27,9 +28,10 @@ use Hyperf\HttpServer\Annotation\Middleware;
  *
  * @Controller(prefix="home/api")
  *
- * @property ValidatorFactoryInterface                     $validationFactory
- * @property Redis                                         $Redis
- * @property BkApi                                         $BkApi
+ * @property ValidatorFactoryInterface $validationFactory
+ * @property Redis $Redis
+ * @property BkApi $BkApi
+ * @property QhApi $QhApi
  * @property \Core\Repositories\Home\OrderSubmitRepository $OrderSubmitRepository
  */
 class ApiController extends BaseController
@@ -51,6 +53,12 @@ class ApiController extends BaseController
      * @var BkApi
      */
     private $BkApi;
+
+    /**
+     * @Inject()
+     * @var QhApi
+     */
+    private $QhApi;
 
     /**
      * 图片上传
@@ -165,27 +173,10 @@ class ApiController extends BaseController
      */
     public function selectPhones()
     {
-        $params    = $this->request->all();
-        $validator = $this->validationFactory->make(
-            $params,
-            [
-                'sid'      => 'required',
-                'province' => 'required|string',
-                'city'     => 'required|string',
-            ],
-            [
-                'sid.required'      => '商品id不能为空',
-                'province.required' => '归属省不能为空',
-                'city.required'     => '归属市不能为空',
-                'province.string'   => '归属省格式错误',
-                'city.string'       => '归属市格式错误',
-            ]
-        );
-
-        if ($validator->fails()) {
-            return $this->error(StatusCode::ERR_EXCEPTION, $validator->errors()->first());
+        $params = $this->request->all();
+        if (!isset($params['sid'])) {
+            return $this->error(StatusCode::ERR_EXCEPTION, '商品id不能为空');
         }
-
         $product = Db::table('product_sale')
             ->select('product_access.label', 'product_access.api_model', 'product_access.*')
             ->join('product_access', 'product_access.id', '=', 'product_sale.access')
@@ -197,6 +188,22 @@ class ApiController extends BaseController
 
         switch ($product->api_model) {
             case 'BkApi':
+                $validator = $this->validationFactory->make(
+                    $params,
+                    [
+                        'province' => 'required|string',
+                        'city'     => 'required|string',
+                    ],
+                    [
+                        'province.required' => '归属省不能为空',
+                        'city.required'     => '归属市不能为空',
+                        'province.string'   => '归属省格式错误',
+                        'city.string'       => '归属市格式错误',
+                    ]
+                );
+                if ($validator->fails()) {
+                    return $this->error(StatusCode::ERR_EXCEPTION, $validator->errors()->first());
+                }
                 $num    = (isset($params['num']) && $params['num'] == "10") ? "10" : "100";
                 $region = $this->BkApi->getAscriptionCode((int)$params['province'], (int)$params['city']);
                 if (!$region) {
@@ -229,8 +236,30 @@ class ApiController extends BaseController
                     $this->Redis->set($key, json_encode($res), 60);
                 }
                 return $res;
-            case "str2":
-                return $this->error(StatusCode::ERR_EXCEPTION, '商品不支持选号1');
+            case "QhApi":
+                $validator = $this->validationFactory->make(
+                    $params,
+                    [
+                        'cuccProvinceEcss' => 'required|string',
+                        'cuccCityEcss'     => 'required|string',
+                    ],
+                    [
+                        'cuccProvinceEcss.required' => '归属省不能为空',
+                        'cuccCityEcss.required'     => '归属市不能为空',
+                        'cuccProvinceEcss.string'   => '归属省格式错误',
+                        'cuccCityEcss.string'       => '归属市格式错误',
+                    ]
+                );
+                if ($validator->fails()) {
+                    return $this->error(StatusCode::ERR_EXCEPTION, $validator->errors()->first());
+                }
+
+                $lists = $this->QhApi->selectPhones($params['cuccProvinceEcss'], $params['cuccCityEcss'], isset($params['searchValue']) ?? null);
+                if (!$lists) {
+                    return $this->error(StatusCode::ERR_EXCEPTION, '获取号码接口失败，请稍候再试！');
+                }
+                var_export(['$lists' => $lists]);
+                return $this->success($lists, '操作成功');
             default:
                 return $this->error(StatusCode::ERR_EXCEPTION, '商品不支持选号');
         }
