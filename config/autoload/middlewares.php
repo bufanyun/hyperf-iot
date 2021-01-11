@@ -12,9 +12,11 @@ declare(strict_types=1);
 return [
     'http' => [
         \App\Middleware\RequestMiddleware::class, // 请求中间件
+        \App\Middleware\DebugMiddleware::class, // debug中间件
 //        \App\Middleware\CorsMiddleware::class, // 跨域处理
         \Hyperf\Session\Middleware\SessionMiddleware::class, // 就在这个里不要调换顺序
         \Hyperf\Validation\Middleware\ValidationMiddleware::class,
+
 //        \App\Middleware\SpreadMiddleware::class,
     ],
 ];

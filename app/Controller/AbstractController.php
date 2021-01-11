@@ -23,7 +23,6 @@ use function Hyperf\ViewEngine\view;
 use Hyperf\HttpServer\Router\Dispatched;
 use Hyperf\Utils\ApplicationContext;
 use Core\Common\Container\Auth;
-use Hyperf\DbConnection\Db;
 
 /**
  *
@@ -43,6 +42,7 @@ use Hyperf\DbConnection\Db;
  */
 abstract class AbstractController
 {
+
     /**
      * @Inject
      * @var ContainerInterface

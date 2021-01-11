@@ -12,12 +12,12 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Hyperf\Utils\Context;
 
 /**
- * RequestMiddleware
  * 接到客户端请求，通过该中间件进行一些调整
+ * Class RequestMiddleware
+ *
  * @package App\Middleware
- * User：YM
- * Date：2019/12/16
- * Time：上午12:13
+ * author MengShuai <133814250@qq.com>
+ * date 2021/01/11 21:50
  */
 class RequestMiddleware implements MiddlewareInterface
 {
@@ -70,12 +70,11 @@ class RequestMiddleware implements MiddlewareInterface
     }
 
     /**
-     * getRequestId
      * 唯一请求id
-     * User：YM
-     * Date：2019/11/18
-     * Time：下午7:53
+     * getRequestId
      * @return string
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/11 21:50
      */
     protected function getRequestId()
     {

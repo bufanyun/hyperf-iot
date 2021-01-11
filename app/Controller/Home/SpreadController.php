@@ -44,18 +44,18 @@ class SpreadController extends BaseController
      */
     public function pool()
     {
-        $reqParam = $this->request->all();
+        $reqParam  = $this->request->all();
         $classifys = Db::table('product_classify')
             ->where(['status' => 1])
             ->orderBy('product_classify.sort', 'DESC')
             ->get();
-        $sales = Db::table('product_sale')->where(['status' => 1, 'pid' => 0])
+        $sales     = Db::table('product_sale')->where(['status' => 1, 'pid' => 0])
             ->orderBy('product_sale.sort', 'DESC')
             ->get();
         unset($reqParam['sid'], $reqParam['r']);
         return $this->view([
-            'reqParam' => $reqParam,
-            'sales' => $sales,
+            'reqParam'  => $reqParam,
+            'sales'     => $sales,
             'classifys' => $classifys,
             'routePath' => '/' . $this->request->path(),
         ]);
@@ -72,7 +72,7 @@ class SpreadController extends BaseController
     public function product_show()
     {
         $reqParam = $this->request->all();
-        $product = Db::table('product_sale')
+        $product  = Db::table('product_sale')
             ->select('product_access.label', 'product_sale.*')
             ->join('product_access', 'product_access.id', '=', 'product_sale.access')
             ->where(['product_sale.status' => 1, 'product_sale.id' => $reqParam['sid']])
@@ -81,10 +81,9 @@ class SpreadController extends BaseController
             return $this->error(StatusCode::ERR_EXCEPTION, '商品不存在');
         }
         unset($reqParam['r']);
-        var_export($product);
         return $this->view([
-            'product' => $product,
-            'reqParam' => $reqParam,
+            'product'   => $product,
+            'reqParam'  => $reqParam,
             'routePath' => '/' . $this->request->path(),
         ], '/Home/Spread/product_show/' . $product->label);
     }
@@ -100,9 +99,11 @@ class SpreadController extends BaseController
     public function plat_apply()
     {
         $reqParam = $this->request->all();
-        $product = Db::table('product_sale')
-            ->select('product_access.label', 'product_access.captcha_switch', 'product_access.area_switch', 'product_access.num_select_switch',
-                'product_sale.id', 'product_sale.name', 'product_sale.titile', 'product_sale.price', 'product_sale.icon', 'product_sale.first_desc', 'product_sale.recommend', 'product_sale.cid')
+        $product  = Db::table('product_sale')
+            ->select('product_access.label', 'product_access.captcha_switch', 'product_access.area_switch',
+                'product_access.num_select_switch',
+                'product_sale.id', 'product_sale.name', 'product_sale.titile', 'product_sale.price',
+                'product_sale.icon', 'product_sale.first_desc', 'product_sale.recommend', 'product_sale.cid')
             ->join('product_access', 'product_access.id', '=', 'product_sale.access')
             ->where(['product_sale.status' => 1, 'product_sale.id' => $reqParam['sid']])
             ->first();
@@ -111,9 +112,9 @@ class SpreadController extends BaseController
         }
         unset($reqParam['r']);
         return $this->view([
-            'product' => $product,
-            'reqParam' => (object)$reqParam,
-            'routePath' => '/' . $this->request->path(),
+            'product'         => $product,
+            'reqParam'        => (object)$reqParam,
+            'routePath'       => '/' . $this->request->path(),
             'interfaceDomain' => isset($this->request->getHeaders()['host'][0]) ? 'http://' . $this->request->getHeaders()['host'][0] : env('API_HOME_INTERFACE'),
         ]);
     }
