@@ -7,5 +7,4 @@ namespace PHPSTORM_META {
     override(\Hyperf\Utils\Context::get(0), map('@'));
     override(\make(0), map('@'));
     override(\di(0), map('@'));
-
 }

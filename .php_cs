@@ -1,5 +1,6 @@
 <?php
 
+
 $header = <<<'EOF'
 This file is part of Hyperf.
 
