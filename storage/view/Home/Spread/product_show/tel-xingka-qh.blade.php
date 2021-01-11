@@ -137,7 +137,7 @@
     <div class="alertTip" style="z-index: 2;">
         <div class="wrap">
             <p>提示</p>
-            <span>{{tipContent}}</span>
+            <span id="tipContent_span"></span>
             <a @click="confirm" class="clearfix">确定</a>
         </div>
     </div>
@@ -365,8 +365,13 @@
                 this.dialogVisible=true
                 this.noDataMsg = false
                 self.$indicator.open();
-                Api.post(Api.queryPhone,JSON.stringify(param),function (result) {
+                Api.post(Api.queryPhone,JSON.stringify(param),function (res) {
+                    if(res.code !== 20000){
+                        self.$messagebox.alert(res.msg);
+                        return;
+                    }
                     self.$indicator.close();
+                    let result = res.data;
                     if(!result||result.length<1){
 
                         // self.$toast("");
@@ -434,13 +439,15 @@
                 var alertTip = document.querySelector('.alertTip');
                 alertTip.style.display = 'none';
                 if (self.success == true) {
-                    if (self.card == true) {
-                        self.clear();
-                        window.location.href = "success.php?bd=&code=lcfx";
-                    } else {
-                        self.clear();
-                        window.location.href = "card.php?bd=&code=lcfx";
-                    }
+                    self.clear();
+                    window.location.reload();
+                    // if (self.card == true) {
+                    //     self.clear();
+                    //     window.location.href = "success.php?bd=&code=lcfx";
+                    // } else {
+                    //     self.clear();
+                    //     window.location.href = "card.php?bd=&code=lcfx";
+                    // }
                 }
                 self.success = false;
                 $('.loading').hide();
@@ -610,6 +617,7 @@
                     if(resultS['rspCode'] == "1000"){
                         $('.loading').hide();
                         self.tipContent = resultS['rspDesc'];
+                        $('#tipContent_span').text(self.tipContent);
                         $('.alertTip').show();
                     } else {
                         self.count = 60;
@@ -619,6 +627,7 @@
                 },function () {
                     $('.loading').hide();
                     self.tipContent = "一分钟内请不要重复发送短信！";
+                    $('#tipContent_span').text(self.tipContent);
                     $('.alertTip').show();
                 })
 
@@ -674,6 +683,14 @@
                 } else {
                     $('.loading').show();
                     var param = {
+                        template:'qh',
+                        job_number:'{{$reqParam['job_number'] ?? ''}}',
+                        channel:'{{$reqParam['channel'] ?? ''}}',
+                        sale_channel:'{{$reqParam['sale_channel'] ?? ''}}',
+                        sub_agent:'{{$reqParam['sub_agent'] ?? ''}}',
+                        source:'{{$reqParam['source'] ?? ''}}',
+                        sid:'{{$product->id}}',
+                        format_province:$('#gsd').val(),
                         name: self.ruleForm.name,
                         phone: self.ruleForm.phone,
                         phoneNum: self.ruleForm.phoneNum,
@@ -706,24 +723,34 @@
                         identityType: 1
                     };
 
-                    var send_order = "/home/public/index.php/index/Receive/xingka_access?r=order_submit.php&bd=&code=lcfx";
-                    Api.post(send_order, JSON.stringify(param), function (resultOrder) {
+                    var send_order = "/home/api/uniform";
+                    Api.post(send_order, JSON.stringify(param), function (res) {
+                        if(res.code !== 20000){
+                            $('#tipContent_span').text(res.msg);
+                            $('.alertTip').show();
+                            return;
+                        }
+                        let resultOrder = res.data;
                         console.log(resultOrder);
                         if(resultOrder['rspCode'] == "1000"){
                             $('.loading').hide();
                             self.tipContent = resultOrder['rspDesc'];
+                            $('#tipContent_span').text(self.tipContent);
                             $('.alertTip').show();
                         } else if(resultOrder['rspCode'] == "2000"){
                             $('.loading').hide();
                             self.tipContent = "恭喜活动参加成功！我们会快马加鞭为您送达，尽情享用百款APP免流！";
+                            $('#tipContent_span').text(self.tipContent);
                             $('.alertTip').show();
                             var formBox = document.querySelector(".formBox");
                             formBox.style.display = 'none';
                             self.success = true;
                             self.card = true;
                         } else {
+                            console.log(111);
                             $('.loading').hide();
-                            self.tipContent = "恭喜活动参加成功！我们会快马加鞭为您送达，尽情享用百款APP免流！";
+                            // self.tipContent = "恭喜活动参加成功！我们会快马加鞭为您送达，尽情享用百款APP免流！";
+                            $('#tipContent_span').text(res.msg);
                             $('.alertTip').show();
                             var formBox = document.querySelector(".formBox");
                             formBox.style.display = 'none';
@@ -736,7 +763,7 @@
                         }else{
                             self.tipContent ="请求失败，请重新提交！";
                         }
-
+                        $('#tipContent_span').text(self.tipContent);
                         $('.alertTip').show();
                     });
                 }

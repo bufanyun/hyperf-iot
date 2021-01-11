@@ -154,8 +154,27 @@ class ApiController extends BaseController
                 }
                 $res = $this->OrderSubmitRepository->default($reqParam);
                 return $res;
-            case "str2":
-                return $this->error(StatusCode::ERR_EXCEPTION, '商品不支持选号1');
+            case "qh":
+                $validator = $this->validationFactory->make(
+                    $reqParam,
+                    [
+                        'sid'        => 'required',
+                        'job_number' => 'required',
+                    ],
+                    [
+                        'sid.required'        => '商品id不能为空',
+                        'job_number.required' => '推广工号不能为空',
+                    ]
+                );
+                if ($validator->fails()) {
+                    return $this->error(StatusCode::ERR_EXCEPTION, $validator->errors()->first());
+                }
+                $OrderThreeInspect = OrderThreeInspect((string)$reqParam['name'], (string)$reqParam['cardNumber'], (string)$reqParam['phone']);
+                if ($OrderThreeInspect !== true) {
+                    return $this->error(StatusCode::ERR_EXCEPTION, $OrderThreeInspect);
+                }
+                $res = $this->OrderSubmitRepository->qh($reqParam);
+                return $res;
             default:
                 return $this->error(StatusCode::ERR_EXCEPTION, '商品不支持选号');
         }
@@ -258,7 +277,6 @@ class ApiController extends BaseController
                 if (!$lists) {
                     return $this->error(StatusCode::ERR_EXCEPTION, '获取号码接口失败，请稍候再试！');
                 }
-                var_export(['$lists' => $lists]);
                 return $this->success($lists, '操作成功');
             default:
                 return $this->error(StatusCode::ERR_EXCEPTION, '商品不支持选号');

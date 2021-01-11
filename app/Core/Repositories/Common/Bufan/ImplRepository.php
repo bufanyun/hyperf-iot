@@ -34,6 +34,40 @@ class ImplRepository extends BaseRepository
     }
 
     /**
+     * qh模版 -- 创建订单
+     * templateBkApi
+     * @param array $inputData
+     * @param array $Ascription
+     * @param object $product
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/11 18:01
+     */
+    public function templateQhApi(array $inputData, array $Ascription, object $product): void
+    {
+        if ($inputData['job_number'] === 'bufanyun' && isset($inputData['sub_agent'])) {
+            $agent_id = Db::connection('bufan')->table('admin')->where(['id' => (int)$inputData['sub_agent']])->exists() ? (int)$inputData['sub_agent'] : 1;
+            $insert   = [
+                'admin_id'    => $agent_id,
+                'type'        => $product->name,
+                'ip'          => getClientIp(),
+                'province'    => $Ascription[0],
+                'city'        => $Ascription[1],
+                'number'      => $inputData['phoneNum'],
+                'name'        => $inputData['name'],
+                'idcard'      => $inputData['cardNumber'],
+                'tel'         => $inputData['phone'],
+                'newname'     => $inputData['name'],
+                'newprovince' => $inputData['province'],
+                'newcity'     => $inputData['city'],
+                'newdistrict' => $inputData['country'],
+                'address'     => $inputData['shippingAddress'],
+                'addtime'     => time(),
+            ];
+            $this->createOrder($insert);
+        }
+    }
+
+    /**
      * bk模版 -- 创建订单
      * templateBkApi
      * @param array $inputData

@@ -106,8 +106,11 @@ class CurlHelpers
         }
         $isSsl = $urlsInfo['scheme'] == 'https' ? true : false;
         $cli   = make(Client::class, [$domain, $port, $isSsl]);
-        $cli->setHeaders($header);
         $cli->set(['timeout' => 10]);
+        $cli->setHeaders($header);
+        if(in_array("Content-type: application/json",$header)) {  //json请求时强制使用json类型传递参数
+            $post_data = json_encode($post_data);
+        }
         $cli->post($queryUrl, $post_data);
         $output = $cli->body;
         $cli->close();

@@ -14,6 +14,7 @@ use Hyperf\DbConnection\Db;
 use Hyperf\Di\Annotation\Inject;
 use Core\Common\Extend\CardApi\Bk\Tools as BkApi;
 use Core\Common\Extend\CardApi\GtNumber\Tools as GtApi;
+use Core\Common\Extend\CardApi\Qh\Tools as QhApi;
 use Core\Common\Container\Redis;
 use Hyperf\Logger\LoggerFactory;
 use Hyperf\Utils\ApplicationContext;
@@ -29,6 +30,7 @@ use Core\Repositories\Common\Bufan\ImplRepository;
  * @property \Core\Common\Container\Redis $Redis
  * @property \Core\Common\Extend\CardApi\Bk\Tools $BkApi
  * @property \Core\Common\Extend\CardApi\GtNumber\Tools $GtApi
+ * @property \Core\Common\Extend\CardApi\Qh\Tools $QhApi
  * @property \Core\Repositories\Common\Bufan\ImplRepository $ImplRepository
  */
 class OrderSubmitRepository extends BaseRepository
@@ -54,6 +56,11 @@ class OrderSubmitRepository extends BaseRepository
     private $GtApi;
 
     /**
+     * @var QhApi
+     */
+    private $QhApi;
+
+    /**
      * @var ImplRepository
      */
     private $ImplRepository;
@@ -63,9 +70,100 @@ class OrderSubmitRepository extends BaseRepository
         $Container            = ApplicationContext::getContainer();
         $this->BkApi          = $Container->get(BkApi::class);
         $this->GtApi          = $Container->get(GtApi::class);
+        $this->QhApi          = $Container->get(QhApi::class);
         $this->Redis          = $Container->get(Redis::class);
         $this->ImplRepository = $Container->get(ImplRepository::class);
         $this->logger         = $Container->get(LoggerFactory::class)->get(__CLASS__);
+    }
+
+    /**
+     * qh模板
+     * default
+     *
+     * @param $inputData
+     *
+     * @return mixed
+     * author MengShuai <133814250@qq.com>
+     * date 2020/12/25 15:41
+     */
+    public function qh($inputData)
+    {
+        $product = Db::table('product_sale')
+            ->select('product_access.*', 'product_sale.*')
+            ->join('product_access', 'product_access.id', '=', 'product_sale.access')
+            ->where([
+                'product_sale.status' => 1,
+                'product_sale.id'     => $inputData['sid'],
+            ])
+            ->first();
+        if ($product == null) {
+            throw new BusinessException(StatusCode::ERR_EXCEPTION, '商品不存在或已停售');
+        }
+        switch ($product->api_model) {
+            case 'QhApi':
+                if ($product->captcha_switch) {
+                    if (!isset($inputData['captchaInfo']['captcha'])) {
+                        throw new BusinessException(StatusCode::ERR_EXCEPTION,
+                            '验证码错误');
+                    }
+                    // TODO
+                    //...
+                }
+
+                $admin_id         = Db::table('user')
+                    ->where(['job_number' => $inputData['job_number']])
+                    ->value('id');
+                $validation       = [
+                    'admin_id'     => $admin_id ? $admin_id : env('SUPER_ADMIN', ''),
+                    'name'         => $inputData['name'],
+                    'sim_identity' => $inputData['cardNumber'],
+                    'phone'        => $inputData['phone'],
+                    'province'     => $inputData['province'],
+                    'city'         => $inputData['city'],
+                    'district'     => $inputData['country'],
+                    'address'      => $inputData['shippingAddress'],
+                ];
+                $ValidationAccess =
+                    $this->ValidationAccess($validation, $product);
+                if ($ValidationAccess !== true) {
+                    throw new BusinessException(StatusCode::ERR_EXCEPTION,
+                        $ValidationAccess);
+                }
+
+                //删除内部键名
+                $data = array_diff_key($inputData, ['template' => '', 'job_number' => '', 'channel' => '', 'sub_agent' => '', 'sid' => '', 'sale_channel' => '', 'format_province' => '']);
+                $this->logger->info('开始下单：' . json_encode($data, JSON_UNESCAPED_UNICODE) . "\r\n");
+                $res = $this->QhApi->uniform($data);
+                $this->logger->info('结束下单,返回结果：' . json_encode($res, JSON_UNESCAPED_UNICODE) . "\r\n");
+                if ($res['rspCode'] === "1000") {
+                    throw new BusinessException(StatusCode::ERR_EXCEPTION, $res['rspDesc']);
+                }
+                $Ascription = explode(',', $inputData['format_province']);
+                $insert     = $validation + [
+                        'sid'            => $inputData['sid'],
+                        'dock_order_id'  => '',
+                        'order_id'       => $this->GeneratOrderNumber(),
+                        'app_province'   => $Ascription[0],
+                        'app_city'       => $Ascription[1],
+                        'app_number'     => $inputData['phoneNum'],
+                        'sale_channel'   => isset($inputData['sale_channel']) ? (int)$inputData['sale_channel'] : 0,
+                        'source'         => isset($inputData['source']) ? $inputData['source'] : '',
+                        'created_at'     => date("Y-m-d H:i:s"),
+                        'status'         => ProductOrderCode::STATUS_TO_EXAMINE,
+                        'activat_status' => ProductOrderCode::ACTIVAT_STATUS_NOT,
+                        'pay_status'     => ProductOrderCode::PAY_STATUS_SUCCESSFUL,
+                    ];
+                $this->createOrder($insert);
+                $this->ImplRepository->templateQhApi($inputData, $Ascription, $product);
+                return [
+                    'code' => StatusCode::SUCCESS,
+                    'msg'  => '提交成功',
+                    'data' => $res,
+                ];
+            default:
+                throw new BusinessException(StatusCode::ERR_EXCEPTION,
+                    '未开放模块');
+        }
     }
 
     /**

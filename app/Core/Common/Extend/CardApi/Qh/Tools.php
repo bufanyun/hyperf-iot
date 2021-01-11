@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 namespace Core\Common\Extend\CardApi\Qh;
 
 use Core\Common\Extend\Helpers\CurlHelpers;
@@ -31,24 +32,18 @@ class Tools
     /**
      * 提交订单
      * uniform
+     * @param array $inputParam
      * @return array
      * author MengShuai <133814250@qq.com>
-     * date 2021/01/11 11:32
+     * date 2021/01/11 17:40
      */
-    public function uniform(array $inputParam) : array
+    public function uniform(array $inputParam): array
     {
-        $params = [$inputParam];
-            $res = $this->request($this->config['domain'] . 'order_submit.php', $params);
-            $res = strstr($res, '{'); //因为返回结果可能是jsonp，所以删除花括号前的所以字符，便于转数组
-            $res = json_decode($res, true);
-            return $res;
-//            if($res['rspCode'] == 2000 || $res['rspDesc'] == '提交成功'){
-//
-//            }
-//
-//            return json(['rspCode' => $res['rspCode'], 'rspDesc' => $res['rspDesc']]);
+        $res = $this->request($this->config['domain'] . 'order_submit.php', $inputParam);
+        $res = strstr($res, '{'); //因为返回结果可能是jsonp，所以删除花括号前的所以字符，便于转数组
+        $res = json_decode($res, true);
+        return $res;
     }
-
 
     /**
      * 转发选号接口
@@ -57,63 +52,27 @@ class Tools
      * @param string $cuccCityEcss
      * @return array
      * author MengShuai <133814250@qq.com>
-     * date 2021/01/11 11:41
+     * date 2021/01/11 17:40
      */
-    public function selectPhones(string $cuccProvinceEcss,string $cuccCityEcss) : array
+    public function selectPhones(string $cuccProvinceEcss, string $cuccCityEcss): array
     {
         $params = ['cuccProvinceEcss' => $cuccProvinceEcss, 'cuccCityEcss' => $cuccCityEcss];
-        $res = $this->request($this->config['domain'] . 'xuanhao.php', $params);
-        return json_decode($res,true);
-    }
-
-    /**
-     * 统一返回格式
-     * format
-     * @param string $rs
-     * @param array  $keys
-     *
-     * @return array
-     * author MengShuai <133814250@qq.com>
-     * date 2020/12/26 23:20
-     */
-    public function format(string $rs, array $keys): array
-    {
-        $rs   = json_decode($rs, true);
-        $data = [];
-        if (!empty($keys)) {
-            foreach ($rs as $k => $v) {
-                if (in_array($k, $keys)) {
-                    $data[$k] = $v;
-                }
-            }
-        }
-        $res = [
-            'code' => (isset($rs['result']) && $rs['result'] == true) ? StatusCode::SUCCESS : StatusCode::ERR_EXCEPTION,
-            'msg'  => isset($rs['msg']) ? (string)$rs['msg'] : '',
-            'data' => $data,
-        ];
-        if ($res['msg'] == '' && isset($rs['error'])) {
-            $res['msg'] = (string)$rs['error'];
-        }
-
-        return $res;
+        $res    = $this->request($this->config['domain'] . 'xuanhao.php', $params);
+        return json_decode($res, true);
     }
 
     /**
      * 发送请求
      * request
-     * @param string $method
-     * @param array  $data
-     *
-     * @return array
+     * @param string $url
+     * @param array $data
+     * @return string
      * author MengShuai <133814250@qq.com>
-     * date 2020/12/26 23:20
+     * date 2021/01/11 17:39
      */
     public function request(string $url, array $data): string
     {
-        var_export([$url, $data]);
-        return $this->Curl->curl_post($url, $data); //协程
+        return $this->Curl->curl_post($url, $data, ["Content-type: application/json"]); //协程
     }
-
 
 }
