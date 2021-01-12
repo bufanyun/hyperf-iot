@@ -13,7 +13,11 @@ use App\Middleware\OssCallbackMiddleware;
 use Hyperf\DbConnection\Db;
 use Hyperf\Utils\ApplicationContext;
 use Hyperf\Di\Annotation\Inject;
-
+use Core\Plugins\WeChat\OfficialAccount;
+use Naixiaoxin\HyperfWechat\EasyWechat;
+use Naixiaoxin\HyperfWechat\Helper;
+use ReflectionException;
+use EasyWeChat\Kernel\Messages\Text;
 
 /**
  * IndexController
@@ -24,10 +28,15 @@ use Hyperf\Di\Annotation\Inject;
  * @Controller(prefix="home/index")
  *
  * @property \Core\Repositories\Home\AttachmentRepository $attachmentRepository
+ * @property OfficialAccount $OfficialAccount
  */
 class IndexController extends BaseController
 {
-
+    /**
+     * @Inject()
+     * @var OfficialAccount
+     */
+    protected $OfficialAccount;
 
     /**
      * index
@@ -58,43 +67,20 @@ class IndexController extends BaseController
 
     public function test()
     {
-        $method = $this->request->input('method', 'AgentTrade/checkOrder', false);
-        $params = [
-            'method' => !$method ? 'AgentTrade/checkOrder' : $method,
-            'data' => json_encode([
-                'test' => 1,
-            ]),
-        ];  //订单扫描
-
-        if ($method == 'AgentTrade/addOrder') {
-            $params = [
-                'method' => $method,
-                'data' => json_encode([
-                    'client' => 'system',
-                    'source' => 'tmt',
-                    'price' => $this->request->input('price', '0.01'),
-                    'type' => $this->request->input('type', '0'),
-                    'qrurl' => 'https://qr.alipay.com/fkx10920stvogcastck55c5?t=1604627435932', //小辉
-                    'orderid' => uniqid(),
-                    'device_id' => '868019047358743', //小米7 -2
-                ]),
-            ];
-        }
-
-        $sign = config('payment_sign');
-        $host = 'ws://127.0.0.1:1888?' . $sign['key'] . "=" . encrypt($params, $sign['encryption']);
-        $client = $this->clientFactory->create($host);
-        /** @var Frame $msg */
-        $msg = $client->recv(3)->data ?? null;
-        if ($msg == null) {
-            var_export(['$msg' => $msg]);
-            return $this->error(StatusCode::ERR_EXCEPTION, '获取信息失败-1');
-        }
-        $result = json_decode($msg, true);
-        if (isset($result['code']) && $result['code'] == 0) {
-            return $this->success($result['data'], $result['msg']);
-        }
-        return $this->error(StatusCode::ERR_EXCEPTION, isset($result['msg']) ?? '获取信息失败-2');
+        $openId = 'ok1EU6l49YgIm66DzPqVzKYNiQvk';
+        $data = [
+            'touser' => $openId,
+            'template_id' => 'Upmm3bET5d3pXt2nhfxhg8pF0wgdztCiiZP8Kx_btko',
+            'url' => 'http://card.facms.cn/#/pages/spread/index?r=/home/spread/pool&job_number=bufanyun&channel=3&sub_agent=1',
+            'data' => [
+                'first' => '尊敬的合伙人，您有新的推广订单已完成。',
+                'keyword1' => ['15303830***888(大王卡)', '#771caa'],
+                'keyword2' => ['20.00元', '#771caa'],
+                'keyword3' => ['2021-01-12', '#771caa'],
+                'remark' => ['该笔订单预计还有T+1月在网奖励10元，T+2月在网奖励10元，该订购号码持续在网就会自动发放哦！', '#771caa'],
+            ],
+        ];
+        $this->OfficialAccount->template_message($data);
     }
 
 }

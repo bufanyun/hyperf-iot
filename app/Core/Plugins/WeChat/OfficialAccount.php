@@ -19,9 +19,9 @@ use Naixiaoxin\HyperfWechat\EasyWechat;
  * date 2021/01/09 17:17
  * @property \EasyWeChat\OfficialAccount\Application $app
  */
-class OfficialAccount
+class OfficialAccount extends Base
 {
-    private ? EasyWechat $app = null;
+    private $app = null;
 
     public function __construct()
     {
@@ -39,11 +39,36 @@ class OfficialAccount
      * author MengShuai <133814250@qq.com>
      * date 2021/01/10 00:00
      */
-    public function shorten(string $url) : array
+    public function shorten(string $url): array
     {
         $res = $this->app->url->shorten($url);
         var_export(['$res' => $res]);
         return $res;
     }
-    
+
+    /**
+     * 发送模板消息给指定用户
+     * template_message
+     * @param array $data
+     * @return array
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/12 09:30
+     */
+    public function template_message(array $data) : array
+    {
+        return $this->app->template_message->send([
+            'touser'      => $data['touser'],
+            'template_id' => $data['template_id'],
+            'url'         => $data['url'],
+//            'miniprogram' => [  //跳转小程序
+//                'appid' => 'xxxxxxx',
+//                'pagepath' => 'pages/xxx',
+//            ],
+            'data'        => $data['data'],
+        ]);
+    }
+
 }

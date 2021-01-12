@@ -12,7 +12,7 @@ use Hyperf\Di\Annotation\Inject;
 use Naixiaoxin\HyperfWechat\EasyWechat;
 
 
-class Base extends EasyWechat
+class Base
 {
 
 }

@@ -28,6 +28,7 @@ class WeChatController extends BaseController
      */
     public function serve()
     {
+        var_export('=========微信回调开始======');
         $reqParam = $this->request->all();
         var_export($reqParam);
         $app = EasyWechat::officialAccount();
@@ -43,6 +44,7 @@ class WeChatController extends BaseController
         $message = make(Text::class,['Hello world!!']);
         $result = $app->customer_service->message($message)->to($openId)->send();
         var_export(['$result' => $result]);
+        var_export('=========微信回调结束======');
         // 一定要用Helper::Response去转换
         return Helper::Response($app->server->serve());
     }
