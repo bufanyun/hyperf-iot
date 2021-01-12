@@ -24,6 +24,7 @@ use Hyperf\HttpServer\Annotation\Middleware;
 use Hyperf\HttpServer\Annotation\Middlewares;
 use App\Middleware\LoginAuthMiddleware;
 use App\Middleware\AdminAuthMiddleware;
+use Hyperf\HttpServer\Annotation\RequestMapping;
 
 /**
  * UploadController
@@ -69,7 +70,7 @@ class UploadController extends BaseController
      * Time：下午11:56
      * @return \Psr\Http\Message\ResponseInterface
      *
-     * @PostMapping(path="file")
+     * @RequestMapping(path="file")
      */
     public function uploadFile()
     {

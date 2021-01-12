@@ -35,7 +35,7 @@ return [
             'cache_key' => 'mc:%s:m:%s:%s:%s',
             'pool' => 'model_cache', // 这里确定使用redis.php，中的那个配置
             'prefix' => 'model_cache',
-            'ttl' => 3600 * 24,
+            'ttl' => 3,//3600 * 24,
             'empty_model_ttl' => 600,
             'load_script' => true,
         ],

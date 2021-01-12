@@ -32,7 +32,7 @@ class User extends BaseModel
      *
      * @var array
      */
-    protected $fillable = ['id', 'status', 'mobile', 'username', 'email', 'nickname', 'avatar', 'job_number', 'session_id', 'password', 'created_at', 'updated_at', 'deleted_at'];
+    protected $fillable = ['id', 'status', 'mobile', 'username', 'email', 'nickname', 'avatar', 'job_number', 'session_id', 'password', 'created_at', 'updated_at', 'deleted_at', 'balance', 'commission', 'admin_id', 'level', 'cash'];
     /**
      * The attributes that should be cast to native types.
      *
@@ -64,6 +64,11 @@ class User extends BaseModel
     public function getAdminNameAttribute() : string
     {
         return $this->getAdminName((string)$this->attributes['admin_id']);
+    }
+
+    public function getCashAttribute()  //:? array
+    {
+        return json_decode(json_encode($this->attributes['cash']), true);
     }
 
     /**
