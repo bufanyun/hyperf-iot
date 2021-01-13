@@ -54,23 +54,6 @@ class Sms
     protected static $maxCheckNums = 10;
 
     /**
-     * 获取最后一次手机发送的数据
-     *
-     * @param int $mobile 手机号
-     * @param string $event 事件
-     * @return  Sms
-     */
-    public static function get($mobile, $event = 'default')
-    {
-        $sms = \app\common\model\Sms::
-        where(['mobile' => $mobile, 'event' => $event])
-            ->order('id', 'DESC')
-            ->find();
-        Hook::listen('sms_get', $sms, null, true);
-        return $sms ? $sms : null;
-    }
-
-    /**
      * 获取阿里短信模板
      * getAliTemplate
      * @param string $event
@@ -126,25 +109,6 @@ class Sms
     }
 
     /**
-     * 发送通知
-     *
-     * @param mixed $mobile 手机号,多个以,分隔
-     * @param string $msg 消息内容
-     * @param string $template 消息模板
-     * @return  boolean
-     */
-    public static function notice($mobile, $msg = '', $template = null)
-    {
-        $params = [
-            'mobile'   => $mobile,
-            'msg'      => $msg,
-            'template' => $template,
-        ];
-        $result = Hook::listen('sms_notice', $params, null, true);
-        return $result ? true : false;
-    }
-
-    /**
      * 校验验证码
      *
      * @param int $mobile 手机号
@@ -177,6 +141,21 @@ class Sms
         } else {
             return false;
         }
+    }
+
+    /**
+     * 获取最后一次手机发送的数据
+     *
+     * @param int $mobile 手机号
+     * @param string $event 事件
+     * @return  Sms
+     */
+    public function get($mobile, $event = 'default')
+    {
+        $sms = $this->SmsModel::query()->where(['mobile' => $mobile, 'event' => $event])
+            ->orderBy('id', 'desc')
+            ->first();
+        return $sms ? $sms : null;
     }
 
 }
