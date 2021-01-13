@@ -27,17 +27,19 @@ use App\Event\SmsEvent;
  */
 class Sms
 {
-    /**
-     * @Inject
-     * @var EventDispatcherInterface
-     */
-    private $eventDispatcher;
 
     /**
      * @Inject()
      * @var SmsModel
      */
     protected $SmsModel;
+
+    /**
+     * @Inject
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
+
 
     /**
      * 验证码有效时长
@@ -54,8 +56,8 @@ class Sms
     /**
      * 获取最后一次手机发送的数据
      *
-     * @param   int    $mobile 手机号
-     * @param   string $event  事件
+     * @param int $mobile 手机号
+     * @param string $event 事件
      * @return  Sms
      */
     public static function get($mobile, $event = 'default')
@@ -68,63 +70,67 @@ class Sms
         return $sms ? $sms : null;
     }
 
-    private function getAliTemplate($event = 'default')
+    /**
+     * 获取阿里短信模板
+     * getAliTemplate
+     * @param string $event
+     * @return string
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/13 15:57
+     */
+    private function getAliTemplate(string $event = 'default'): string
     {
-        return env("ALIYUN_".strtoupper($event)."_TEMPLATE", '');
+        return env("ALIYUN_" . strtoupper($event) . "_TEMPLATE", '');
     }
 
     /**
      * 发送验证码
      *
-     * @param   int    $mobile 手机号
-     * @param   int    $code   验证码,为空时将自动生成4位数字
-     * @param   string $event  事件
+     * @param int $mobile 手机号
+     * @param int $code 验证码,为空时将自动生成4位数字
+     * @param string $event 事件
      * @return  boolean
      */
-    public function send($mobile, $code = null, $event = 'default')
+    public function send($mobile, $code = null, $event = 'default'): bool
     {
         $easySms = ApplicationContext::getContainer()->get(SmsInterface::class);
-        $code = is_null($code) ? mt_rand(1000, 9999) : $code;
-        $insert = [
-            'event' => $event,
-            'mobile' => $mobile,
-            'code' => $code,
-            'ip' => getClientIp(),
-            'created_at' => date("Y-m-d H:i:s")
+        $code    = is_null($code) ? mt_rand(1000, 9999) : $code;
+        $insert  = [
+            'event'      => $event,
+            'mobile'     => $mobile,
+            'code'       => $code,
+            'ip'         => getClientIp(),
+            'created_at' => date("Y-m-d H:i:s"),
         ];
-//        $sms = $this->SmsModel->query()->insert($insert);
+
         $result = true;
-//        try {
-//            $easySms->send($mobile, [
-////            'content' => '{1}为您的登录验证码，请于5分钟内填写',
-//                'template' => $this->getAliTemplate($event),
-//                'data' => [
-//                    'code' => $code
-//                ],
-//            ]);
-//        }catch (\Overtrue\EasySms\Exceptions\NoGatewayAvailableException $exception){
-//            var_export($exception->getException('aliyun')->getMessage());
-//            $logger = ApplicationContext::getContainer()->get(LoggerFactory::class)->get('send','sms');
-//            $logger->error($exception->getException('aliyun')->getMessage() . " " . json_encode($insert));
-//            $result = false;
-//        }
-//
-//        $result = Hook::listen('sms_send', $sms, null, true);
+        try {
+            $easySms->send($mobile, [
+                'template' => $this->getAliTemplate($event),
+                'data'     => [
+                    'code' => $code,
+                ],
+            ]);
+        } catch (\Overtrue\EasySms\Exceptions\NoGatewayAvailableException $exception) {
+            $error  = $exception->getException('aliyun')->getMessage();
+            $logger = ApplicationContext::getContainer()->get(LoggerFactory::class)->get('send', 'sms');
+            $logger->error($error . "：" . json_encode($insert));
+            var_export($error);
+            $result = false;
+        }
         if (!$result) {
             return false;
         }
-       $rs = $this->eventDispatcher->dispatch(new SmsEvent($insert));
-
-        var_export(['$rs' =>$rs->sms]);
+        $this->eventDispatcher->dispatch(new SmsEvent($insert, 'send'));
         return true;
     }
 
     /**
      * 发送通知
      *
-     * @param   mixed  $mobile   手机号,多个以,分隔
-     * @param   string $msg      消息内容
-     * @param   string $template 消息模板
+     * @param mixed $mobile 手机号,多个以,分隔
+     * @param string $msg 消息内容
+     * @param string $template 消息模板
      * @return  boolean
      */
     public static function notice($mobile, $msg = '', $template = null)
@@ -132,7 +138,7 @@ class Sms
         $params = [
             'mobile'   => $mobile,
             'msg'      => $msg,
-            'template' => $template
+            'template' => $template,
         ];
         $result = Hook::listen('sms_notice', $params, null, true);
         return $result ? true : false;
@@ -141,52 +147,36 @@ class Sms
     /**
      * 校验验证码
      *
-     * @param   int    $mobile 手机号
-     * @param   int    $code   验证码
-     * @param   string $event  事件
+     * @param int $mobile 手机号
+     * @param int $code 验证码
+     * @param string $event 事件
      * @return  boolean
      */
-    public static function check($mobile, $code, $event = 'default')
+    public function check($mobile, $code, $event = 'default')
     {
         $time = time() - self::$expire;
-        $sms = \app\common\model\Sms::where(['mobile' => $mobile, 'event' => $event])
-            ->order('id', 'DESC')
-            ->find();
+        $sms  = $this->SmsModel::query()->where(['mobile' => $mobile, 'event' => $event])
+            ->orderBy('id', 'desc')
+            ->first();
+
         if ($sms) {
-            if ($sms['createtime'] > $time && $sms['times'] <= self::$maxCheckNums) {
-                $correct = $code == $sms['code'];
+            if (strtotime((string)$sms->created_at) > $time && $sms->times <= self::$maxCheckNums) {
+                $correct = $code == $sms->code;
                 if (!$correct) {
                     $sms->times = $sms->times + 1;
                     $sms->save();
                     return false;
                 } else {
-                    $result = Hook::listen('sms_check', $sms, null, true);
-                    return $result;
+                    return true;
                 }
             } else {
                 // 过期则清空该手机验证码
-                self::flush($mobile, $event);
+                $sms->delete();
                 return false;
             }
         } else {
             return false;
         }
-    }
-
-    /**
-     * 清空指定手机号验证码
-     *
-     * @param   int    $mobile 手机号
-     * @param   string $event  事件
-     * @return  boolean
-     */
-    public static function flush($mobile, $event = 'default')
-    {
-        \app\common\model\Sms::
-        where(['mobile' => $mobile, 'event' => $event])
-            ->delete();
-        Hook::listen('sms_flush');
-        return true;
     }
 
 }

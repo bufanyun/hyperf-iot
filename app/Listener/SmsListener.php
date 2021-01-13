@@ -4,15 +4,30 @@ namespace App\Listener;
 use App\Event\SmsEvent;
 use Hyperf\Event\Annotation\Listener;
 use Hyperf\Event\Contract\ListenerInterface;
+use Hyperf\Di\Annotation\Inject;
+use App\Models\Sms as SmsModel;
 
 /**
+ * 发送短信事件
+ * Class SmsListener
+ * @package App\Listener
+ * author MengShuai <133814250@qq.com>
+ * date 2021/01/13 15:53
+ *
  * @Listener
+ * @property SmsModel $SmsModel
  */
 class SmsListener implements ListenerInterface
 {
+
+    /**
+     * @Inject()
+     * @var SmsModel
+     */
+    protected $SmsModel;
+
     public function listen(): array
     {
-        // 返回一个该监听器要监听的事件数组，可以同时监听多个事件
         return [
             SmsEvent::class,
         ];
@@ -23,11 +38,19 @@ class SmsListener implements ListenerInterface
      */
     public function process(object $event)
     {
-        // 事件触发后该监听器要执行的代码写在这里，比如该示例下的发送用户注册成功短信等
-        // 直接访问 $event 的 user 属性获得事件触发时传递的参数值
-        // $event->user;
-        var_export(['$event' => $event->sms]);
+        $this->{$event->function}($event->data);
+    }
 
-        return 'test';
+    /**
+     * 发送短信
+     * send
+     * @param array $event
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/13 15:53
+     */
+    protected function send(array $event) : void
+    {
+        $this->SmsModel->query()->insert($event);
+        // TODO ..
     }
 }

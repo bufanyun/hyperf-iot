@@ -10,7 +10,7 @@ namespace App\Models;
  * @property string $code 
  * @property int $times 
  * @property string $ip 
- * @property int $createtime 
+ * @property \Carbon\Carbon $created_at 
  */
 class Sms extends BaseModel
 {
@@ -25,11 +25,14 @@ class Sms extends BaseModel
      *
      * @var array
      */
-    protected $fillable = ['id', 'event', 'mobile', 'code', 'times', 'ip', 'createtime'];
+    protected $fillable = ['id', 'event', 'mobile', 'created_at', 'code', 'times', 'ip'];
     /**
      * The attributes that should be cast to native types.
      *
      * @var array
      */
-    protected $casts = ['id' => 'integer', 'times' => 'integer', 'createtime' => 'integer'];
+    protected $casts = ['id' => 'integer', 'created_at' => 'datetime'];
+
+    const UPDATED_AT = null;
+
 }

@@ -3,11 +3,13 @@ namespace App\Event;
 
 class SmsEvent
 {
-    // 建议这里定义成 public 属性，以便监听器对该属性的直接使用，或者你提供该属性的 Getter
-    public $sms;
+    public $data;
 
-    public function __construct($sms)
+    public string $function;
+
+    public function __construct($data, string $function)
     {
-        $this->sms = $sms;
+        $this->data = $data;
+        $this->function = $function;
     }
 }

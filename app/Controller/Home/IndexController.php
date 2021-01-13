@@ -90,10 +90,15 @@ class IndexController extends BaseController
 //            var_export($exception->getException('aliyun')->getMessage());
 //        }
 
-        $mobile= 15303830571;
-        $res = $this->Sms->send($mobile, $code = null, $event = 'default');
-        var_export(['发送结果：'.$res]);
-
+        $mobile= 15303830572;
+        $event = 'default';
+//        $res = $this->Sms->send($mobile, $code = null, $event);
+//        if(!$res){
+//            return $this->error(StatusCode::ERR_EXCEPTION, '发送失败，稍后再试！');
+//        }
+        $res = $this->Sms->check($mobile, $code = null, $event);
+        var_export(['发送结果：'. $res]);
+        return $this->success();
 //        $openId = 'ok1EU6l49YgIm66DzPqVzKYNiQvk';
 //        $data = [
 //            'touser' => $openId,
