@@ -45,26 +45,13 @@ class Sms
      * 验证码有效时长
      * @var int
      */
-    protected static $expire = 120;
+    protected static $expire = 300;
 
     /**
      * 最大允许检测的次数
      * @var int
      */
     protected static $maxCheckNums = 10;
-
-    /**
-     * 获取阿里短信模板
-     * getAliTemplate
-     * @param string $event
-     * @return string
-     * author MengShuai <133814250@qq.com>
-     * date 2021/01/13 15:57
-     */
-    private function getAliTemplate(string $event = 'default'): string
-    {
-        return env("ALIYUN_" . strtoupper($event) . "_TEMPLATE", '');
-    }
 
     /**
      * 发送验证码
@@ -158,4 +145,16 @@ class Sms
         return $sms ? $sms : null;
     }
 
+    /**
+     * 获取阿里短信模板
+     * getAliTemplate
+     * @param string $event
+     * @return string
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/13 15:57
+     */
+    private function getAliTemplate(string $event = 'default'): string
+    {
+        return env("ALIYUN_" . strtoupper($event) . "_TEMPLATE", '');
+    }
 }
