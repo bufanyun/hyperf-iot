@@ -149,6 +149,7 @@ class UserController extends BaseController
     }
 
     /**
+     * 获取个人信息及其权限
      * Info
      * @return \Psr\Http\Message\ResponseInterface
      *
@@ -164,6 +165,22 @@ class UserController extends BaseController
                 'name'            => $currUser['nickname'],
                 'permission_menu' => $permission_menu,
             ] + $currUser);
+    }
+
+    /**
+     * 修改个人信息
+     * update_info
+     * @return \Psr\Http\Message\ResponseInterface
+     *
+     * @PostMapping(path="update_info")
+     * @throws \Exception
+     */
+    public function update_info()
+    {
+        $reqParam = $this->request->all();
+        $id       = $this->userRepo->saveUser($reqParam+['id' => $this->auth->check(false)]);
+
+        return $this->success($id);
     }
 
 

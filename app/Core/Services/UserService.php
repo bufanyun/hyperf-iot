@@ -77,6 +77,7 @@ class UserService extends BaseService
      */
     public function getInfo($id,$type=true)
     {
+        $type = false;
         $res = $this->userModel->getInfo($id,$type);
         if (count($res) == count($res,1)) {
             unset($res['password']);

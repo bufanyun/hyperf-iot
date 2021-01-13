@@ -31,6 +31,8 @@ return [
     'upload_path' => BASE_PATH.'/public/static/',
     // 上传文件目录
     'attachments' => 'attachments',
+    // 伪静态路径前缀
+    'rewrite' => 'static',
     // 文件名:P生产环境，D开发环境，T测试环境
     'file_name_format' => env('UPLOAD_PREFIX', 'T').'{time}_{rand:5}',
 

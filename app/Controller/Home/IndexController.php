@@ -18,6 +18,8 @@ use Naixiaoxin\HyperfWechat\EasyWechat;
 use Naixiaoxin\HyperfWechat\Helper;
 use ReflectionException;
 use EasyWeChat\Kernel\Messages\Text;
+use HyperfLibraries\Sms\Contract\SmsInterface;
+use Core\Plugins\Sms;
 
 /**
  * IndexController
@@ -29,6 +31,7 @@ use EasyWeChat\Kernel\Messages\Text;
  *
  * @property \Core\Repositories\Home\AttachmentRepository $attachmentRepository
  * @property OfficialAccount $OfficialAccount
+ * @property Sms $Sms
  */
 class IndexController extends BaseController
 {
@@ -37,6 +40,12 @@ class IndexController extends BaseController
      * @var OfficialAccount
      */
     protected $OfficialAccount;
+
+    /**
+     * @Inject()
+     * @var Sms
+     */
+    protected $Sms;
 
     /**
      * index
@@ -67,20 +76,38 @@ class IndexController extends BaseController
 
     public function test()
     {
-        $openId = 'ok1EU6l49YgIm66DzPqVzKYNiQvk';
-        $data = [
-            'touser' => $openId,
-            'template_id' => 'Upmm3bET5d3pXt2nhfxhg8pF0wgdztCiiZP8Kx_btko',
-            'url' => 'http://card.facms.cn/#/pages/spread/index?r=/home/spread/pool&job_number=bufanyun&channel=3&sub_agent=1',
-            'data' => [
-                'first' => '尊敬的合伙人，您有新的推广订单已完成。',
-                'keyword1' => ['15303830***888(大王卡)', '#771caa'],
-                'keyword2' => ['20.00元', '#771caa'],
-                'keyword3' => ['2021-01-12', '#771caa'],
-                'remark' => ['该笔订单预计还有T+1月在网奖励10元，T+2月在网奖励10元，该订购号码持续在网就会自动发放哦！', '#771caa'],
-            ],
-        ];
-        $this->OfficialAccount->template_message($data);
+//        $easySms = ApplicationContext::getContainer()->get(SmsInterface::class);
+//        try {
+//            $result = $easySms->send(15303830571, [
+////            'content' => '{1}为您的登录验证码，请于5分钟内填写',
+//                'template' => 'SMS_198921686',
+//                'data' => [
+//                    'code' => 12345
+//                ],
+//            ]);
+//            var_export($result);
+//        }catch (\Overtrue\EasySms\Exceptions\NoGatewayAvailableException $exception){
+//            var_export($exception->getException('aliyun')->getMessage());
+//        }
+
+        $mobile= 15303830571;
+        $res = $this->Sms->send($mobile, $code = null, $event = 'default');
+        var_export(['发送结果：'.$res]);
+
+//        $openId = 'ok1EU6l49YgIm66DzPqVzKYNiQvk';
+//        $data = [
+//            'touser' => $openId,
+//            'template_id' => 'Upmm3bET5d3pXt2nhfxhg8pF0wgdztCiiZP8Kx_btko',
+//            'url' => 'http://card.facms.cn/#/pages/spread/index?r=/home/spread/pool&job_number=bufanyun&channel=3&sub_agent=1',
+//            'data' => [
+//                'first' => '尊敬的合伙人，您有新的推广订单已完成。',
+//                'keyword1' => ['15303830***888(大王卡)', '#771caa'],
+//                'keyword2' => ['20.00元', '#771caa'],
+//                'keyword3' => ['2021-01-12', '#771caa'],
+//                'remark' => ['该笔订单预计还有T+1月在网奖励10元，T+2月在网奖励10元，该订购号码持续在网就会自动发放哦！', '#771caa'],
+//            ],
+//        ];
+//        $this->OfficialAccount->template_message($data);
     }
 
 }

@@ -113,7 +113,7 @@ class AttachmentService extends BaseService
 //            $domain = config('app_domain');
 //            $domain = substr($domain,0,4) == 'http'?$domain:'http://'.$domain;
             $domain = env('CDN_DOMAIN');
-            $attachments = ltrim(config('upload.attachments'),'/');
+            $attachments = config('upload.rewrite') . '/' . ltrim(config('upload.attachments'),'/');
             $host = $domain.'/'.$attachments;
         }
         $fullUrl = rtrim($host,'/').'/'.ltrim($path,'/');
