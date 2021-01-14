@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Core\Common\Traits\Admin\Controller;
 
-use App\Exception\BusinessException;
 use App\Constants\StatusCode;
 use Hyperf\DbConnection\Db;
 use Hyperf\HttpServer\Annotation\RequestMapping;
@@ -22,20 +21,25 @@ use Hyperf\HttpServer\Annotation\RequestMapping;
  * Trait Expert
  *
  * @package Core\Common\Traits\Admin\Controller
+ * author MengShuai <133814250@qq.com>
+ * date 2021/01/14 21:24
  */
 trait Expert
 {
 
     /**
      * list
+     *
      * @return \Psr\Http\Message\ResponseInterface
      *
      * @RequestMapping(path="list")
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/14 21:24
      */
     public function list()
     {
         $reqParam = $this->request->all();
-        $query = $this->model->query();
+        $query    = $this->model->query();
 
         [$querys, $sort, $order, $offset, $limit] = $this->model->buildTableParams($reqParam, $query);
         $where = []; //额外条件
@@ -53,30 +57,33 @@ trait Expert
         //        var_export(Db::getQueryLog());
 
         $list = $list ? $list->toArray() : [];
-        if(!empty($list)){
+        if (!empty($list)) {
             foreach ($list as $k => $v) {
-                //                $list[$k]['status'] = $v['status'] === 0 ? false : true;
+                //    $list[$k]['status'] = $v['status'] === 0 ? false : true;
             }
             unset($v);
         }
-        $result = array("total" => $total, "rows" => $list);
+        $result = ["total" => $total, "rows" => $list];
         return $this->success($result);
     }
 
     /**
      * switch
+     *
      * @return \Psr\Http\Message\ResponseInterface
      *
      * @RequestMapping(path="switch")
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/14 21:24
      */
     public function switch()
     {
         $reqParam = $this->request->all();
-        if ( ! isset($reqParam['key'])) {
+        if (!isset($reqParam['key'])) {
             return $this->error(StatusCode::ERR_EXCEPTION, '缺少更新开关的参数');
         }
         $primaryKey = $this->model->getKeyName();
-        if ( ! isset($reqParam[$primaryKey])) {
+        if (!isset($reqParam[$primaryKey])) {
             return $this->error(StatusCode::ERR_EXCEPTION, '缺少更新开关的条件');
         }
         $query = $this->model->query();
@@ -92,67 +99,75 @@ trait Expert
 
 
     /**
+     * 编辑/更新行
      * edit
      *
      * @return void
      *
      * @RequestMapping(path="edit")
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/14 21:24
      */
     public function edit()
     {
-        $reqParam = $this->request->all();
-        if ($this->request->isMethod('post')) {
-            // ...
-            var_export('post');
+        if (!$this->request->has($this->model->getKeyName())) {
+            return $this->error(StatusCode::ERR_EXCEPTION, '缺少编辑的条件');
+        }
+        $where = [
+            $this->model->getKeyName() => $this->request->input($this->model->getKeyName()),
+        ];
+        $row   = $this->model->query()->where($where)->first();
+        if (!$row) {
+            return $this->error(StatusCode::ERR_EXCEPTION, '数据不存在');
         }
 
-        var_export(['$reqParam' =>$reqParam]);
+        if ($this->request->isMethod('post')) {
+            $update = $this->model->loadModel($this->request->all());
+            if (count($update) < 1) {
+                return $this->error(StatusCode::ERR_EXCEPTION, '缺少更新内容');
+            }
+            Db::beginTransaction();
+            try {
+                Db::table($this->model->getTable())
+                    ->where([$this->model->getKeyName() => $row->{$this->model->getKeyName()}])
+                    ->update($update);
+                Db::commit();
+            } catch (\Throwable $ex) {
+                Db::rollBack();
+                return $this->error(StatusCode::ERR_EXCEPTION, $ex->getMessage());
+            }
+        }
+
+        return $this->success($row, '获取成功');
     }
 
-
     /**
-     * 添加
+     * 添加/插入行
+     * add
+     * @return mixed
+     *
+     * @RequestMapping(path="add")
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/14 21:45
      */
     public function add()
     {
-        if ($this->request->isPost()) {
-            $params = $this->request->post("row/a");
-            if ($params) {
-                $params = $this->preExcludeFields($params);
-
-                if ($this->dataLimit && $this->dataLimitFieldAutoFill) {
-                    $params[$this->dataLimitField] = $this->auth->id;
-                }
-                $result = false;
-                Db::startTrans();
-                try {
-                    //是否采用模型验证
-                    if ($this->modelValidate) {
-                        $name = str_replace("\\model\\", "\\validate\\", get_class($this->model));
-                        $validate = is_bool($this->modelValidate) ? ($this->modelSceneValidate ? $name . '.add' : $name) : $this->modelValidate;
-                        $this->model->validateFailException(true)->validate($validate);
-                    }
-                    $result = $this->model->allowField(true)->save($params);
-                    Db::commit();
-                } catch (ValidateException $e) {
-                    Db::rollback();
-                    $this->error($e->getMessage());
-                } catch (PDOException $e) {
-                    Db::rollback();
-                    $this->error($e->getMessage());
-                } catch (Exception $e) {
-                    Db::rollback();
-                    $this->error($e->getMessage());
-                }
-                if ($result !== false) {
-                    $this->success();
-                } else {
-                    $this->error(__('No rows were inserted'));
-                }
+        if ($this->request->isMethod('post')) {
+            $insert = $this->model->loadModel($this->request->all(), null, false);
+            if (count($insert) < 1) {
+                return $this->error(StatusCode::ERR_EXCEPTION, '缺少插入内容');
             }
-            $this->error(__('Parameter %s can not be empty', ''));
+            Db::beginTransaction();
+            try {
+                $id = Db::table($this->model->getTable())->insertGetId($insert);
+                Db::commit();
+            } catch (\Throwable $ex) {
+                Db::rollBack();
+                return $this->error(StatusCode::ERR_EXCEPTION, $ex->getMessage());
+            }
+            return $this->success([$this->model->getKeyName() => $id], '添加成功');
         }
-        return $this->view->fetch();
+        return $this->error(StatusCode::ERR_EXCEPTION, '访问非法');
     }
 
 
@@ -178,7 +193,7 @@ trait Expert
                 ->limit($offset, $limit)
                 ->select();
 
-            $result = array("total" => $total, "rows" => $list);
+            $result = ["total" => $total, "rows" => $list];
 
             return json($result);
         }
@@ -192,7 +207,7 @@ trait Expert
     public function del($ids = "")
     {
         if ($ids) {
-            $pk = $this->model->getPk();
+            $pk       = $this->model->getPk();
             $adminIds = $this->getDataLimitAdminIds();
             if (is_array($adminIds)) {
                 $this->model->where($this->dataLimitField, 'in', $adminIds);
@@ -227,7 +242,7 @@ trait Expert
      */
     public function destroy($ids = "")
     {
-        $pk = $this->model->getPk();
+        $pk       = $this->model->getPk();
         $adminIds = $this->getDataLimitAdminIds();
         if (is_array($adminIds)) {
             $this->model->where($this->dataLimitField, 'in', $adminIds);
@@ -263,7 +278,7 @@ trait Expert
      */
     public function restore($ids = "")
     {
-        $pk = $this->model->getPk();
+        $pk       = $this->model->getPk();
         $adminIds = $this->getDataLimitAdminIds();
         if (is_array($adminIds)) {
             $this->model->where($this->dataLimitField, 'in', $adminIds);
@@ -301,7 +316,8 @@ trait Expert
         if ($ids) {
             if ($this->request->has('params')) {
                 parse_str($this->request->post("params"), $values);
-                $values = array_intersect_key($values, array_flip(is_array($this->multiFields) ? $this->multiFields : explode(',', $this->multiFields)));
+                $values = array_intersect_key($values,
+                    array_flip(is_array($this->multiFields) ? $this->multiFields : explode(',', $this->multiFields)));
                 if ($values || $this->auth->isSuperAdmin()) {
                     $adminIds = $this->getDataLimitAdminIds();
                     if (is_array($adminIds)) {
@@ -354,12 +370,12 @@ trait Expert
             $this->error(__('Unknown data format'));
         }
         if ($ext === 'csv') {
-            $file = fopen($filePath, 'r');
+            $file     = fopen($filePath, 'r');
             $filePath = tempnam(sys_get_temp_dir(), 'import_csv');
-            $fp = fopen($filePath, "w");
-            $n = 0;
+            $fp       = fopen($filePath, "w");
+            $n        = 0;
             while ($line = fgets($file)) {
-                $line = rtrim($line, "\n\r\0");
+                $line     = rtrim($line, "\n\r\0");
                 $encoding = mb_detect_encoding($line, ['utf-8', 'gbk', 'latin1', 'big5']);
                 if ($encoding != 'utf-8') {
                     $line = mb_convert_encoding($line, 'utf-8', $encoding);
@@ -383,10 +399,11 @@ trait Expert
         //导入文件首行类型,默认是注释,如果需要使用字段名称请使用name
         $importHeadType = isset($this->importHeadType) ? $this->importHeadType : 'comment';
 
-        $table = $this->model->getQuery()->getTable();
+        $table    = $this->model->getQuery()->getTable();
         $database = \think\Config::get('database.database');
         $fieldArr = [];
-        $list = db()->query("SELECT COLUMN_NAME,COLUMN_COMMENT FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = ? AND TABLE_SCHEMA = ?", [$table, $database]);
+        $list     = db()->query("SELECT COLUMN_NAME,COLUMN_COMMENT FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = ? AND TABLE_SCHEMA = ?",
+            [$table, $database]);
         foreach ($list as $k => $v) {
             if ($importHeadType == 'comment') {
                 $fieldArr[$v['COLUMN_COMMENT']] = $v['COLUMN_NAME'];
@@ -401,14 +418,14 @@ trait Expert
             if (!$PHPExcel = $reader->load($filePath)) {
                 $this->error(__('Unknown data format'));
             }
-            $currentSheet = $PHPExcel->getSheet(0);  //读取文件中的第一个工作表
-            $allColumn = $currentSheet->getHighestDataColumn(); //取得最大的列号
-            $allRow = $currentSheet->getHighestRow(); //取得一共有多少行
+            $currentSheet    = $PHPExcel->getSheet(0);  //读取文件中的第一个工作表
+            $allColumn       = $currentSheet->getHighestDataColumn(); //取得最大的列号
+            $allRow          = $currentSheet->getHighestRow(); //取得一共有多少行
             $maxColumnNumber = Coordinate::columnIndexFromString($allColumn);
-            $fields = [];
+            $fields          = [];
             for ($currentRow = 1; $currentRow <= 1; $currentRow++) {
                 for ($currentColumn = 1; $currentColumn <= $maxColumnNumber; $currentColumn++) {
-                    $val = $currentSheet->getCellByColumnAndRow($currentColumn, $currentRow)->getValue();
+                    $val      = $currentSheet->getCellByColumnAndRow($currentColumn, $currentRow)->getValue();
                     $fields[] = $val;
                 }
             }
@@ -416,10 +433,10 @@ trait Expert
             for ($currentRow = 2; $currentRow <= $allRow; $currentRow++) {
                 $values = [];
                 for ($currentColumn = 1; $currentColumn <= $maxColumnNumber; $currentColumn++) {
-                    $val = $currentSheet->getCellByColumnAndRow($currentColumn, $currentRow)->getValue();
+                    $val      = $currentSheet->getCellByColumnAndRow($currentColumn, $currentRow)->getValue();
                     $values[] = is_null($val) ? '' : $val;
                 }
-                $row = [];
+                $row  = [];
                 $temp = array_combine($fields, $values);
                 foreach ($temp as $k => $v) {
                     if (isset($fieldArr[$k]) && $k !== '') {
@@ -457,7 +474,8 @@ trait Expert
             $this->model->saveAll($insert);
         } catch (PDOException $exception) {
             $msg = $exception->getMessage();
-            if (preg_match("/.+Integrity constraint violation: 1062 Duplicate entry '(.+)' for key '(.+)'/is", $msg, $matches)) {
+            if (preg_match("/.+Integrity constraint violation: 1062 Duplicate entry '(.+)' for key '(.+)'/is", $msg,
+                $matches)) {
                 $msg = "导入失败，包含【{$matches[1]}】的记录已存在";
             };
             $this->error($msg);

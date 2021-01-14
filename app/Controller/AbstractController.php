@@ -12,17 +12,17 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Core\Common\Container\Response;
-use Hyperf\Di\Annotation\Inject;
+use Hyperf\HttpServer\Router\Dispatched;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\HttpServer\Contract\ResponseInterface;
-use Psr\Container\ContainerInterface;
+use Hyperf\Utils\ApplicationContext;
+use Hyperf\Di\Annotation\Inject;
 use Hyperf\Contract\SessionInterface;
 use Hyperf\Validation\Contract\ValidatorFactoryInterface;
 use function Hyperf\ViewEngine\view;
-use Hyperf\HttpServer\Router\Dispatched;
-use Hyperf\Utils\ApplicationContext;
+use Core\Common\Container\Response;
 use Core\Common\Container\Auth;
+use Psr\Container\ContainerInterface;
 
 /**
  *

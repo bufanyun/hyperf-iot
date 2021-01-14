@@ -19,12 +19,14 @@ use Hyperf\DbConnection\Db;
 /**
  * Trait Table
  * 表格操作类
+ *
  * @package Core\Common\Traits\Admin\Models
  */
 trait Table
 {
 
     /**可操作的开关字段白名单
+     *
      * @var array
      */
     protected $switchList = ['status',];
@@ -32,8 +34,10 @@ trait Table
     /**
      * 添加数据
      * add
+     *
      * @param array $params
-     * @param null $query
+     * @param null  $query
+     *
      * @return bool
      * author MengShuai <133814250@qq.com>
      * date 2020/11/27 20:18
@@ -81,7 +85,7 @@ trait Table
      *
      * @param array $where
      * @param array $params
-     * @param null $query
+     * @param null  $query
      *
      * @return int|mixed
      * author MengShuai <133814250@qq.com>
@@ -134,7 +138,7 @@ trait Table
      *
      * @param array $where
      * @param array $params
-     * @param null $query
+     * @param null  $query
      *
      * @return int|mixed
      * author MengShuai <133814250@qq.com>
@@ -190,8 +194,10 @@ trait Table
     /**
      * 表格查询
      * formQuery
+     *
      * @param array $params
-     * @param null $query
+     * @param null  $query
+     *
      * @return array
      * author MengShuai <133814250@qq.com>
      * date 2020/11/26 22:59
@@ -260,12 +266,44 @@ trait Table
         ];
     }
 
+    /**
+     * 获取检查后的更新/添加的数据内容
+     * loadModel
+     * @param array $params
+     * @param null  $query
+     * @param bool  $isUpdate
+     *
+     * @return array
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/14 21:42
+     */
+    public function loadModel(array $params = [], $query = null, $isUpdate = true): array
+    {
+        $model = make(get_called_class());
+        if ($query === null) {
+            $query = clone $model;
+        }
+        $update     = [];
+        $editRoster = $model->editRoster ?? $model->fillable;
+        if($isUpdate === false){
+            $editRoster = $model->fillable;
+        }
+        if (isset($params)) {
+            array_map(function ($k) use (&$update, $params, $model) {
+                if (isset($params[$k])) {
+                    $update[$model->getTable() . '.' . $k] = $params[$k];
+                }
+            }, $editRoster);
+        }
+        return $update;
+    }
 
     /**
      * 生成表格类查询所需要的条件,排序方式
      * buildTableParams
+     *
      * @param array $params
-     * @param null $query
+     * @param null  $query
      *
      * @return array
      * author MengShuai <133814250@qq.com>
@@ -274,7 +312,7 @@ trait Table
     public function buildTableParams(array $params = [], $query = null): array
     {
         $model = make(get_called_class());
-        if ($query == null) {
+        if ($query === null) {
             $query = clone $model;
         }
 

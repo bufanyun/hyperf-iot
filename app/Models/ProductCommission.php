@@ -35,4 +35,9 @@ class ProductCommission extends BaseModel
      * @var array
      */
     protected $casts = ['id' => 'integer', 'type' => 'integer', 'month' => 'integer'];
+    /**
+     * 允许修改的字段名单
+     * @var array
+     */
+    protected $editRoster = ['type', 'month', 'amount_money', 'money', 'detailed_titile'];
 }

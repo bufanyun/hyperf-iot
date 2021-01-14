@@ -39,15 +39,9 @@ class RequestMiddleware implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-
         // 为每一个请求增加一个qid
         $request = Context::override(ServerRequestInterface::class, function (ServerRequestInterface $request) {
             $request = $request->withAddedHeader('qid', $this->getRequestId());
-            //对参数进行安全过滤
-
-            $params = $this->stripslashesRecursive($this->request->all());
-            var_export(['$params' =>$params]);
-            $request = $request->withQueryParams($params);
             return $request;
         });
         // 统一会话保持用session解决
@@ -65,8 +59,6 @@ class RequestMiddleware implements MiddlewareInterface
                 return $request;
             });
         }
-
-
         // 利用协程上下文存储请求开始的时间，用来计算程序执行时间
         Context::set('request_start_time',microtime(true));
 
@@ -91,19 +83,5 @@ class RequestMiddleware implements MiddlewareInterface
         $remote = strtoupper(substr(md5($tmp['remote_addr']),12,8));
         $ip = strtoupper(substr(md5(getServerLocalIp()), 14, 4));
         return uniqid(). '-' . $remote. '-'.$ip.'-'. $name;
-    }
-
-    protected function stripslashesRecursive(array $array) : array
-    {
-        foreach ($array as $k => $v) {
-            if (is_string($v)){
-                $array[$k] = addslashes(stripslashes(trim($v)));
-            } elseif (is_array($v)){
-                $array[$k] = $this->stripslashesRecursive($v);
-            }
-        }
-        unset($v);
-        var_export(['$array' =>$array]);
-        return $array;
     }
 }
