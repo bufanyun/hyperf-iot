@@ -76,7 +76,7 @@ class Sms
         $result = true;
         try {
             $easySms->send($mobile, [
-                'template' => $this->getAliTemplate($event),
+                'template' => $this->getTemplate($event),
                 'data'     => [
                     'code' => $code,
                 ],
@@ -146,15 +146,32 @@ class Sms
     }
 
     /**
-     * 获取阿里短信模板
-     * getAliTemplate
+     * 获取ip在一小时内发送累计次数
+     * getIpFrequency
+     * @param string $ip
+     * @return int
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/14 09:31
+     */
+    public function getIpFrequency(string $ip) : int
+    {
+        $count = $this->SmsModel::query()->where(['ip' => $ip])
+        ->whereTime('created_at', '-1 hours')
+        ->count();
+        return $count ?? 0;
+    }
+
+    /**
+     * 获取短信模板
+     * getTemplate
      * @param string $event
      * @return string
      * author MengShuai <133814250@qq.com>
      * date 2021/01/13 15:57
      */
-    private function getAliTemplate(string $event = 'default'): string
+    public function getTemplate(string $event = 'default')
     {
-        return env("ALIYUN_" . strtoupper($event) . "_TEMPLATE", '');
+        //暂时统一使用阿里
+        return env("ALIYUN_" . strtoupper($event) . "_TEMPLATE", null);
     }
 }

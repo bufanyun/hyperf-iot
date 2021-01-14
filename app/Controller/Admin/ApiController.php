@@ -16,15 +16,12 @@ use Hyperf\HttpServer\Annotation\RequestMapping;
 use App\Models\User;
 use Hyperf\Di\Annotation\Inject;
 use Core\Plugins\Sms;
-use Hyperf\Validation\Contract\ValidatorFactoryInterface;
+use App\Constants\StatusCode;
 
 /**
- * UserController
- * 用户管理
+ * ApiController
+ * 管理员api
  * @package App\Controller\Admin
- * User：YM
- * Date：2020/2/5
- * Time：下午4:04
  *
  * @Controller(prefix="/admin_api/api")
  *
@@ -33,22 +30,16 @@ use Hyperf\Validation\Contract\ValidatorFactoryInterface;
  *     @Middleware(AdminAuthMiddleware::class)
  * })
  *
- * @property \Core\Repositories\Admin\UserRepository $userRepo
+ * @property User $model
+ * @property Sms $Sms
  */
 class ApiController extends BaseController
 {
     /**
-     *
      * @Inject()
      * @var User
      */
     private $model;
-
-    /**
-     * @Inject()
-     * @var ValidatorFactoryInterface
-     */
-    private $validationFactory;
 
     /**
      * @Inject()
@@ -57,6 +48,7 @@ class ApiController extends BaseController
     protected $Sms;
 
     /**
+     * 发送短信
      * send_sms
      * @return \Psr\Http\Message\ResponseInterface
      *
@@ -65,28 +57,45 @@ class ApiController extends BaseController
     public function send_sms()
     {
         $reqParam  = $this->request->all();
-//        var_export(['$this->validationFactory' => $this->validationFactory, '$this->Sms' =>$this->Sms, 'model' =>$this->model]);
-        $validator = $this->validationFactory->make(
+        $validator = $this->validation->make(
             $reqParam,
             [
-                'mobile' => 'required|/^1[34578]\d{9}$/',
+                'mobile' => 'required|regex:/^1[34578]\d{9}$/',
                 'event'  => 'required',
             ],
             [
                 'mobile.required' => '手机号不能为空',
-                'event.required'  => '事件类型不能为空',
-
+                'mobile.regex' => '手机号格式不正确',
+                'event.required'  => '事件模板不能为空',
             ]
         );
         if ($validator->fails()) {
             return $this->error(StatusCode::ERR_EXCEPTION, $validator->errors()->first());
         }
+        if(!$this->Sms->getTemplate($reqParam['event'])){
+            return $this->error(StatusCode::ERR_EXCEPTION, '事件模板未注册');
+        }
 
-        var_export($reqParam);
-//        $res = $this->Sms->send($reqParam['mobile'], $code = null, $reqParam['event']);
-//        if(!$res){
-//            return $this->error(StatusCode::ERR_EXCEPTION, '发送失败，稍后再试！');
-//        }
+        $last = $this->Sms->get($reqParam['mobile'], $reqParam['event']);
+        if ($last && time() - strtotime((string)$last->created_at) < 60) {
+            return $this->error(StatusCode::ERR_EXCEPTION, '发送频繁，请60秒后再试');
+        }
+        $ipSendTotal = $this->Sms->getIpFrequency(getClientIp());
+        if ($ipSendTotal >= 10) {
+            return $this->error(StatusCode::ERR_EXCEPTION, '发送频繁，请一小时后再试');
+        }
+
+        if($reqParam['event'] === 'register')
+        {
+            //TODO
+            //...
+        }
+
+        $res = $this->Sms->send($reqParam['mobile'], $code = null, $reqParam['event']);
+        if(!$res){
+            return $this->error(StatusCode::ERR_EXCEPTION, '发送失败，稍后再试！');
+        }
+        return $this->success([], '发送成功');
     }
 
 
