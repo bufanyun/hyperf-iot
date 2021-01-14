@@ -60,7 +60,7 @@ class ApiController extends BaseController
         $validator = $this->validation->make(
             $reqParam,
             [
-                'mobile' => 'required|regex:/^1[34578]\d{9}$/',
+                'mobile' => 'required|regex:/^1[3456789]\d{9}$/',
                 'event'  => 'required',
             ],
             [
@@ -98,9 +98,48 @@ class ApiController extends BaseController
         return $this->success([], '发送成功');
     }
 
-
+    /**
+     * 效验短信验证码
+     * check_sms
+     * @return \Psr\Http\Message\ResponseInterface
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/14 09:45
+     *
+     * @RequestMapping(path="check_sms")
+     */
     public function check_sms()
     {
-
+        $reqParam  = $this->request->all();
+        $validator = $this->validation->make(
+            $reqParam,
+            [
+                'mobile' => 'required|regex:/^1[3456789]\d{9}$/',
+                'event'  => 'required',
+                'captcha' => 'required',
+            ],
+            [
+                'mobile.required' => '手机号不能为空',
+                'mobile.regex' => '手机号格式不正确',
+                'event.required'  => '事件模板不能为空',
+                'captcha.required'  => '验证码不能为空',
+            ]
+        );
+        if ($validator->fails()) {
+            return $this->error(StatusCode::ERR_EXCEPTION, $validator->errors()->first());
+        }
+        if(!$this->Sms->getTemplate($reqParam['event'])){
+            return $this->error(StatusCode::ERR_EXCEPTION, '事件模板未注册');
+        }
+        if($reqParam['event'] === 'register')
+        {
+            //TODO
+            //...
+        }
+        $ret = $this->Sms->check($reqParam['mobile'], $reqParam['captcha'], $reqParam['event']);
+        if ($ret) {
+            return $this->success([], '验证成功');
+        } else {
+            return $this->error(StatusCode::ERR_EXCEPTION, '验证码不正确');
+        }
     }
 }
