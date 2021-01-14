@@ -15,7 +15,7 @@ namespace App\Models;
 use Hyperf\DbConnection\Model\Model;
 use Hyperf\ModelCache\Cacheable;
 use Hyperf\ModelCache\CacheableInterface;
-use Core\Common\Traits\Admin\Table;
+use Core\Common\Traits\Admin\Models\Table;
 
 abstract class BaseModel extends Model implements CacheableInterface
 {

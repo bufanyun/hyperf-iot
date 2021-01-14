@@ -78,6 +78,7 @@ abstract class AbstractController
      * @var Auth
      */
     protected $auth;
+    
 
     /**
      * 模板渲染

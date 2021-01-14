@@ -4,6 +4,7 @@ declare (strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Controller\BaseController;
+use Core\Common\Traits\Admin\Table;
 use Crypto\Rand;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Annotation\AutoController;
@@ -36,6 +37,8 @@ use App\Models\ProductCommission;
  */
 class ProductCommissionController extends BaseController
 {
+
+    use \Core\Common\Traits\Admin\Controller\Expert;
 
     /**
      *
@@ -122,6 +125,18 @@ class ProductCommissionController extends BaseController
         $update = $this->model->switch($where, $param, $query);
         return $this->success(['switch' => $update]);
     }
+
+//    /**
+//     * edit
+//     * @return \Psr\Http\Message\ResponseInterface
+//     *
+//     * @RequestMapping(path="edit")
+//     */
+//    public function edit()
+//    {
+//        var_export('777');
+//
+//    }
 
 
 }

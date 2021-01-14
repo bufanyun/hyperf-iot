@@ -10,7 +10,7 @@ declare(strict_types=1);
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
 
-namespace Core\Common\Traits\Admin;
+namespace Core\Common\Traits\Admin\Models;
 
 use App\Exception\BusinessException;
 use App\Constants\StatusCode;
@@ -19,7 +19,7 @@ use Hyperf\DbConnection\Db;
 /**
  * Trait Table
  * 表格操作类
- * @package Core\Common\Traits\Admin
+ * @package Core\Common\Traits\Admin\Models
  */
 trait Table
 {
