@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
+use App\Constants\StatusCode;
 use App\Controller\BaseController;
 use Hyperf\HttpServer\Annotation\Controller;
 use Hyperf\HttpServer\Annotation\GetMapping;
@@ -15,7 +16,8 @@ use App\Middleware\AdminAuthMiddleware;
 use Hyperf\HttpServer\Annotation\RequestMapping;
 use App\Models\User;
 use Hyperf\Di\Annotation\Inject;
-
+use Core\Plugins\Sms;
+use Core\Plugins\Ems;
 
 /**
  * UserController
@@ -33,6 +35,8 @@ use Hyperf\Di\Annotation\Inject;
  * })
  *
  * @property \Core\Repositories\Admin\UserRepository $userRepo
+ * @property Sms $Sms
+ * @property Ems $Ems
  */
 class UserController extends BaseController
 {
@@ -42,6 +46,18 @@ class UserController extends BaseController
      * @var User
      */
     private $model;
+
+    /**
+     * @Inject()
+     * @var Sms
+     */
+    protected $Sms;
+
+    /**
+     * @Inject()
+     * @var Ems
+     */
+    protected $Ems;
 
     /**
      * list
@@ -168,6 +184,27 @@ class UserController extends BaseController
     }
 
     /**
+     * 修改头像
+     * update_avatar
+     * @return \Psr\Http\Message\ResponseInterface
+     *
+     * @PostMapping(path="update_avatar")
+     * @throws \Exception
+     */
+    public function update_avatar()
+    {
+        $reqParam = $this->request->all();
+        $update   = [
+            'id'     => $this->auth->check(false),
+            //允许修改的字段
+            'avatar' => $reqParam['avatar'],
+        ];
+        $id       = $this->userRepo->saveUser($update);
+
+        return $this->success($id);
+    }
+
+    /**
      * 修改个人信息
      * update_info
      * @return \Psr\Http\Message\ResponseInterface
@@ -178,11 +215,98 @@ class UserController extends BaseController
     public function update_info()
     {
         $reqParam = $this->request->all();
-        $id       = $this->userRepo->saveUser($reqParam+['id' => $this->auth->check(false)]);
+        $update   = [
+            'id'       => $this->auth->check(false),
+            //允许修改的字段
+            'password' => $reqParam['password'],
+        ];
+        $id       = $this->userRepo->saveUser($update);
 
         return $this->success($id);
     }
 
+    /**
+     * 修改提现信息
+     * update_cash
+     * @return \Psr\Http\Message\ResponseInterface
+     *
+     * @PostMapping(path="update_cash")
+     * @throws \Exception
+     */
+    public function update_cash()
+    {
+        $user     = $this->auth->check();
+        $reqParam = $this->request->all();
+        if (!isset($reqParam['captcha']) || $reqParam['captcha'] == '') {
+            return $this->error(StatusCode::ERR_EXCEPTION, '请输入验证码');
+        }
+        $ret = $this->Sms->check($user['mobile'], $reqParam['captcha'], 'modified_withdrawal');
+        if (!$ret) {
+            return $this->error(StatusCode::ERR_EXCEPTION, '验证码不正确');
+        }
+        $update = [
+            'id'   => $user['id'],
+            //允许修改的字段
+            'cash' => json_encode([
+                //允许修改的字段
+                'alipay_name'    => $reqParam['alipay_name'],
+                'add_make_img'   => $reqParam['add_make_img'],
+                'alipay_account' => $reqParam['alipay_account'],
+            ]),
+        ];
+        $id     = $this->userRepo->saveUser($update);
+
+        return $this->success($id);
+    }
+
+    /**
+     * 重置secret_key
+     * reset_secret_key
+     * @return \Psr\Http\Message\ResponseInterface
+     *
+     * @PostMapping(path="reset_secret_key")
+     * @throws \Exception
+     */
+    public function reset_secret_key()
+    {
+        $reqParam = $this->request->all();
+        $update   = [
+            'id'         => $this->auth->check(false),
+            //允许修改的字段
+            'secret_key' => $reqParam['secret_key'],
+        ];
+        $id       = $this->userRepo->saveUser($update);
+
+        return $this->success($id);
+    }
+
+    /**
+     * 修改邮箱
+     * update_email
+     * @return \Psr\Http\Message\ResponseInterface
+     *
+     * @PostMapping(path="update_email")
+     * @throws \Exception
+     */
+    public function update_email()
+    {
+        $reqParam = $this->request->all();
+        if (!isset($reqParam['captcha']) || $reqParam['captcha'] == '') {
+            return $this->error(StatusCode::ERR_EXCEPTION, '请输入验证码');
+        }
+        $ret = $this->Ems->check($reqParam['email'], $reqParam['captcha'], 'update_email');
+        if (!$ret) {
+            return $this->error(StatusCode::ERR_EXCEPTION, '验证码不正确');
+        }
+        $update = [
+            'id'    => $this->auth->check(false),
+            //允许修改的字段
+            'email' => $reqParam['email'],
+        ];
+        $id     = $this->userRepo->saveUser($update);
+
+        return $this->success($id);
+    }
 
     /**
      * getInfo

@@ -72,7 +72,7 @@ class Ems
 
         if($event !== 'html'){
             $code    = mt_rand(1000, 9999);
-            $content['MsgHTML'] =  "您的验证码为：{$code}，有效期10分钟。" . ($content['MsgHTML'] !=='' ? '<hr>' : '') . $content['MsgHTML'];
+            $content['MsgHTML'] =  "您的验证码为：{$code}，有效期10分钟。" . ($content['MsgHTML'] !=='' ? '<br><br><hr style="height: 2px;border: none;border-top: 2px dashed rgba(0,0,0,0.2);">' : '') . $content['MsgHTML'];
         }
         $config = config('mailbox');
         $mail = ApplicationContext::getContainer()->get(PHPMailer::class);

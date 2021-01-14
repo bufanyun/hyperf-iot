@@ -138,6 +138,13 @@ class UserService extends BaseService
         if (isset($inputData['job_number']) && $inputData['job_number']){
             $saveData['job_number'] = $inputData['job_number'];
         }
+        if (isset($inputData['cash']) && $inputData['cash']){
+            $saveData['cash'] = $inputData['cash'];
+        }
+        if (isset($inputData['secret_key']) && $inputData['secret_key']){
+            $saveData['secret_key'] = $inputData['secret_key'];
+        }
+        
         $id = $this->userModel->saveInfo($saveData,$type);
         return $id;
     }

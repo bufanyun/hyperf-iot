@@ -17,7 +17,8 @@ use App\Constants\UserCode;
  * @property string $password 
  * @property \Carbon\Carbon $created_at 
  * @property \Carbon\Carbon $updated_at 
- * @property string $deleted_at 
+ * @property string $deleted_at
+ * @property string $cash
  */
 class User extends BaseModel
 {
