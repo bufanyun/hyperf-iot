@@ -20,6 +20,8 @@ use ReflectionException;
 use EasyWeChat\Kernel\Messages\Text;
 use HyperfLibraries\Sms\Contract\SmsInterface;
 use Core\Plugins\Sms;
+use HyperfExt\Mail\Mail;
+use Core\Plugins\Ems as EmsPlugins;
 
 /**
  * IndexController
@@ -76,6 +78,9 @@ class IndexController extends BaseController
 
     public function test()
     {
+        $EmsPlugins = make(EmsPlugins::class);
+        $res = Mail::to('133814250@qq.com')->send($EmsPlugins->setCentent('666'));
+        var_export(['$res' =>$res]);
 //        $easySms = ApplicationContext::getContainer()->get(SmsInterface::class);
 //        try {
 //            $result = $easySms->send(15303830571, [
@@ -90,15 +95,15 @@ class IndexController extends BaseController
 //            var_export($exception->getException('aliyun')->getMessage());
 //        }
 
-        $mobile= 15303830572;
-        $event = 'default';
-//        $res = $this->Sms->send($mobile, $code = null, $event);
-//        if(!$res){
-//            return $this->error(StatusCode::ERR_EXCEPTION, '发送失败，稍后再试！');
-//        }
-        $res = $this->Sms->check($mobile, $code = null, $event);
-        var_export(['发送结果：'. $res]);
-        return $this->success();
+//        $mobile= 15303830572;
+//        $event = 'default';
+////        $res = $this->Sms->send($mobile, $code = null, $event);
+////        if(!$res){
+////            return $this->error(StatusCode::ERR_EXCEPTION, '发送失败，稍后再试！');
+////        }
+//        $res = $this->Sms->check($mobile, $code = null, $event);
+//        var_export(['发送结果：'. $res]);
+//        return $this->success();
 //        $openId = 'ok1EU6l49YgIm66DzPqVzKYNiQvk';
 //        $data = [
 //            'touser' => $openId,
