@@ -189,13 +189,13 @@ class ApiController extends BaseController
             }
         }
 
+        $Subject = '系统通知';
         if ($reqParam['event'] === 'register') {
-            //TODO
-            //...
+            $Subject = '新用户注册验证';
         }
 
         $res = $this->Ems->send([
-            'Subject'    => '标题',
+            'Subject'    => $Subject,
             'MsgHTML'    => $reqParam['content'],
             'AddAddress' => $reqParam['email'],
         ], $reqParam['event']);

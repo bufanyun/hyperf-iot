@@ -1,7 +1,7 @@
 <?php
 namespace App\Listener;
 
-use App\Event\SmsEvent;
+use App\Event\EmsEvent;
 use Hyperf\Event\Annotation\Listener;
 use Hyperf\Event\Contract\ListenerInterface;
 use Hyperf\Di\Annotation\Inject;
@@ -29,12 +29,12 @@ class EmsListener implements ListenerInterface
     public function listen(): array
     {
         return [
-            SmsEvent::class,
+            EmsEvent::class,
         ];
     }
 
     /**
-     * @param SmsEvent $event
+     * @param EmsEvent $event
      */
     public function process(object $event)
     {

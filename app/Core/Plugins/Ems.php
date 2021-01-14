@@ -10,6 +10,7 @@ use Hyperf\Utils\ApplicationContext;
 use App\Models\Ems as EmsModel;
 use PHPMailer\PHPMailer\PHPMailer;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use App\Event\EmsEvent;
 
 /**
  * 邮箱发送/验证类
@@ -19,6 +20,7 @@ use Psr\EventDispatcher\EventDispatcherInterface;
  * date 2021/01/14 10:08
  *
  * @property EmsModel $EmsModel
+ * @property EventDispatcherInterface $eventDispatcher
  */
 class Ems
 {
@@ -67,9 +69,10 @@ class Ems
      */
     public function send(array $content, string $event = 'html')
     {
+
         if($event !== 'html'){
             $code    = mt_rand(1000, 9999);
-            $content['MsgHTML'] = $content['MsgHTML'] . ($content['MsgHTML'] !=='' ? '<br>' : '') . "您的验证码为：{$code}，有效期10分钟。";
+            $content['MsgHTML'] =  "您的验证码为：{$code}，有效期10分钟。" . ($content['MsgHTML'] !=='' ? '<hr>' : '') . $content['MsgHTML'];
         }
         $config = config('mailbox');
         $mail = ApplicationContext::getContainer()->get(PHPMailer::class);
