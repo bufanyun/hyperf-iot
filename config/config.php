@@ -34,6 +34,16 @@ return [
 //        'http://number.facms.cn',
 //        'http://admin.facms.cn',
     ],
+    //邮箱服务器配置
+    'mailbox' => [
+        'host' => env('MAILBOX_HOST', ''), // SMTP 服务器
+        'port' => env('MAILBOX_PORT', 465), // SMTP服务器的端口号
+        'Secure' => env('MAILBOX_HOST', 'ssl'), // 使用安全协议
+        'username' => env('MAILBOX_USERNAME', ''), // SMTP服务器用户名
+        'password' => env('MAILBOX_PASSWORD', ''), // SMTP服务器密码
+        'from' => env('MAILBOX_FROM', ''), // 发件人邮箱
+        'fromName' => env('MAILBOX_FROMNAME','系统邮件'),  //发件人昵称
+    ],
     // 是否记录日志
     'app_log' => env('APP_LOG', false),
     // 是否记录框架的日志

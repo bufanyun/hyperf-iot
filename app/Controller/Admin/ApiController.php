@@ -16,6 +16,7 @@ use Hyperf\HttpServer\Annotation\RequestMapping;
 use App\Models\User;
 use Hyperf\Di\Annotation\Inject;
 use Core\Plugins\Sms;
+use Core\Plugins\Ems;
 use App\Constants\StatusCode;
 
 /**
@@ -32,6 +33,7 @@ use App\Constants\StatusCode;
  *
  * @property User $model
  * @property Sms $Sms
+ * @property Ems $Ems
  */
 class ApiController extends BaseController
 {
@@ -46,6 +48,12 @@ class ApiController extends BaseController
      * @var Sms
      */
     protected $Sms;
+
+    /**
+     * @Inject()
+     * @var Ems
+     */
+    protected $Ems;
 
     /**
      * 发送短信
@@ -65,14 +73,14 @@ class ApiController extends BaseController
             ],
             [
                 'mobile.required' => '手机号不能为空',
-                'mobile.regex' => '手机号格式不正确',
+                'mobile.regex'    => '手机号格式不正确',
                 'event.required'  => '事件模板不能为空',
             ]
         );
         if ($validator->fails()) {
             return $this->error(StatusCode::ERR_EXCEPTION, $validator->errors()->first());
         }
-        if(!$this->Sms->getTemplate($reqParam['event'])){
+        if (!$this->Sms->getTemplate($reqParam['event'])) {
             return $this->error(StatusCode::ERR_EXCEPTION, '事件模板未注册');
         }
 
@@ -85,14 +93,13 @@ class ApiController extends BaseController
             return $this->error(StatusCode::ERR_EXCEPTION, '发送频繁，请一小时后再试');
         }
 
-        if($reqParam['event'] === 'register')
-        {
+        if ($reqParam['event'] === 'register') {
             //TODO
             //...
         }
 
         $res = $this->Sms->send($reqParam['mobile'], $code = null, $reqParam['event']);
-        if(!$res){
+        if (!$res) {
             return $this->error(StatusCode::ERR_EXCEPTION, '发送失败，稍后再试！');
         }
         return $this->success([], '发送成功');
@@ -113,29 +120,125 @@ class ApiController extends BaseController
         $validator = $this->validation->make(
             $reqParam,
             [
-                'mobile' => 'required|regex:/^1[3456789]\d{9}$/',
-                'event'  => 'required',
+                'mobile'  => 'required|regex:/^1[3456789]\d{9}$/',
+                'event'   => 'required',
                 'captcha' => 'required',
             ],
             [
-                'mobile.required' => '手机号不能为空',
-                'mobile.regex' => '手机号格式不正确',
-                'event.required'  => '事件模板不能为空',
-                'captcha.required'  => '验证码不能为空',
+                'mobile.required'  => '手机号不能为空',
+                'mobile.regex'     => '手机号格式不正确',
+                'event.required'   => '事件模板不能为空',
+                'captcha.required' => '验证码不能为空',
             ]
         );
         if ($validator->fails()) {
             return $this->error(StatusCode::ERR_EXCEPTION, $validator->errors()->first());
         }
-        if(!$this->Sms->getTemplate($reqParam['event'])){
+        if (!$this->Sms->getTemplate($reqParam['event'])) {
             return $this->error(StatusCode::ERR_EXCEPTION, '事件模板未注册');
         }
-        if($reqParam['event'] === 'register')
-        {
+        if ($reqParam['event'] === 'register') {
             //TODO
             //...
         }
         $ret = $this->Sms->check($reqParam['mobile'], $reqParam['captcha'], $reqParam['event']);
+        if ($ret) {
+            return $this->success([], '验证成功');
+        } else {
+            return $this->error(StatusCode::ERR_EXCEPTION, '验证码不正确');
+        }
+    }
+
+
+    /**
+     * 发送邮件
+     * send_ems
+     * @return \Psr\Http\Message\ResponseInterface
+     *
+     * @RequestMapping(path="send_ems")
+     */
+    public function send_ems()
+    {
+        $reqParam  = $this->request->all();
+        $validator = $this->validation->make(
+            $reqParam,
+            [
+                'email'   => 'required|regex:/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/',
+                'event'   => 'required',
+                'content' => 'required',
+            ],
+            [
+                'email.required'   => '邮箱不能为空',
+                'email.regex'      => '邮箱格式不正确',
+                'event.required'   => '事件模板不能为空',
+                'content.required' => '邮箱内容不能为空',
+            ]
+        );
+        if ($validator->fails()) {
+            return $this->error(StatusCode::ERR_EXCEPTION, $validator->errors()->first());
+        }
+
+        if ($reqParam['event'] !== 'html') {
+            $last = $this->Ems->get($reqParam['email'], $reqParam['event']);
+            if ($last && time() - strtotime((string)$last->created_at) < 60) {
+                return $this->error(StatusCode::ERR_EXCEPTION, '发送频繁，请60秒后再试');
+            }
+            $ipSendTotal = $this->Ems->getIpFrequency(getClientIp());
+            if ($ipSendTotal >= 10) {
+                return $this->error(StatusCode::ERR_EXCEPTION, '发送频繁，请一小时后再试');
+            }
+        }
+
+        if ($reqParam['event'] === 'register') {
+            //TODO
+            //...
+        }
+
+        $res = $this->Ems->send([
+            'Subject'    => '标题',
+            'MsgHTML'    => $reqParam['content'],
+            'AddAddress' => $reqParam['email'],
+        ], $reqParam['event']);
+        if (!$res) {
+            return $this->error(StatusCode::ERR_EXCEPTION, '发送失败，稍后再试！');
+        }
+        return $this->success([], '发送成功');
+    }
+
+    /**
+     * 效验邮箱验证码
+     * check_ems
+     * @return \Psr\Http\Message\ResponseInterface
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/14 09:45
+     *
+     * @RequestMapping(path="check_ems")
+     */
+    public function check_ems()
+    {
+        $reqParam  = $this->request->all();
+        $validator = $this->validation->make(
+            $reqParam,
+            [
+                'email'   => 'required|regex:/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/',
+                'event'   => 'required',
+                'captcha' => 'required',
+            ],
+            [
+                'email.required'   => '邮箱不能为空',
+                'email.regex'      => '邮箱格式不正确',
+                'event.required'   => '事件模板不能为空',
+                'captcha.required' => '验证码不能为空',
+            ]
+        );
+        if ($validator->fails()) {
+            return $this->error(StatusCode::ERR_EXCEPTION, $validator->errors()->first());
+        }
+        if ($reqParam['event'] === 'register') {
+            //TODO
+            //...
+        }
+        $ret = $this->Ems->check($reqParam['email'], $reqParam['captcha'], $reqParam['event']);
         if ($ret) {
             return $this->success([], '验证成功');
         } else {

@@ -4,17 +4,12 @@ declare(strict_types=1);
 
 namespace Core\Plugins;
 
-use App\Constants\StatusCode;
-use App\Exception\BusinessException;
-use Core\Common\Container\Auth;
-use Core\Services\AttachmentService;
 use Hyperf\Di\Annotation\Inject;
 use HyperfLibraries\Sms\Contract\SmsInterface;
 use Hyperf\Utils\ApplicationContext;
-use App\Models\Sms as SmsModel;
-use Hyperf\Logger\LoggerFactory;
+use App\Models\Ems as EmsModel;
+use PHPMailer\PHPMailer\PHPMailer;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use HyperfExt\Mail\Mailable;
 
 /**
  * 邮箱发送/验证类
@@ -23,11 +18,16 @@ use HyperfExt\Mail\Mailable;
  * author MengShuai <133814250@qq.com>
  * date 2021/01/14 10:08
  *
- * @property Mail $Mail
+ * @property EmsModel $EmsModel
  */
-class Ems extends Mailable
+class Ems
 {
 
+    /**
+     * @Inject()
+     * @var EmsModel
+     */
+    protected $EmsModel;
 
     /**
      * @Inject
@@ -56,46 +56,52 @@ class Ems extends Mailable
     }
 
     /**
-     * 发送验证码
-     *
-     * @param int $mobile 手机号
-     * @param int $code 验证码,为空时将自动生成4位数字
-     * @param string $event 事件
-     * @return  boolean
+     * 发送邮件
+     * $event不为空时默认为验证码类，自动生成4位验证码
+     * send
+     * @param array $content
+     * @param string|null $event
+     * @return bool
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/14 11:56
      */
-    public function send($mobile, $code = null, $event = 'default')
+    public function send(array $content, string $event = 'html')
     {
-
-//        $easySms = ApplicationContext::getContainer()->get(SmsInterface::class);
-//        $code    = is_null($code) ? mt_rand(1000, 9999) : $code;
-//        $insert  = [
-//            'event'      => $event,
-//            'mobile'     => $mobile,
-//            'code'       => $code,
-//            'ip'         => getClientIp(),
-//            'created_at' => date("Y-m-d H:i:s"),
-//        ];
-//
-//        $result = true;
-//        try {
-//            $easySms->send($mobile, [
-//                'template' => $this->getTemplate($event),
-//                'data'     => [
-//                    'code' => $code,
-//                ],
-//            ]);
-//        } catch (\Overtrue\EasySms\Exceptions\NoGatewayAvailableException $exception) {
-//            $error  = $exception->getException('aliyun')->getMessage();
-//            $logger = ApplicationContext::getContainer()->get(LoggerFactory::class)->get('send', 'sms');
-//            $logger->error($error . "：" . json_encode($insert));
-//            var_export($error);
-//            $result = false;
-//        }
-//        if (!$result) {
-//            return false;
-//        }
-//        $this->eventDispatcher->dispatch(new SmsEvent($insert, 'send'));
-//        return true;
+        if($event !== 'html'){
+            $code    = mt_rand(1000, 9999);
+            $content['MsgHTML'] = $content['MsgHTML'] . ($content['MsgHTML'] !=='' ? '<br>' : '') . "您的验证码为：{$code}，有效期10分钟。";
+        }
+        $config = config('mailbox');
+        $mail = ApplicationContext::getContainer()->get(PHPMailer::class);
+        $mail->Hostname = '127.0.0.1'; //解决hyperf超全局变量关闭问题
+        $mail->CharSet = 'UTF-8'; //设定邮件编码，默认ISO-8859-1，如果发中文此项必须设置，否则乱码
+        $mail->IsSMTP(); // 设定使用SMTP服务
+        $mail->SMTPDebug = 0; // 关闭SMTP调试功能
+        $mail->SMTPAuth = true; // 启用 SMTP 验证功能
+        $mail->SMTPSecure = 'ssl'; // 使用安全协议
+        $mail->Host = $config['host']; // SMTP 服务器
+        $mail->Port = $config['port']; // SMTP服务器的端口号
+        $mail->Username = $config['username']; // SMTP服务器用户名
+        $mail->Password = $config['password']; // SMTP服务器密码
+        $mail->SetFrom($config['from'], $config['fromName']); // 邮箱，昵称
+        $mail->Subject = $content['Subject'];
+        $mail->MsgHTML($content['MsgHTML']);
+        $mail->AddAddress($content['AddAddress']); // 收件人
+        $result = $mail->Send();
+        if (!$result) {
+            return false;
+        }
+        if($event !== 'html') {
+            $insert = [
+                'event'      => $event,
+                'mobile'     => $content['AddAddress'],
+                'code'       => $code,
+                'ip'         => getClientIp(),
+                'created_at' => date("Y-m-d H:i:s"),
+            ];
+            $this->eventDispatcher->dispatch(new EmsEvent($insert, 'send'));
+        }
+        return true;
     }
 
     /**
@@ -109,7 +115,7 @@ class Ems extends Mailable
     public function check($mobile, $code, $event = 'default')
     {
         $time = time() - self::$expire;
-        $sms  = $this->SmsModel::query()->where(['mobile' => $mobile, 'event' => $event])
+        $sms  = $this->EmsModel::query()->where(['mobile' => $mobile, 'event' => $event])
             ->orderBy('id', 'desc')
             ->first();
 
@@ -138,11 +144,11 @@ class Ems extends Mailable
      *
      * @param int $mobile 手机号
      * @param string $event 事件
-     * @return  Sms
+     * @return  Ems
      */
     public function get($mobile, $event = 'default')
     {
-        $sms = $this->SmsModel::query()->where(['mobile' => $mobile, 'event' => $event])
+        $sms = $this->EmsModel::query()->where(['mobile' => $mobile, 'event' => $event])
             ->orderBy('id', 'desc')
             ->first();
         return $sms ? $sms : null;
@@ -158,23 +164,10 @@ class Ems extends Mailable
      */
     public function getIpFrequency(string $ip) : int
     {
-        $count = $this->SmsModel::query()->where(['ip' => $ip])
+        $count = $this->EmsModel::query()->where(['ip' => $ip])
             ->whereTime('created_at', '-1 hours')
             ->count();
         return $count ?? 0;
     }
 
-    /**
-     * 获取短信模板
-     * getTemplate
-     * @param string $event
-     * @return string
-     * author MengShuai <133814250@qq.com>
-     * date 2021/01/13 15:57
-     */
-    public function getTemplate(string $event = 'default')
-    {
-        //暂时统一使用阿里
-        return env("ALIYUN_" . strtoupper($event) . "_TEMPLATE", null);
-    }
 }

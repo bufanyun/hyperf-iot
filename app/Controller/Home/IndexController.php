@@ -20,7 +20,6 @@ use ReflectionException;
 use EasyWeChat\Kernel\Messages\Text;
 use HyperfLibraries\Sms\Contract\SmsInterface;
 use Core\Plugins\Sms;
-use HyperfExt\Mail\Mail;
 use Core\Plugins\Ems as EmsPlugins;
 
 /**
@@ -48,6 +47,13 @@ class IndexController extends BaseController
      * @var Sms
      */
     protected $Sms;
+
+    /**
+     * @Inject()
+     * @var EmsPlugins
+     */
+    protected $EmsPlugins;
+
 
     /**
      * index
@@ -78,8 +84,12 @@ class IndexController extends BaseController
 
     public function test()
     {
-        $EmsPlugins = make(EmsPlugins::class);
-        $res = Mail::to('133814250@qq.com')->send($EmsPlugins->setCentent('666'));
+        $res = $this->EmsPlugins->send([
+            'Subject' => '通知',
+            'MsgHTML' => 666,
+            'AddAddress' => '133814250@qq.com'
+        ]);
+
         var_export(['$res' =>$res]);
 //        $easySms = ApplicationContext::getContainer()->get(SmsInterface::class);
 //        try {

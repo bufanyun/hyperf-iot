@@ -14,8 +14,6 @@
     "require": {
         "php": ">=7.2",
         "ext-swoole": ">=4.5",
-        "alibabacloud/dm": "^1.8",
-        "hyperf-ext/mail": "^2.1",
         "hyperf-libraries/sms": "^2.0",
         "hyperf/amqp": "2.1.*",
         "hyperf/async-queue": "2.1.*",
@@ -44,7 +42,9 @@
         "hyperf/websocket-server": "^2.1",
         "jenssegers/agent": "^2.6",
         "league/flysystem-memory": "^2.0",
-        "naixiaoxin/hyperf-wechat": "^1.1"
+        "naixiaoxin/hyperf-wechat": "^1.1",
+        "phpmailer/phpmailer": "^6.2",
+        "yurunsoft/phpmailer-swoole": "1.0.2"
     },
     "require-dev": {
         "filp/whoops": "^2.9",
