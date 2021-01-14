@@ -260,20 +260,30 @@ class UserController extends BaseController
     }
 
     /**
-     * 重置secret_key
-     * reset_secret_key
+     * 修改/重置API配置
+     * reset_api
      * @return \Psr\Http\Message\ResponseInterface
      *
-     * @PostMapping(path="reset_secret_key")
+     * @PostMapping(path="reset_api")
      * @throws \Exception
      */
     public function reset_secret_key()
     {
         $reqParam = $this->request->all();
+        if(isset($reqParam['ip_white']) && $reqParam['ip_white'] !== '') {
+            $ip_whites = explode(',', $reqParam['ip_white']);
+            foreach ($ip_whites as $ip) {
+                if (!filter_var($ip, FILTER_VALIDATE_IP)) {
+                    return $this->error(StatusCode::ERR_EXCEPTION, $ip . '不是有效的IP地址');
+                }
+            }
+            unset($ip);
+        }
         $update   = [
             'id'         => $this->auth->check(false),
             //允许修改的字段
             'secret_key' => $reqParam['secret_key'],
+            'ip_white'   => $reqParam['ip_white'],
         ];
         $id       = $this->userRepo->saveUser($update);
 

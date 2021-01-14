@@ -144,7 +144,9 @@ class UserService extends BaseService
         if (isset($inputData['secret_key']) && $inputData['secret_key']){
             $saveData['secret_key'] = $inputData['secret_key'];
         }
-        
+        if (isset($inputData['ip_white']) && $inputData['ip_white']){
+            $saveData['ip_white'] = $inputData['ip_white'];
+        }
         $id = $this->userModel->saveInfo($saveData,$type);
         return $id;
     }

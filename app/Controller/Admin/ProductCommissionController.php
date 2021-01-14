@@ -73,7 +73,22 @@ class ProductCommissionController extends BaseController
         $list = $list ? $list->toArray() : [];
         if(!empty($list)){
             foreach ($list as $k => $v) {
-                //                $list[$k]['status'] = $v['status'] === 0 ? false : true;
+                switch($v['type']){
+                    case 1:
+                        $list[$k]['type'] = '激活佣金';
+                        $list[$k]['type_status'] = 'list-badge status-success';
+                        break;
+                    case 2:
+                        $list[$k]['type'] = '首次充值';
+                        $list[$k]['amount_money'] = '首充达'.$v['amount_money'].'元';
+                        $list[$k]['type_status'] = 'list-badge status-info';
+                        break;
+                    case 3:
+                        $list[$k]['type'] = '后续月返';
+                        $list[$k]['month'] = '在网达'.$v['month'].'月';
+                        $list[$k]['type_status'] = 'list-badge status-warning';
+                        break;
+                }
             }
             unset($v);
         }

@@ -33,7 +33,7 @@ class User extends BaseModel
      *
      * @var array
      */
-    protected $fillable = ['id', 'status', 'mobile', 'username', 'email', 'nickname', 'avatar', 'job_number', 'session_id', 'password', 'created_at', 'updated_at', 'deleted_at', 'balance', 'commission', 'admin_id', 'level', 'cash'];
+    protected $fillable = ['id', 'status', 'mobile', 'username', 'email', 'nickname', 'avatar', 'job_number', 'session_id', 'password', 'created_at', 'updated_at', 'deleted_at', 'balance', 'commission', 'admin_id', 'level', 'cash', 'secret_key'];
     /**
      * The attributes that should be cast to native types.
      *
