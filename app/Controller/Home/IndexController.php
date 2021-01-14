@@ -65,10 +65,7 @@ class IndexController extends BaseController
 
     public function index()
     {
-        $res = Db::connection('bufan')->table('withdraw')
-//        ->where(['status' => 1])
-//        ->orderBy('product_classify.sort', 'DESC')
-            ->get();
+        $res = Db::connection('bufan')->table('withdraw')->get();
         var_export($res);
         return $this->view(['name' => 'ms']);
     }
@@ -84,13 +81,13 @@ class IndexController extends BaseController
 
     public function test()
     {
-        $res = $this->EmsPlugins->send([
-            'Subject' => '通知',
-            'MsgHTML' => 666,
-            'AddAddress' => '133814250@qq.com'
-        ]);
-
-        var_export(['$res' =>$res]);
+//        $res = $this->EmsPlugins->send([
+//            'Subject' => '通知',
+//            'MsgHTML' => 666,
+//            'AddAddress' => '133814250@qq.com'
+//        ]);
+//
+//        var_export(['$res' =>$res]);
 //        $easySms = ApplicationContext::getContainer()->get(SmsInterface::class);
 //        try {
 //            $result = $easySms->send(15303830571, [

@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controller\Home;
 
-use App\Constants\RedisCode;
 use App\Constants\StatusCode;
 use App\Controller\BaseController;
-use App\Exception\BusinessException;
 use Hyperf\HttpServer\Annotation\Controller;
 use Hyperf\HttpServer\Annotation\RequestMapping;
 use App\Middleware\SpreadMiddleware;
 use Hyperf\DbConnection\Db;
-use Hyperf\Utils\ApplicationContext;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Annotation\Middleware;
 use Hyperf\Validation\Contract\ValidatorFactoryInterface;
