@@ -29,6 +29,7 @@ trait Expert
 {
 
     /**
+     * 页面列表
      * list
      *
      * @return \Psr\Http\Message\ResponseInterface
@@ -69,6 +70,7 @@ trait Expert
     }
 
     /**
+     * 状态开关
      * switch
      *
      * @return \Psr\Http\Message\ResponseInterface
@@ -114,29 +116,14 @@ trait Expert
         if (!$this->request->has($this->model->getKeyName())) {
             return $this->error(StatusCode::ERR_EXCEPTION, '缺少编辑的条件');
         }
-        $where = [
-            $this->model->getKeyName() => $this->request->input($this->model->getKeyName()),
-        ];
-        $row   = $this->model->query()->where($where)->first();
+        $row = $this->model->query()
+            ->where([$this->model->getKeyName() => $this->request->input($this->model->getKeyName()),])
+            ->first();
         if (!$row) {
             return $this->error(StatusCode::ERR_EXCEPTION, '数据不存在');
         }
 
-        if ($this->request->isMethod('post')) {
-            $update = $this->model->loadModel($this->request->all());
-            if (count($update) < 1) {
-                return $this->error(StatusCode::ERR_EXCEPTION, '缺少更新内容');
-            }
-            Db::beginTransaction();
-            try {
-                Db::table($this->model->getTable())
-                    ->where([$this->model->getKeyName() => $row->{$this->model->getKeyName()}])
-                    ->update($update);
-                Db::commit();
-            } catch (\Throwable $ex) {
-                Db::rollBack();
-                throw new DatabaseExceptionHandler(StatusCode::ERR_EXCEPTION_DATABASE, $ex->getMessage(), $ex);
-            }
+        if ($this->request->isMethod('post') && $this->model->edit($row, $this->request->all())) {
             return $this->success($row, '更新成功');
         }
 
@@ -154,21 +141,41 @@ trait Expert
      */
     public function add()
     {
-        if ($this->request->isMethod('post')) {
-            $insert = $this->model->loadModel($this->request->all(), null, false);
-            if (count($insert) < 1) {
-                return $this->error(StatusCode::ERR_EXCEPTION, '缺少插入内容');
-            }
-            Db::beginTransaction();
-            try {
-                $id = Db::table($this->model->getTable())->insertGetId($insert);
-                Db::commit();
-            } catch (\Throwable $ex) {
-                Db::rollBack();
-                throw new DatabaseExceptionHandler(StatusCode::ERR_EXCEPTION_DATABASE, $ex->getMessage(), $ex);
-            }
-            return $this->success([$this->model->getKeyName() => $id], '添加成功');
+        if ($this->request->isMethod('post') && $this->model->add($this->request->all())) {
+            return $this->success([], '添加成功');
         }
+        return $this->error(StatusCode::ERR_EXCEPTION, '访问非法');
+    }
+
+
+    /**
+     * 删除
+     * del
+     *
+     * @RequestMapping(path="del")
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/15 11:02
+     */
+    public function del()
+    {
+        if ($this->request->isMethod('post')) {
+            if (!$this->request->has($this->model->getKeyName())) {
+                return $this->error(StatusCode::ERR_EXCEPTION, '缺少编辑的条件');
+            }
+            $ids   = explode(",", (string)$this->request->input($this->model->getKeyName()));
+            $query = $this->model->query();
+            $where = [
+                //管理员访问权限
+            ];
+            $query->where($where);
+            $count = $this->model->del($ids, $query);
+            if ($count) {
+                return $this->success([], '成功删除' . $count . '条数据');
+            } else {
+                return $this->error(StatusCode::ERR_EXCEPTION, '删除失败');
+            }
+        }
+
         return $this->error(StatusCode::ERR_EXCEPTION, '访问非法');
     }
 
@@ -200,43 +207,6 @@ trait Expert
             return json($result);
         }
         return $this->view->fetch();
-    }
-
-
-    /**
-     * 删除
-     */
-    public function del($ids = "")
-    {
-        if ($ids) {
-            $pk       = $this->model->getPk();
-            $adminIds = $this->getDataLimitAdminIds();
-            if (is_array($adminIds)) {
-                $this->model->where($this->dataLimitField, 'in', $adminIds);
-            }
-            $list = $this->model->where($pk, 'in', $ids)->select();
-
-            $count = 0;
-            Db::startTrans();
-            try {
-                foreach ($list as $k => $v) {
-                    $count += $v->delete();
-                }
-                Db::commit();
-            } catch (PDOException $e) {
-                Db::rollback();
-                $this->error($e->getMessage());
-            } catch (Exception $e) {
-                Db::rollback();
-                $this->error($e->getMessage());
-            }
-            if ($count) {
-                $this->success();
-            } else {
-                $this->error(__('No rows were deleted'));
-            }
-        }
-        $this->error(__('Parameter %s can not be empty', 'ids'));
     }
 
     /**

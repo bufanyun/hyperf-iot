@@ -15,51 +15,38 @@ namespace Core\Common\Traits\Admin\Models;
 use App\Exception\BusinessException;
 use App\Constants\StatusCode;
 use Hyperf\DbConnection\Db;
+use App\Exception\DatabaseExceptionHandler;
 
 /**
  * Trait Table
  * 表格操作类
  *
  * @package Core\Common\Traits\Admin\Models
+ * author MengShuai <133814250@qq.com>
+ * date 2021/01/15 14:41
  */
 trait Table
 {
-
-    /**可操作的开关字段白名单
-     *
-     * @var array
-     */
-    protected $switchList = ['status',];
-
     /**
-     * 添加数据
+     * 添加数据行
      * add
-     *
      * @param array $params
-     * @param null  $query
-     *
+     * @param null $query
      * @return bool
      * author MengShuai <133814250@qq.com>
-     * date 2020/11/27 20:18
+     * date 2021/01/15 14:41
      */
-    public function add(array $params = [], $query = null): void
+    public function add(array $params = [], $query = null): bool
     {
         $model = make(get_called_class());
         if ($query == null) {
             $query = clone $model;
         }
         //过滤掉多余字段
-        $insert = [];
-        if (isset($model->fillable) && is_array($model->fillable)) {
-            array_map(function ($k) use (&$insert, $params) {
-                if (isset($params[$k]) && $params[$k] != '') {
-                    $insert[$k] = $params[$k];
-                }
-            }, $model->fillable);
-        }
-        if (empty($insert)) {
+        $insert = $this->loadModel($params, null, false);
+        if (count($insert) < 1) {
             throw new BusinessException(StatusCode::ERR_EXCEPTION_USER,
-                '没有提交任何参数内容');
+                '缺少插入内容');
         }
 
         Db::beginTransaction();
@@ -68,81 +55,104 @@ trait Table
             Db::commit();
         } catch (\Throwable $ex) {
             Db::rollBack();
-            throw new BusinessException(StatusCode::ERR_EXCEPTION_USER,
-                $ex->getMessage());
+            throw new DatabaseExceptionHandler(StatusCode::ERR_EXCEPTION_DATABASE, $ex->getMessage(), $ex);
         }
 
         if (!$res) {
             throw new BusinessException(StatusCode::ERR_EXCEPTION_USER,
                 '添加失败，稍后重试');
         }
-        return;
+        return true;
     }
 
     /**
-     * 编辑/更新信息
+     * 编辑/更新信息行
      * edit
-     *
-     * @param array $where
+     * @param $where
      * @param array $params
-     * @param null  $query
-     *
-     * @return int|mixed
+     * @param null $query
+     * @return bool
      * author MengShuai <133814250@qq.com>
-     * date 2020/11/27 11:24
+     * date 2021/01/15 14:41
      */
-    public function edit(array $where, array $params = [], $query = null): void
+    public function edit($where, array $params = [], $query = null): bool
     {
         $model = make(get_called_class());
         if ($query == null) {
             $query = clone $model;
         }
         //过滤掉多余字段
-        $update = [];
-        if (isset($model->fillable) && is_array($model->fillable)) {
-            array_map(function ($k) use (&$update, $params) {
-                if (isset($params[$k]) && $params[$k] != '') {
-                    $update[$k] = $params[$k];
-                }
-            }, $model->fillable);
-        }
-        if (empty($update)) {
+        $update = $this->loadModel($params);
+        if (count($update) < 1) {
             throw new BusinessException(StatusCode::ERR_EXCEPTION_USER,
-                '没有提交任何更新内容');
-        }
-        $exists = $query->where($where)->exists();
-        if (!$exists) {
-            throw new BusinessException(StatusCode::ERR_EXCEPTION_USER,
-                '没有找到需要更新的数据');
+                '缺少更新内容');
         }
         Db::beginTransaction();
         try {
-            $res = $query->where($where)->update($update);
+            $res = $query->where([$this->getKeyName() => $where->{$this->getKeyName()}])
+                ->update($update);
             Db::commit();
         } catch (\Throwable $ex) {
             Db::rollBack();
-            throw new BusinessException(StatusCode::ERR_EXCEPTION_USER,
-                $ex->getMessage());
+            throw new DatabaseExceptionHandler(StatusCode::ERR_EXCEPTION_DATABASE, $ex->getMessage(), $ex);
         }
 
         if (!$res) {
             throw new BusinessException(StatusCode::ERR_EXCEPTION_USER,
                 '更新失败，稍后重试');
         }
-        return;
+        return true;
+    }
+
+    /**
+     * 通过主键删除数据，支持批量，兼容伪删除
+     * del
+     * @param $ids
+     * @param null $query
+     * @return int
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/15 14:37
+     */
+    public function del($ids, $query = null): int
+    {
+        $model = make(get_called_class());
+        if ($query == null) {
+            $query = clone $model;
+        }
+        $list = $query->whereIn($this->getKeyName(), $ids)->get()->toArray();
+        if (!$list) {
+            throw new BusinessException(StatusCode::ERR_EXCEPTION_USER,
+                '未找到需要删除的数据');
+        }
+
+        $count       = 0;
+        $isPseudoDel = $this->isPseudoDel();
+        Db::beginTransaction();
+        try {
+            foreach ($list as $k => $v) {
+                $db = Db::table($this->getTable())->where([$this->getKeyName() => $v[$this->getKeyName()]]);
+                $count += $isPseudoDel
+                    ? $db->update([static::DELETED_AT => date("Y-m-d H:i:s")])
+                    : $db->delete();
+            }
+            unset($v);
+            Db::commit();
+        } catch (\Throwable $ex) {
+            Db::rollBack();
+            throw new DatabaseExceptionHandler(StatusCode::ERR_EXCEPTION_DATABASE, $ex->getMessage(), $ex);
+        }
+        return $count;
     }
 
     /**
      * 状态类开关
      * switch
-     *
      * @param array $where
      * @param array $params
-     * @param null  $query
-     *
-     * @return int|mixed
+     * @param null $query
+     * @return int
      * author MengShuai <133814250@qq.com>
-     * date 2020/11/27 11:24
+     * date 2021/01/15 14:42
      */
     public function switch(array $where, array $params = [], $query = null): int
     {
@@ -180,8 +190,7 @@ trait Table
             Db::commit();
         } catch (\Throwable $ex) {
             Db::rollBack();
-            throw new BusinessException(StatusCode::ERR_EXCEPTION_USER,
-                $ex->getMessage());
+            throw new DatabaseExceptionHandler(StatusCode::ERR_EXCEPTION_DATABASE, $ex->getMessage(), $ex);
         }
 
         if (!$res) {
@@ -192,86 +201,11 @@ trait Table
     }
 
     /**
-     * 表格查询
-     * formQuery
-     *
-     * @param array $params
-     * @param null  $query
-     *
-     * @return array
-     * author MengShuai <133814250@qq.com>
-     * date 2020/11/26 22:59
-     */
-    public function formQuery(array $params = [], $query = null): array
-    {
-        $model = make(get_called_class());
-        if ($query == null) {
-            $query = clone $model;
-        }
-        //排序，默认使用主键
-        $order = [$model->getKeyName() => 'DESC'];
-        //分页
-        $pageSize    = 10;
-        $currentPage = 1;
-        if (isset($params['page_size'])) {
-            $pageSize = $params['page_size'] > 0 ? $params['page_size'] : $pageSize;
-            unset($params['page_size']);
-        }
-        if (isset($params['current_page'])) {
-            $currentPage = $params['current_page'] > 0 ? $params['current_page'] : $currentPage;
-            unset($params['current_page']);
-        }
-        $offset = ($currentPage - 1) * $pageSize;
-        //查询条件
-        $where = [];
-        if (isset($model->fillable) && is_array($model->fillable)) {
-            array_map(function ($k) use (&$where, $params) {
-                if (isset($params[$k]) && $params[$k] != '') {
-                    $where[$k] = $params[$k];
-                }
-            }, $model->fillable);
-
-            //返回字段
-            foreach ($model->fillable as $fk => $fv) {
-                $model->fillable[$fk] = $model->getTable() . '.' . $fv;
-            }
-            $query->select($model->fillable);
-        }
-
-        // 循环增加查询条件
-        foreach ($where as $k => $v) {
-            if ($v || $v != null) {
-                $query =
-                    $query->where($model->getTable() . '.' . $k, $v);
-            }
-        }
-        // 追加排序
-        if ($order && is_array($order)) {
-            foreach ($order as $k => $v) {
-                $query =
-                    $query->orderBy($model->getTable() . '.' . $k, $v);
-            }
-        }
-
-        //总数
-        $que   = clone $query;
-        $count = $que->count();
-
-        $query = $query->offset($offset)->limit($pageSize);
-        $query = $query->get();
-        $list  = $query ? $query->toArray() : [];
-        return [
-            'count' => $count ?? 0,
-            'list'  => $list,
-        ];
-    }
-
-    /**
      * 获取检查后的更新/添加的数据内容
      * loadModel
      * @param array $params
-     * @param null  $query
-     * @param bool  $isUpdate
+     * @param null $query
+     * @param bool $isUpdate
      *
      * @return array
      * author MengShuai <133814250@qq.com>
@@ -285,7 +219,7 @@ trait Table
         }
         $update     = [];
         $editRoster = $model->editRoster ?? $model->fillable;
-        if($isUpdate === false){
+        if ($isUpdate === false) {
             $editRoster = $model->fillable;
         }
         if (isset($params)) {
@@ -295,7 +229,49 @@ trait Table
                 }
             }, $editRoster);
         }
+
+        $update = array_merge(
+            $update,
+            $this->setFillAttribute($model, $isUpdate),
+        //...
+        );
         return $update;
+    }
+
+    /**
+     * 填充模型自动字段
+     * setFillAttribute
+     * @param $model
+     * @param bool $isUpdate
+     * @return array
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/15 10:46
+     */
+    protected function setFillAttribute($model, bool $isUpdate): array
+    {
+        $update = [];
+        //新增时间
+        if ($isUpdate === false && in_array($model::CREATED_AT, $model->fillable)) {
+            $update[$model::CREATED_AT] = date("Y-m-d H:i:s");
+        }
+        //更新时间
+        if ($isUpdate === true && in_array($model::UPDATED_AT, $model->fillable)) {
+            $update[$model::UPDATED_AT] = date("Y-m-d H:i:s");
+        }
+        return $update;
+    }
+
+    /**
+     * 判断是否存在伪删除
+     * isPseudoDel
+     * @return bool
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/15 11:49
+     */
+    public function isPseudoDel(): bool
+    {
+        $model = make(get_called_class());
+        return in_array($model::DELETED_AT, $model->fillable);
     }
 
     /**
@@ -303,7 +279,7 @@ trait Table
      * buildTableParams
      *
      * @param array $params
-     * @param null  $query
+     * @param null $query
      *
      * @return array
      * author MengShuai <133814250@qq.com>

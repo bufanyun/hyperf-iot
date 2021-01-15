@@ -40,6 +40,8 @@ class ProductCommission extends BaseModel
      * @var array
      */
     protected $editRoster = ['type', 'month', 'amount_money', 'money', 'detailed_titile'];
+    
+    const UPDATED_AT = null;
 
     public function getCreatedAtAttribute() : string
     {
@@ -49,8 +51,4 @@ class ProductCommission extends BaseModel
         return (string) $this->attributes['created_at'];
     }
 
-    public function setCreatedAtAttribute() : string
-    {
-        return date("Y-m-d H:i:s");
-    }
 }
