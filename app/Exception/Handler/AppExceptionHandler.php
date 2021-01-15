@@ -52,6 +52,7 @@ class AppExceptionHandler extends ExceptionHandler
             $throwable->getLine(), $throwable->getFile()));
         $this->logger->error($throwable->getTraceAsString());
 
+//        var_export(['$throwable' =>$throwable]);
         if ($throwable instanceof NotFoundHttpException) { //方法不存在
             $code = StatusCode::ERR_NON_EXISTENT;
         } elseif ($throwable instanceof BusinessException) { //常规错误

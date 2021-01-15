@@ -20,6 +20,7 @@ use App\Constants\StatusCode;
 use Core\Common\Facade\Log;
 use Hyperf\Utils\Context;
 use Hyperf\Utils\Coroutine;
+use Hyperf\Utils\ApplicationContext;
 
 /**
  * BaseController
@@ -109,50 +110,45 @@ class BaseController extends AbstractController
     }
 
     /**
-     * success
      * 成功返回请求结果
-     * User：YM
-     * Date：2019/11/20
-     * Time：下午3:56
+     * success
      * @param array $data
-     * @param null $msg
+     * @param string|null $msg
      * @return \Psr\Http\Message\ResponseInterface
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/15 09:36
      */
     public function success($data = [], string $msg = null)
     {
-        return $this->response->success($data, $msg);
-
         $msg = $msg ?? StatusCode::getMessage(StatusCode::SUCCESS);
         $data = ['code' => StatusCode::SUCCESS, 'msg' => $msg, 'data' => $data];
         $response = $this->response->json($data);
         $executionTime = microtime(true) - Context::get('request_start_time');
         $rbs = strlen($response->getBody()->getContents());
         // 获取日志实例，记录日志
-        $logger = Log::get(requestEntry(Coroutine::getBackTrace()));
-        $logger->info($msg, getLogArguments($executionTime, $rbs));
+        $logger = ApplicationContext::getContainer()->get(\Hyperf\Logger\LoggerFactory::class)->get('success','response');
+        $logger->info($msg, getLogArguments($executionTime, $rbs)+['data' => $data]);
         return $response;
     }
 
     /**
-     * error
      * 业务相关错误结果返回
-     * User：YM
-     * Date：2019/11/20
-     * Time：下午3:56
+     * error
      * @param int $code
      * @param null $msg
      * @return \Psr\Http\Message\ResponseInterface
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/15 09:36
      */
     public function error($code = StatusCode::ERR_EXCEPTION, $msg = null)
     {
-        return $this->response->error($code, $msg);
         $msg = $msg ?? StatusCode::getMessage(StatusCode::ERR_EXCEPTION);
         $data = ['code' => $code, 'msg' => $msg, 'data' => []];
         $response = $this->response->json($data);
         $executionTime = microtime(true) - Context::get('request_start_time');
         $rbs = strlen($response->getBody()->getContents());
         // 获取日志实例，记录日志
-        $logger = Log::get(requestEntry(Coroutine::getBackTrace()));
+        $logger = ApplicationContext::getContainer()->get(\Hyperf\Logger\LoggerFactory::class)->get('error','response');
         $logger->error($msg, getLogArguments($executionTime, $rbs));
         return $response;
     }

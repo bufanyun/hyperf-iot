@@ -40,4 +40,17 @@ class ProductCommission extends BaseModel
      * @var array
      */
     protected $editRoster = ['type', 'month', 'amount_money', 'money', 'detailed_titile'];
+
+    public function getCreatedAtAttribute() : string
+    {
+        if ('0000-00-00 00:00:00' === (string) $this->attributes['created_at']) {
+            return '-';
+        }
+        return (string) $this->attributes['created_at'];
+    }
+
+    public function setCreatedAtAttribute() : string
+    {
+        return date("Y-m-d H:i:s");
+    }
 }

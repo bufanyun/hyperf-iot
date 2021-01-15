@@ -102,4 +102,11 @@ class StatusCode extends AbstractConstants
      * @Message("提交的数据存在格式或内容错误！")
      */
     const ERR_EXCEPTION_PARAMETER = 3004;
+
+
+    /**
+     * 数据库响应失败
+     * @Message("数据库响应出错，多次出现请联系管理员！")
+     */
+    const ERR_EXCEPTION_DATABASE = 4005;
 }

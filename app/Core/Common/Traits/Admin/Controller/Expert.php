@@ -15,6 +15,7 @@ namespace Core\Common\Traits\Admin\Controller;
 use App\Constants\StatusCode;
 use Hyperf\DbConnection\Db;
 use Hyperf\HttpServer\Annotation\RequestMapping;
+use App\Exception\DatabaseExceptionHandler;
 
 /**
  * 通用控制器方法
@@ -134,8 +135,9 @@ trait Expert
                 Db::commit();
             } catch (\Throwable $ex) {
                 Db::rollBack();
-                return $this->error(StatusCode::ERR_EXCEPTION, $ex->getMessage());
+                throw new DatabaseExceptionHandler(StatusCode::ERR_EXCEPTION_DATABASE, $ex->getMessage(), $ex);
             }
+            return $this->success($row, '更新成功');
         }
 
         return $this->success($row, '获取成功');
@@ -163,7 +165,7 @@ trait Expert
                 Db::commit();
             } catch (\Throwable $ex) {
                 Db::rollBack();
-                return $this->error(StatusCode::ERR_EXCEPTION, $ex->getMessage());
+                throw new DatabaseExceptionHandler(StatusCode::ERR_EXCEPTION_DATABASE, $ex->getMessage(), $ex);
             }
             return $this->success([$this->model->getKeyName() => $id], '添加成功');
         }

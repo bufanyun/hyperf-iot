@@ -93,6 +93,8 @@ class ProductCommissionController extends BaseController
                         $list[$k]['type_status'] = 'list-badge status-warning';
                         break;
                 }
+
+                $list[$k]['bind_products'] = (int)$v['bind_products']+rand(1,9);
             }
             unset($v);
         }
