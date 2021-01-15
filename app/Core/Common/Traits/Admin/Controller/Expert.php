@@ -55,10 +55,9 @@ trait Expert
             ->where($where)
             ->orderBy($sort, $order)
             ->offset($offset)->limit($limit)
-            ->get();
-        //        var_export(Db::getQueryLog());
+            ->get()
+            ->toArray();
 
-        $list = $list ? $list->toArray() : [];
         if (!empty($list)) {
             foreach ($list as $k => $v) {
                 //    $list[$k]['status'] = $v['status'] === 0 ? false : true;

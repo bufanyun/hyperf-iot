@@ -6,7 +6,7 @@ namespace App\Models;
 use App\Models\ProductClassify;
 use Core\Common\Container\Redis;
 use Hyperf\Di\Annotation\Inject;
-
+use Core\Common\Extend\Helpers\ArrayHelpers;
 
 /**
  * @property int $id 
@@ -59,22 +59,14 @@ class ProductSale extends BaseModel
 
     protected $appends = [
         'cid_name',
-        'pid_name'
     ];
-    public function getPidNameAttribute() : string
-    {
-        if(empty($this->attributes['pid'])){
-            return '';
-        }
-        $v= $this->attributes['pid']>0 ? $this->getPidKindName($this->attributes['pid']) : $this->attributes['kind_name'];
-        return $v;
-    }
+
     public function getCidNameAttribute() : string
     {
         if(empty($this->attributes['cid'])){
             return '';
         }
-        return arraySearchColumn($this->ProductClassify->getList(), 'id', (string)$this->attributes['cid'], 'name');
+        return ArrayHelpers::searchColumn($this->ProductClassify->getList(), 'id', (string)$this->attributes['cid'], 'name');
     }
     public function getPriceAttribute() : string
     {
@@ -118,5 +110,10 @@ class ProductSale extends BaseModel
     {
        $name = $this->query()->where(['id' => $pid])->value('kind_name');
        return isset($name) ? (string)$name : '';
+    }
+
+    public function product_classify()
+    {
+        return $this->hasOne(ProductClassify::class, 'id', 'cid');
     }
 }
