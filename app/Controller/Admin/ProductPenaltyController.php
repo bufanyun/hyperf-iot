@@ -37,12 +37,15 @@ use App\Models\ProductPenalty;
 class ProductPenaltyController extends BaseController
 {
 
+    use \Core\Common\Traits\Admin\Controller\Expert;
+
     /**
      *
      * @Inject()
      * @var ProductPenalty
      */
     private $model;
+
 
     /**
      * list
@@ -73,7 +76,24 @@ class ProductPenaltyController extends BaseController
         $list = $list ? $list->toArray() : [];
         if(!empty($list)){
             foreach ($list as $k => $v) {
-                //                $list[$k]['status'] = $v['status'] === 0 ? false : true;
+                switch($v['type']){
+                    case 1:
+                        $list[$k]['type'] = '省级';
+                        $list[$k]['type_status'] = 'list-badge status-success';
+                        break;
+                    case 2:
+                        $list[$k]['type'] = '市级';
+                        $list[$k]['type_status'] = 'list-badge status-info';
+                        break;
+                    case 3:
+                        $list[$k]['type'] = '区域级';
+                        $list[$k]['type_status'] = 'list-badge status-warning';
+                        break;
+                    case 4:
+                        $list[$k]['type'] = '街道级';
+                        $list[$k]['type_status'] = 'list-badge status-primary';
+                        break;
+                }
             }
             unset($v);
         }

@@ -270,8 +270,7 @@ trait Table
      */
     public function isPseudoDel(): bool
     {
-        $model = make(get_called_class());
-        return in_array($model::DELETED_AT, $model->fillable);
+        return in_array(static::DELETED_AT, $this->fillable);
     }
 
     /**
@@ -410,6 +409,11 @@ trait Table
             }
         }
         unset($v);
+
+        //是否使用伪删除
+        if($this->isPseudoDel()){
+            $query->whereNull(static::DELETED_AT);
+        }
 
         return [$query, $sort, $order, $offset, $limit];
     }
