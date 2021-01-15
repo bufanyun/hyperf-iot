@@ -40,7 +40,7 @@ class ProductCommission extends BaseModel
      * @var array
      */
     protected $editRoster = ['type', 'month', 'amount_money', 'money', 'detailed_titile'];
-    
+
     const UPDATED_AT = null;
 
     public function getCreatedAtAttribute() : string
