@@ -123,11 +123,11 @@ class BaseController extends AbstractController
         $msg = $msg ?? StatusCode::getMessage(StatusCode::SUCCESS);
         $data = ['code' => StatusCode::SUCCESS, 'msg' => $msg, 'data' => $data];
         $response = $this->response->json($data);
-        $executionTime = microtime(true) - Context::get('request_start_time');
-        $rbs = strlen($response->getBody()->getContents());
-        // 获取日志实例，记录日志
-        $logger = ApplicationContext::getContainer()->get(\Hyperf\Logger\LoggerFactory::class)->get('success','response');
-        $logger->info($msg, getLogArguments($executionTime, $rbs)+['data' => $data]);
+//        $executionTime = microtime(true) - Context::get('request_start_time');
+//        $rbs = strlen($response->getBody()->getContents());
+//        // 获取日志实例，记录日志
+//        $logger = ApplicationContext::getContainer()->get(\Hyperf\Logger\LoggerFactory::class)->get('success','response');
+//        $logger->info($msg, getLogArguments($executionTime, $rbs)+['data' => $data]);
         return $response;
     }
 

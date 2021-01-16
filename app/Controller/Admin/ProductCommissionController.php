@@ -13,6 +13,7 @@ use App\Middleware\AdminAuthMiddleware;
 use Hyperf\HttpServer\Annotation\RequestMapping;
 use App\Constants\ProductCommissionCode;
 use App\Models\ProductCommission;
+use Core\Common\Extend\Helpers\ArrayHelpers;
 
 /**
  * ProductCommissionController
@@ -62,6 +63,8 @@ class ProductCommissionController extends BaseController
 
         if (!empty($list)) {
             foreach ($list as $k => $v) {
+                $list[$k] = ArrayHelpers::hidden($v, ['id', 'admin_id', 'type', 'month', 'amount_money', 'money', 'detailed_titile', 'bind_products', 'created_at']);
+                $list[$k]['value'] = $v['id'];
                 switch($v['type']){
                     case 1 :
                         $list[$k]['brand'] =  "[" . ProductCommissionCode::getMessage($v['type']) . "] 佣金：{$v['money']}";

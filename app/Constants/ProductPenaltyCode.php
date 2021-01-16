@@ -39,5 +39,5 @@ class ProductPenaltyCode extends AbstractConstants
      * @Message("街道级")
      */
     public const TYPE_ADDRESS = 4;
-    
+
 }

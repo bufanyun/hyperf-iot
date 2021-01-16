@@ -19,7 +19,7 @@ use Core\Common\Extend\Helpers\ArrayHelpers;
  * @property string $titile 
  * @property float $price 
  * @property string $icon 
- * @property int $recommend 
+ * @property string $recommend
  * @property int $stocks 
  * @property int $sales 
  * @property string $penalty 
@@ -55,7 +55,7 @@ class ProductSale extends BaseModel
      *
      * @var array
      */
-    protected $casts = ['id' => 'integer', 'admin_id' => 'integer', 'pid' => 'integer', 'commission' => 'integer',  'cid' => 'integer', 'access' => 'integer', 'price' => 'float', 'recommend' => 'integer', 'stocks' => 'integer', 'sales' => 'integer', 'sort' => 'integer', 'status' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
+    protected $casts = ['id' => 'integer', 'admin_id' => 'integer', 'pid' => 'integer', 'cid' => 'integer', 'access' => 'integer', 'price' => 'float', 'recommend' => 'integer', 'stocks' => 'integer', 'sales' => 'integer', 'sort' => 'integer', 'status' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
 
     protected $appends = [
         'cid_name',

@@ -14,6 +14,8 @@ use Hyperf\HttpServer\Annotation\RequestMapping;
 use App\Constants\StatusCode;
 use App\Models\ProductPenalty;
 use App\Constants\ProductPenaltyCode;
+use Core\Common\Extend\Helpers\ArrayHelpers;
+
 
 /**
  * ProductPenaltyController
@@ -63,6 +65,8 @@ class ProductPenaltyController extends BaseController
 
         if (!empty($list)) {
             foreach ($list as $k => $v) {
+                $list[$k] = ArrayHelpers::hidden($v, ['id', 'admin_id', 'type', 'province', 'city', 'district', 'status', 'created_at', 'updated_at', 'deleted_at']);
+                $list[$k]['value'] = $v['id'];
                switch($v['type']){
                    case 1 :
                        $list[$k]['brand'] =  "[" . ProductPenaltyCode::getMessage($v['type']) . "] {$v['province']}";

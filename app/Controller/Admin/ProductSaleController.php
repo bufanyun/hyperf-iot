@@ -30,13 +30,14 @@ use Core\Common\Extend\Helpers\ArrayHelpers;
 class ProductSaleController extends BaseController
 {
 
+    use \Core\Common\Traits\Admin\Controller\Expert;
+
     /**
      *
      * @Inject()
      * @var ProductSale
      */
     private $model;
-
 
     /**
      * 下拉框父类卡种
@@ -50,10 +51,10 @@ class ProductSaleController extends BaseController
      */
     public function selected_pid_name()
     {
-        $query    = $this->model->query();
-        $where = ['pid' => 0 , 'status' => 1]; //额外条件
-        $list = $query
-            ->select('name','id as code')
+        $query = $this->model->query();
+        $where = ['pid' => 0, 'status' => 1]; //额外条件
+        $list  = $query
+            ->select('name', 'id as code')
             ->where($where)
             ->get()
             ->toArray();
@@ -77,7 +78,7 @@ class ProductSaleController extends BaseController
     public function list()
     {
         $reqParam = $this->request->all();
-        $query = $this->model->query();
+        $query    = $this->model->query();
         [$querys, $sort, $order, $offset, $limit] = $this->model->buildTableParams($reqParam, $query);
         $where = []; //额外条件
 
@@ -96,14 +97,14 @@ class ProductSaleController extends BaseController
             ->toArray();
         //        var_export(Db::getQueryLog());
 
-        if(!empty($list)){
+        if (!empty($list)) {
             foreach ($list as $k => $v) {
-                $list[$k] = ArrayHelpers::hidden($v, ['first_desc', 'deleted_at', 'stocks', 'sales', 'penalty']);
-                $list[$k]['pid_name']= $v['pid']>0 ? $this->model->getPidKindName($v['pid']) : $v['kind_name'];
+                $list[$k]             = ArrayHelpers::hidden($v, ['first_desc', 'deleted_at', 'stocks', 'sales', 'penalty']);
+                $list[$k]['pid_name'] = $v['pid'] > 0 ? $this->model->getPidKindName($v['pid']) : $v['kind_name'];
             }
             unset($v);
         }
-        $result = array("total" => $total, "rows" => $list);
+        $result = ["total" => $total, "rows" => $list];
         return $this->success($result);
     }
 
