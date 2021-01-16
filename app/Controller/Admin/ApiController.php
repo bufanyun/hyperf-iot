@@ -18,10 +18,12 @@ use Hyperf\Di\Annotation\Inject;
 use Core\Plugins\Sms;
 use Core\Plugins\Ems;
 use App\Constants\StatusCode;
+use Core\Plugins\WeChat\OfficialAccount;
 
 /**
  * ApiController
  * 管理员api
+ *
  * @package App\Controller\Admin
  *
  * @Controller(prefix="/admin_api/api")
@@ -31,9 +33,10 @@ use App\Constants\StatusCode;
  *     @Middleware(AdminAuthMiddleware::class)
  * })
  *
- * @property User $model
- * @property Sms $Sms
- * @property Ems $Ems
+ * @property User            $model
+ * @property Sms             $Sms
+ * @property Ems             $Ems
+ * @property OfficialAccount $OfficialAccount
  */
 class ApiController extends BaseController
 {
@@ -56,8 +59,16 @@ class ApiController extends BaseController
     protected $Ems;
 
     /**
+     * @Inject()
+     * @var OfficialAccount
+     */
+    protected $OfficialAccount;
+
+
+    /**
      * 发送短信
      * send_sms
+     *
      * @return \Psr\Http\Message\ResponseInterface
      *
      * @RequestMapping(path="send_sms")
@@ -108,6 +119,7 @@ class ApiController extends BaseController
     /**
      * 效验短信验证码
      * check_sms
+     *
      * @return \Psr\Http\Message\ResponseInterface
      * author MengShuai <133814250@qq.com>
      * date 2021/01/14 09:45
@@ -153,6 +165,7 @@ class ApiController extends BaseController
     /**
      * 发送邮件
      * send_ems
+     *
      * @return \Psr\Http\Message\ResponseInterface
      *
      * @RequestMapping(path="send_ems")
@@ -208,6 +221,7 @@ class ApiController extends BaseController
     /**
      * 效验邮箱验证码
      * check_ems
+     *
      * @return \Psr\Http\Message\ResponseInterface
      * author MengShuai <133814250@qq.com>
      * date 2021/01/14 09:45
@@ -244,5 +258,59 @@ class ApiController extends BaseController
         } else {
             return $this->error(StatusCode::ERR_EXCEPTION, '验证码不正确');
         }
+    }
+
+    /**
+     * 获取推广汇总信息
+     * get_pool
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/16 23:41
+     *
+     * @RequestMapping(path="get_pool")
+     */
+    public function get_pool()
+    {
+        $currUser       = $this->auth->check();
+        $promotion_link = env('API_HOME_SHARE',
+                '') . '/#/pages/spread/index?r=/home/spread/pool&job_number=' . $currUser['job_number'];
+        $res            = $this->OfficialAccount->shorten($promotion_link);
+        if (isset($res['errcode']) && $res['errcode'] === 0) {
+            $promotion_link = $res['short_url'];
+        }
+        return $this->success([
+            'promotion_link' => $promotion_link,
+            //TODO..
+        ]);
+    }
+
+    /**
+     * 生成产品推广链接
+     * generate_sharing_link
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/16 23:41
+     *
+     * @RequestMapping(path="generate_sharing_link")
+     */
+    public function generate_sharing_link()
+    {
+        $reqParam = $this->request->all();
+        $currUser = $this->auth->check();
+
+        $promotion_link = env('API_HOME_SHARE', '') . "/#/pages/spread/index?r=/home/spread/product_show&sid={$reqParam['id']}&job_number={$currUser['job_number']}&channel={$reqParam['sale_channel']}";
+        $res            = $this->OfficialAccount->shorten($promotion_link);
+        if (isset($res['errcode']) && $res['errcode'] === 0) {
+            $promotion_link = $res['short_url'];
+        }
+        return $this->success([
+            'promotion_link' => $promotion_link,
+        ]);
     }
 }

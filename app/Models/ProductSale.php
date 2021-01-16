@@ -70,14 +70,17 @@ class ProductSale extends BaseModel
         }
         return ArrayHelpers::searchColumn($this->ProductClassify->getList(), 'id', (string)$this->attributes['cid'], 'name');
     }
+
     public function getPriceAttribute() : string
     {
-        return $this->attributes['price'] = $this->attributes['price'] < 0.01 ? '免费' : '￥ '.sprintf("%.2f",$this->attributes['price']);
+        return sprintf("%.2f",$this->attributes['price']);
     }
+
     public function getStatusAttribute() : bool
     {
         return $this->attributes['status'] = $this->attributes['status'] ? true : false;
     }
+
     public function getCreatedAtAttribute() : string
     {
         if ('0000-00-00 00:00:00' === (string) $this->attributes['created_at']) {
@@ -85,18 +88,13 @@ class ProductSale extends BaseModel
         }
         return (string) $this->attributes['created_at'];
     }
+
     public function getUpdatedAtAttribute() : string
     {
         if ('0000-00-00 00:00:00' === (string) $this->attributes['updated_at']) {
             return '-';
         }
         return (string) $this->attributes['updated_at'];
-    }
-    //修改时 更改储存格式或者值 【自动触发，无需调用】
-    public function setStatusAttribute($value)
-    {
-        //$value 代表字段的值
-        //        $this->attributes['title'] = empty($value) ? '0' : $value;
     }
 
     /**

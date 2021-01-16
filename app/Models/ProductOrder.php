@@ -62,6 +62,31 @@ class ProductOrder extends BaseModel
     protected $casts = ['id' => 'integer', 'sid' => 'integer', 'pay_type' => 'integer', 'pay_status' => 'integer', 'status' => 'integer', 'activat_status' => 'integer', 'sale_channel' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
 
 
+    /**
+     * 获取订单进度状态码
+     * getStatusSelected
+     * @param array $lists
+     *
+     * @return array
+     * @throws \ReflectionException
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/16 20:40
+     */
+    public function getStatusSelected(array $lists = [])
+    {
+        $i=0;
+        $ref = new \ReflectionClass(ProductOrderCode::class);
+        $arrConsts = $ref->getConstants();
+        foreach ($arrConsts as $key => $val)
+        {
+            if(strpos($key,'STATUS_') === 0){
+                $lists[$i] = ['name' => ProductOrderCode::getMessage($val), 'code' => $val];
+                $i++;
+            }
+        }
+        unset($val);
+        return $lists;
+    }
 
 
     public function product_sale()

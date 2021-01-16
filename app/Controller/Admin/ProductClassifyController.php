@@ -59,10 +59,10 @@ class ProductClassifyController extends BaseController
      */
     public function selected()
     {
-        $query    = $this->model->query();
+        $query = $this->model->query();
         $where = ['status' => 1]; //额外条件
-        $list = $query
-            ->select('name','id as code')
+        $list  = $query
+            ->select('name', 'id as code')
             ->where($where)
             ->get()
             ->toArray();

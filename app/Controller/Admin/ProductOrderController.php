@@ -1,18 +1,12 @@
 <?php
+
 declare (strict_types=1);
 
 namespace App\Controller\Admin;
 
 use App\Controller\BaseController;
-use Crypto\Rand;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Annotation\AutoController;
-use http\Exception;
-use App\Exception\BusinessException;
-use Core\Plugins\BaiDu\Lbs;
-use Hyperf\DbConnection\Db;
-use App\Models\IpRegion;
-use Hyperf\Utils\Parallel;
 use Hyperf\HttpServer\Annotation\Middleware;
 use Hyperf\HttpServer\Annotation\Middlewares;
 use App\Middleware\LoginAuthMiddleware;
@@ -20,11 +14,13 @@ use App\Middleware\AdminAuthMiddleware;
 use Hyperf\HttpServer\Annotation\RequestMapping;
 use App\Constants\StatusCode;
 use App\Models\ProductOrder;
+use App\Models\ProductOrderChannel;
 use App\Constants\ProductOrderCode;
 
 /**
  * ProductOrderController
  * 订单列表
+ *
  * @package App\Controller\Admin
  *
  * @AutoController(prefix="admin_api/product_order")
@@ -46,8 +42,15 @@ class ProductOrderController extends BaseController
     private $model;
 
     /**
+     * @Inject()
+     * @var ProductOrderChannel
+     */
+    private $ProductOrderChannelModel;
+
+    /**
      * 最近销售
      * lately
+     *
      * @return \Psr\Http\Message\ResponseInterface
      *
      * @RequestMapping(path="lately")
@@ -69,6 +72,7 @@ class ProductOrderController extends BaseController
     /**
      * 添加/插入行
      * add
+     *
      * @return mixed
      *
      * @RequestMapping(path="add")
@@ -81,7 +85,34 @@ class ProductOrderController extends BaseController
     }
 
     /**
+     * @return mixed
+     *
+     * @RequestMapping(path="del")
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/14 21:45
+     */
+    public function del()
+    {
+        return $this->error(StatusCode::ERR_EXCEPTION, '访问非法');
+    }
+
+    /**
+     * 获取订单进度状态码
+     * get_status_selected
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     *
+     * @RequestMapping(path="get_status_selected")
+     */
+    public function getStatusSelected()
+    {
+        return $this->success($this->model->getStatusSelected());
+    }
+
+    /**
+     * 订单列表
      * list
+     *
      * @return \Psr\Http\Message\ResponseInterface
      *
      * @RequestMapping(path="list")
@@ -111,7 +142,11 @@ class ProductOrderController extends BaseController
         $list = $list ? $list->toArray() : [];
         if (!empty($list)) {
             foreach ($list as $k => $v) {
-                //                $list[$k]['status'] = $v['status'] === 0 ? false : true;
+                $list[$k]['status']         = ProductOrderCode::getMessage($v['status']);
+                $list[$k]['activat_status'] = ProductOrderCode::getMessage($v['activat_status']);
+                $list[$k]['sale_channel']   = $this->ProductOrderChannelModel->query()->where(['id' => $v['sale_channel']])->value('name') ?? '默认';
+                $list[$k]['source']   = isset($v['source']) && $v['source']!=='' ? $v['source'] : '互联网';
+
             }
             unset($v);
         }

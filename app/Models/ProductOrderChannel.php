@@ -34,4 +34,12 @@ class ProductOrderChannel extends BaseModel
      * @var array
      */
     protected $casts = ['id' => 'integer', 'status' => 'integer', 'sort' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
+
+    protected $searchFields = ['id', 'name', 'remarks'];
+    
+    public function getStatusAttribute() : bool
+    {
+        return $this->attributes['status'] = $this->attributes['status'] ? true : false;
+    }
+
 }

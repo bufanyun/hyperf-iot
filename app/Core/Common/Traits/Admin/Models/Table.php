@@ -30,8 +30,10 @@ trait Table
     /**
      * 添加数据行
      * add
+     *
      * @param array $params
-     * @param null $query
+     * @param null  $query
+     *
      * @return bool
      * author MengShuai <133814250@qq.com>
      * date 2021/01/15 14:41
@@ -68,9 +70,11 @@ trait Table
     /**
      * 编辑/更新信息行
      * edit
-     * @param $where
+     *
+     * @param       $where
      * @param array $params
-     * @param null $query
+     * @param null  $query
+     *
      * @return bool
      * author MengShuai <133814250@qq.com>
      * date 2021/01/15 14:41
@@ -107,8 +111,10 @@ trait Table
     /**
      * 通过主键删除数据，支持批量，兼容伪删除
      * del
-     * @param $ids
+     *
+     * @param      $ids
      * @param null $query
+     *
      * @return int
      * author MengShuai <133814250@qq.com>
      * date 2021/01/15 14:37
@@ -130,7 +136,7 @@ trait Table
         Db::beginTransaction();
         try {
             foreach ($list as $k => $v) {
-                $db = Db::table($this->getTable())->where([$this->getKeyName() => $v[$this->getKeyName()]]);
+                $db    = Db::table($this->getTable())->where([$this->getKeyName() => $v[$this->getKeyName()]]);
                 $count += $isPseudoDel
                     ? $db->update([static::DELETED_AT => date("Y-m-d H:i:s")])
                     : $db->delete();
@@ -147,9 +153,11 @@ trait Table
     /**
      * 状态类开关
      * switch
+     *
      * @param array $where
      * @param array $params
-     * @param null $query
+     * @param null  $query
+     *
      * @return int
      * author MengShuai <133814250@qq.com>
      * date 2021/01/15 14:42
@@ -203,9 +211,10 @@ trait Table
     /**
      * 获取检查后的更新/添加的数据内容
      * loadModel
+     *
      * @param array $params
-     * @param null $query
-     * @param bool $isUpdate
+     * @param null  $query
+     * @param bool  $isUpdate
      *
      * @return array
      * author MengShuai <133814250@qq.com>
@@ -241,8 +250,10 @@ trait Table
     /**
      * 填充模型自动字段
      * setFillAttribute
-     * @param $model
+     *
+     * @param      $model
      * @param bool $isUpdate
+     *
      * @return array
      * author MengShuai <133814250@qq.com>
      * date 2021/01/15 10:46
@@ -264,6 +275,7 @@ trait Table
     /**
      * 判断是否存在伪删除
      * isPseudoDel
+     *
      * @return bool
      * author MengShuai <133814250@qq.com>
      * date 2021/01/15 11:49
@@ -274,11 +286,11 @@ trait Table
     }
 
     /**
-     * 生成表格类查询所需要的条件,排序方式
+     * 生成表格类查询所需要的条件,排序方式,过滤伪删除
      * buildTableParams
      *
      * @param array $params
-     * @param null $query
+     * @param null  $query
      *
      * @return array
      * author MengShuai <133814250@qq.com>
@@ -411,7 +423,7 @@ trait Table
         unset($v);
 
         //是否使用伪删除
-        if($this->isPseudoDel()){
+        if ($this->isPseudoDel()) {
             $query->whereNull(static::DELETED_AT);
         }
 

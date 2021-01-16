@@ -21,7 +21,7 @@ use Naixiaoxin\HyperfWechat\EasyWechat;
  */
 class OfficialAccount extends Base
 {
-    private $app = null;
+    public $app = null;
 
     public function __construct()
     {
