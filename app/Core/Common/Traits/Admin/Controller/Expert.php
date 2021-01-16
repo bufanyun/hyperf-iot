@@ -27,7 +27,6 @@ use App\Exception\DatabaseExceptionHandler;
  */
 trait Expert
 {
-
     /**
      * 页面列表
      * list

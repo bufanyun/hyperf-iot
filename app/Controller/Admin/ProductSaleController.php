@@ -37,6 +37,37 @@ class ProductSaleController extends BaseController
      */
     private $model;
 
+
+    /**
+     * 下拉框父类卡种
+     * selected_pid_name
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     *
+     * @RequestMapping(path="selected_pid_name")
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/14 21:24
+     */
+    public function selected_pid_name()
+    {
+        $query    = $this->model->query();
+        $where = ['pid' => 0 , 'status' => 1]; //额外条件
+        $list = $query
+            ->select('name','id as code')
+            ->where($where)
+            ->get()
+            ->toArray();
+
+        if (!empty($list)) {
+            foreach ($list as $k => $v) {
+                //    $list[$k]['status'] = $v['status'] === 0 ? false : true;
+                unset($list[$k]['cid_name']);
+            }
+            unset($v);
+        }
+        return $this->success($list);
+    }
+
     /**
      * list
      * @return \Psr\Http\Message\ResponseInterface
