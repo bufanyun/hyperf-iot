@@ -3,9 +3,7 @@
 declare (strict_types=1);
 namespace App\Models;
 
-use Core\Common\Container\Redis;
 use App\Constants\RedisCode;
-use Hyperf\Di\Annotation\Inject;
 
 /**
  * @property int $id
@@ -41,12 +39,6 @@ class ProductClassify extends BaseModel
     protected $casts = ['id' => 'integer', 'admin_id' => 'integer', 'sort' => 'integer', 'status' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
 
     /**
-     * @Inject()
-     * @var Redis
-     */
-    private $Redis;
-
-    /**
      * 获取产品列表
      * getList
      * @return array
@@ -55,14 +47,15 @@ class ProductClassify extends BaseModel
      */
     public function getList() : array
     {
+        $redis = redis();
         $key = RedisCode::CLASSIFY_LIST;
-        if ($res = $this->Redis->get($key)) {
+        if ($res = $redis->get($key)) {
             return json_decode($res, true);
         }
         $res = $this->query()->where(['status' => 1])->orderBy($this->table .'.sort', 'orderBy')->get();
         $res = $res ? $res->toArray() : [];
         if ( ! empty($res)) {
-            $this->Redis->set($key, json_encode($res), 3600);
+            $redis->set($key, json_encode($res), 3600);
         }
         return $res;
     }

@@ -86,6 +86,7 @@ class ProductSaleController extends BaseController
             ->with('product_classify:id,name,icon')
             ->where($where)
             ->orderBy($sort, $order)
+//            ->orderBy('kind_name', 'DESC')
             ->count();
         //        Db::enableQueryLog();
         $list = $querys

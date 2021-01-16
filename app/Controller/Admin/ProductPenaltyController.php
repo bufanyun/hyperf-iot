@@ -54,9 +54,9 @@ class ProductPenaltyController extends BaseController
      */
     public function selecteds()
     {
-        $query    = $this->model->query();
+        $query = $this->model->query();
         $where = ['status' => 1]; //额外条件
-        $list = $query
+        $list  = $query
             ->where($where)
             ->orderBy('type', 'ASC')
             ->orderBy('id', 'DESC')
@@ -65,25 +65,25 @@ class ProductPenaltyController extends BaseController
 
         if (!empty($list)) {
             foreach ($list as $k => $v) {
-                $list[$k] = ArrayHelpers::hidden($v, ['id', 'admin_id', 'type', 'province', 'city', 'district', 'status', 'created_at', 'updated_at', 'deleted_at']);
+                $list[$k]          = ArrayHelpers::hidden($v, ['id', 'admin_id', 'type', 'province', 'city', 'district', 'status', 'created_at', 'updated_at', 'deleted_at']);
                 $list[$k]['value'] = $v['id'];
-               switch($v['type']){
-                   case 1 :
-                       $list[$k]['brand'] =  "[" . ProductPenaltyCode::getMessage($v['type']) . "] {$v['province']}";
-                       break;
-                   case 2 :
-                       $list[$k]['brand'] =  "[" . ProductPenaltyCode::getMessage($v['type']) . "] {$v['province']}-{$v['city']}";
-                       break;
-                   case 3 :
-                       $list[$k]['brand'] =  "[" . ProductPenaltyCode::getMessage($v['type']) . "] {$v['province']}-{$v['city']}-{$v['district']}";
-                       break;
-                   case 4 :
-                       $list[$k]['brand'] =  "[" . ProductPenaltyCode::getMessage($v['type']) . "] {$v['province']}-{$v['city']}-{$v['district']}-{$v['district']}";
-                       break;
-                   default :
-                       $list[$k]['brand'] = '未知';
-                       break;
-               }
+                switch ($v['type']) {
+                    case 1 :
+                        $list[$k]['brand'] = "[" . ProductPenaltyCode::getMessage($v['type']) . "] {$v['province']}";
+                        break;
+                    case 2 :
+                        $list[$k]['brand'] = "[" . ProductPenaltyCode::getMessage($v['type']) . "] {$v['province']}-{$v['city']}";
+                        break;
+                    case 3 :
+                        $list[$k]['brand'] = "[" . ProductPenaltyCode::getMessage($v['type']) . "] {$v['province']}-{$v['city']}-{$v['district']}";
+                        break;
+                    case 4 :
+                        $list[$k]['brand'] = "[" . ProductPenaltyCode::getMessage($v['type']) . "] {$v['province']}-{$v['city']}-{$v['district']}-{$v['district']}";
+                        break;
+                    default :
+                        $list[$k]['brand'] = '未知';
+                        break;
+                }
             }
             unset($v);
         }
@@ -99,7 +99,7 @@ class ProductPenaltyController extends BaseController
     public function list()
     {
         $reqParam = $this->request->all();
-        $query = $this->model->query();
+        $query    = $this->model->query();
 
         [$querys, $sort, $order, $offset, $limit] = $this->model->buildTableParams($reqParam, $query);
         $where = []; //额外条件
@@ -117,59 +117,28 @@ class ProductPenaltyController extends BaseController
         //        var_export(Db::getQueryLog());
 
         $list = $list ? $list->toArray() : [];
-        if(!empty($list)){
+        if (!empty($list)) {
             foreach ($list as $k => $v) {
-                switch($v['type']){
+                $list[$k]['type'] = ProductPenaltyCode::getMessage($v['type']);
+                switch ($v['type']) {
                     case 1:
-                        $list[$k]['type'] = '省级';
                         $list[$k]['type_status'] = 'list-badge status-success';
                         break;
                     case 2:
-                        $list[$k]['type'] = '市级';
                         $list[$k]['type_status'] = 'list-badge status-info';
                         break;
                     case 3:
-                        $list[$k]['type'] = '区域级';
                         $list[$k]['type_status'] = 'list-badge status-warning';
                         break;
                     case 4:
-                        $list[$k]['type'] = '街道级';
                         $list[$k]['type_status'] = 'list-badge status-primary';
                         break;
                 }
             }
             unset($v);
         }
-        $result = array("total" => $total, "rows" => $list);
+        $result = ["total" => $total, "rows" => $list];
         return $this->success($result);
     }
-
-    /**
-     * switch
-     * @return \Psr\Http\Message\ResponseInterface
-     *
-     * @RequestMapping(path="switch")
-     */
-    public function switch()
-    {
-        $reqParam = $this->request->all();
-        if ( ! isset($reqParam['key'])) {
-            return $this->error(StatusCode::ERR_EXCEPTION, '缺少更新开关的参数');
-        }
-        $primaryKey = $this->model->getKeyName();
-        if ( ! isset($reqParam[$primaryKey])) {
-            return $this->error(StatusCode::ERR_EXCEPTION, '缺少更新开关的条件');
-        }
-        $query = $this->model->query();
-        $where = [$primaryKey => $reqParam[$primaryKey]];
-        $param = [
-            'key'    => $reqParam['key'],
-            'update' => isset($reqParam['update']) ? $reqParam['update'] : '',
-        ];
-
-        $update = $this->model->switch($where, $param, $query);
-        return $this->success(['switch' => $update]);
-    }
-
-
+    
 }

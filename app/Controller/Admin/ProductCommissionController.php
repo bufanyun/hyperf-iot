@@ -52,9 +52,9 @@ class ProductCommissionController extends BaseController
      */
     public function selecteds()
     {
-        $query    = $this->model->query();
+        $query = $this->model->query();
         $where = []; //额外条件
-        $list = $query
+        $list  = $query
             ->where($where)
             ->orderBy('type', 'ASC')
             ->orderBy('id', 'DESC')
@@ -63,17 +63,17 @@ class ProductCommissionController extends BaseController
 
         if (!empty($list)) {
             foreach ($list as $k => $v) {
-                $list[$k] = ArrayHelpers::hidden($v, ['id', 'admin_id', 'type', 'month', 'amount_money', 'money', 'detailed_titile', 'bind_products', 'created_at']);
+                $list[$k]          = ArrayHelpers::hidden($v, ['id', 'admin_id', 'type', 'month', 'amount_money', 'money', 'detailed_titile', 'bind_products', 'created_at']);
                 $list[$k]['value'] = $v['id'];
-                switch($v['type']){
+                switch ($v['type']) {
                     case 1 :
-                        $list[$k]['brand'] =  "[" . ProductCommissionCode::getMessage($v['type']) . "] 佣金：{$v['money']}";
+                        $list[$k]['brand'] = "[" . ProductCommissionCode::getMessage($v['type']) . "] 佣金：{$v['money']}";
                         break;
                     case 2 :
-                        $list[$k]['brand'] =  "[" . ProductCommissionCode::getMessage($v['type']) . "] 佣金：{$v['money']}-要求首充：{$v['amount_money']}";
+                        $list[$k]['brand'] = "[" . ProductCommissionCode::getMessage($v['type']) . "] 佣金：{$v['money']}-要求首充：{$v['amount_money']}";
                         break;
                     case 3 :
-                        $list[$k]['brand'] =  "[" . ProductCommissionCode::getMessage($v['type']) . "] 佣金：{$v['money']}-要求在网 {$v['month']} 月后";
+                        $list[$k]['brand'] = "[" . ProductCommissionCode::getMessage($v['type']) . "] 佣金：{$v['money']}-要求在网 {$v['month']} 月后";
                         break;
                     default :
                         $list[$k]['brand'] = '未知';
@@ -84,8 +84,7 @@ class ProductCommissionController extends BaseController
         }
         return $this->success($list);
     }
-
-
+    
     /**
      * list
      * @return \Psr\Http\Message\ResponseInterface
@@ -95,7 +94,7 @@ class ProductCommissionController extends BaseController
     public function list()
     {
         $reqParam = $this->request->all();
-        $query = $this->model->query();
+        $query    = $this->model->query();
 
         [$querys, $sort, $order, $offset, $limit] = $this->model->buildTableParams($reqParam, $query);
         $where = []; //额外条件
@@ -113,31 +112,28 @@ class ProductCommissionController extends BaseController
         //        var_export(Db::getQueryLog());
 
         $list = $list ? $list->toArray() : [];
-        if(!empty($list)){
+        if (!empty($list)) {
             foreach ($list as $k => $v) {
-                switch($v['type']){
+                $list[$k]['bind_products'] = (int)$v['bind_products'] + rand(1, 9);
+                $list[$k]['type']          = ProductCommissionCode::getMessage($v['type']);
+                switch ($v['type']) {
                     case 1:
-                        $list[$k]['type'] = '激活佣金';
                         $list[$k]['type_status'] = 'list-badge status-success';
                         break;
                     case 2:
-                        $list[$k]['type'] = '首次充值';
-                        $list[$k]['amount_money'] = '首充达'.$v['amount_money'].'元';
-                        $list[$k]['type_status'] = 'list-badge status-info';
+                        $list[$k]['amount_money'] = '首充达' . $v['amount_money'] . '元';
+                        $list[$k]['type_status']  = 'list-badge status-info';
                         break;
                     case 3:
-                        $list[$k]['type'] = '后续月返';
-                        $list[$k]['month'] = '在网达'.$v['month'].'月';
+                        $list[$k]['month']       = '在网达' . $v['month'] . '月';
                         $list[$k]['type_status'] = 'list-badge status-warning';
                         break;
                 }
-
-                $list[$k]['bind_products'] = (int)$v['bind_products']+rand(1,9);
             }
             unset($v);
         }
-        $result = array("total" => $total, "rows" => $list);
+        $result = ["total" => $total, "rows" => $list];
         return $this->success($result);
     }
-    
+
 }

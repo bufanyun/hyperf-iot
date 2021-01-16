@@ -75,6 +75,11 @@ class ProductOrderCode extends AbstractConstants
     /**
      * @Message("未付款")
      */
+    public const STATUS_UNPAID = 1000;
+
+    /**
+     * @Message("未付款")
+     */
     public const PAY_STATUS_UNPAID = 1000;
 
     /**

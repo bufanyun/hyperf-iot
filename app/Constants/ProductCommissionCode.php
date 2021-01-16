@@ -24,7 +24,7 @@ use Hyperf\Constants\Annotation\Constants;
 class ProductCommissionCode extends AbstractConstants
 {
     /**
-     * @Message("激活佣金")
+     * @Message("激活在网")
      */
     public const TYPE_ACTIVATION = 1;
     /**

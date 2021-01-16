@@ -3,6 +3,8 @@
 declare (strict_types=1);
 namespace App\Models;
 
+use App\Constants\ProductOrderCode;
+
 /**
  * @property int $id 
  * @property int $sid 
@@ -58,6 +60,9 @@ class ProductOrder extends BaseModel
      * @var array
      */
     protected $casts = ['id' => 'integer', 'sid' => 'integer', 'pay_type' => 'integer', 'pay_status' => 'integer', 'status' => 'integer', 'activat_status' => 'integer', 'sale_channel' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
+
+
+
 
     public function product_sale()
     {

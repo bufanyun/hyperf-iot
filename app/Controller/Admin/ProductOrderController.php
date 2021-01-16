@@ -67,6 +67,20 @@ class ProductOrderController extends BaseController
     }
 
     /**
+     * 添加/插入行
+     * add
+     * @return mixed
+     *
+     * @RequestMapping(path="add")
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/14 21:45
+     */
+    public function add()
+    {
+        return $this->error(StatusCode::ERR_EXCEPTION, '访问非法');
+    }
+
+    /**
      * list
      * @return \Psr\Http\Message\ResponseInterface
      *
@@ -104,33 +118,5 @@ class ProductOrderController extends BaseController
         $result = ["total" => $total, "rows" => $list];
         return $this->success($result);
     }
-
-    /**
-     * switch
-     * @return \Psr\Http\Message\ResponseInterface
-     *
-     * @RequestMapping(path="switch")
-     */
-    public function switch()
-    {
-        $reqParam = $this->request->all();
-        if (!isset($reqParam['key'])) {
-            return $this->error(StatusCode::ERR_EXCEPTION, '缺少更新开关的参数');
-        }
-        $primaryKey = $this->model->getKeyName();
-        if (!isset($reqParam[$primaryKey])) {
-            return $this->error(StatusCode::ERR_EXCEPTION, '缺少更新开关的条件');
-        }
-        $query = $this->model->query();
-        $where = [$primaryKey => $reqParam[$primaryKey]];
-        $param = [
-            'key'    => $reqParam['key'],
-            'update' => isset($reqParam['update']) ? $reqParam['update'] : '',
-        ];
-
-        $update = $this->model->switch($where, $param, $query);
-        return $this->success(['switch' => $update]);
-    }
-
 
 }

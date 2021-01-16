@@ -61,6 +61,8 @@ class ProductSale extends BaseModel
         'cid_name',
     ];
 
+    protected $searchFields = ['id', 'name', 'kind_name'];
+
     public function getCidNameAttribute() : string
     {
         if(empty($this->attributes['cid'])){
