@@ -56,12 +56,7 @@ class User extends BaseModel
     protected $appends = [
         'admin_name'
     ];
-
-    public function getLevelAttribute() : string
-    {
-        $level = UserCode::getLevelMap()[$this->attributes['level']];
-        return isset($level) ? $level : '未知';
-    }
+    
     public function getAdminNameAttribute() : string
     {
         return $this->getAdminName((string)$this->attributes['admin_id']);

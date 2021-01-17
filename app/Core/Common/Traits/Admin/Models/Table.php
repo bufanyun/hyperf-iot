@@ -220,7 +220,7 @@ trait Table
      * author MengShuai <133814250@qq.com>
      * date 2021/01/14 21:42
      */
-    public function loadModel(array $params = [], $query = null, $isUpdate = true): array
+    public function loadModel(array $params = [], $query = null, bool $isUpdate = true): array
     {
         $model = make(get_called_class());
         if ($query === null) {
@@ -238,7 +238,6 @@ trait Table
                 }
             }, $editRoster);
         }
-
         $update = array_merge(
             $update,
             $this->setFillAttribute($model, $isUpdate),

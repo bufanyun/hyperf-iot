@@ -32,4 +32,18 @@ class AdminMoneyLog extends BaseModel
      * @var array
      */
     protected $casts = ['id' => 'integer', 'admin_id' => 'integer', 'created_at' => 'datetime'];
+
+    /**
+     * 添加明细记录
+     * set
+     * @param array $data
+     *
+     * @return bool
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/17 21:39
+     */
+    public function set(array $data)
+    {
+        return $this->query()->insert($this->loadModel($data, null, false));
+    }
 }

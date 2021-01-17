@@ -40,18 +40,16 @@ trait Expert
     public function list()
     {
         $reqParam = $this->request->all();
-        $query    = $this->model->query();
+        $where    = []; //额外条件
+        $query    = $this->model->query()->where($where);   //前置模型
 
         [$querys, $sort, $order, $offset, $limit] = $this->model->buildTableParams($reqParam, $query);
-        $where = []; //额外条件
 
         $total = $querys
-            ->where($where)
             ->orderBy($sort, $order)
             ->count();
         //        Db::enableQueryLog();
         $list = $querys
-            ->where($where)
             ->orderBy($sort, $order)
             ->offset($offset)->limit($limit)
             ->get()
@@ -131,6 +129,7 @@ trait Expert
     /**
      * 添加/插入行
      * add
+     *
      * @return mixed
      *
      * @RequestMapping(path="add")

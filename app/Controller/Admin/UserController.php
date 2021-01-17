@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Constants\StatusCode;
+use App\Constants\UserCode;
 use App\Controller\BaseController;
 use Hyperf\HttpServer\Annotation\Controller;
 use Hyperf\HttpServer\Annotation\GetMapping;
@@ -22,6 +23,7 @@ use Core\Plugins\Ems;
 /**
  * UserController
  * 用户管理
+ *
  * @package App\Controller\Admin
  * User：YM
  * Date：2020/2/5
@@ -35,8 +37,8 @@ use Core\Plugins\Ems;
  * })
  *
  * @property \Core\Repositories\Admin\UserRepository $userRepo
- * @property Sms $Sms
- * @property Ems $Ems
+ * @property Sms                                     $Sms
+ * @property Ems                                     $Ems
  */
 class UserController extends BaseController
 {
@@ -61,6 +63,7 @@ class UserController extends BaseController
 
     /**
      * list
+     *
      * @return \Psr\Http\Message\ResponseInterface
      *
      * @RequestMapping(path="list")
@@ -77,18 +80,15 @@ class UserController extends BaseController
             ->where($where)
             ->orderBy($sort, $order)
             ->count();
-        //        Db::enableQueryLog();
-        $list = $querys
+        $list  = $querys
             ->where($where)
             ->orderBy($sort, $order)
             ->offset($offset)->limit($limit)
-            ->get();
-        //        var_export(Db::getQueryLog());
-
-        $list = $list ? $list->toArray() : [];
+            ->get()
+            ->toArray();
         if (!empty($list)) {
             foreach ($list as $k => $v) {
-                //                $list[$k]['status'] = $v['status'] === 0 ? false : true;
+                $list[$k]['level'] = UserCode::getLevelMap()[$v['level']];
             }
             unset($v);
         }
@@ -98,6 +98,7 @@ class UserController extends BaseController
 
     /**
      * switch
+     *
      * @return \Psr\Http\Message\ResponseInterface
      *
      * @RequestMapping(path="switch")
@@ -123,34 +124,13 @@ class UserController extends BaseController
         return $this->success(['switch' => $update]);
     }
 
-//    /**
-//     * index
-//     * 用户列表，用户管理
-//     * User：YM
-//     * Date：2020/2/5
-//     * Time：下午4:05
-//     * @return \Psr\Http\Message\ResponseInterface
-//     *
-//     * @GetMapping(path="list")
-//     */
-//    public function index()
-//    {
-//        $reqParam = $this->request->all();
-//        $list = $this->userRepo->getUserList(filterParams($reqParam));
-//        $data = [
-//            'pages' => $list['pages'],
-//            'list' => $list['data'],
-//        ];
-//        return $this->success($data);
-//    }
-
-
     /**
      * store
      * 保存，新建、编辑都用该方法，区别是否有主键id
      * User：YM
      * Date：2020/2/5
      * Time：下午5:01
+     *
      * @return \Psr\Http\Message\ResponseInterface
      * @throws \Exception
      *
@@ -167,13 +147,15 @@ class UserController extends BaseController
     /**
      * 获取个人信息及其权限
      * Info
+     *
      * @return \Psr\Http\Message\ResponseInterface
      *
      * @GetMapping(path="info")
      */
     public function info()
     {
-        $currUser        = $this->auth->check();
+        $currUser          = $this->auth->check();
+        $currUser['level'] = UserCode::getLevelMap()[$currUser['level']];;
         $permission_menu = [['test' => 6]];   //权限菜单
         return $this->success([
                 'roles'           => ['admin'],
@@ -186,6 +168,7 @@ class UserController extends BaseController
     /**
      * 修改头像
      * update_avatar
+     *
      * @return \Psr\Http\Message\ResponseInterface
      *
      * @PostMapping(path="update_avatar")
@@ -207,6 +190,7 @@ class UserController extends BaseController
     /**
      * 修改个人信息
      * update_info
+     *
      * @return \Psr\Http\Message\ResponseInterface
      *
      * @PostMapping(path="update_info")
@@ -228,6 +212,7 @@ class UserController extends BaseController
     /**
      * 修改提现信息
      * update_cash
+     *
      * @return \Psr\Http\Message\ResponseInterface
      *
      * @PostMapping(path="update_cash")
@@ -262,6 +247,7 @@ class UserController extends BaseController
     /**
      * 修改/重置API配置
      * reset_api
+     *
      * @return \Psr\Http\Message\ResponseInterface
      *
      * @PostMapping(path="reset_api")
@@ -270,7 +256,7 @@ class UserController extends BaseController
     public function reset_secret_key()
     {
         $reqParam = $this->request->all();
-        if(isset($reqParam['ip_white']) && $reqParam['ip_white'] !== '') {
+        if (isset($reqParam['ip_white']) && $reqParam['ip_white'] !== '') {
             $ip_whites = explode(',', $reqParam['ip_white']);
             foreach ($ip_whites as $ip) {
                 if (!filter_var($ip, FILTER_VALIDATE_IP)) {
@@ -279,13 +265,13 @@ class UserController extends BaseController
             }
             unset($ip);
         }
-        $update   = [
+        $update = [
             'id'         => $this->auth->check(false),
             //允许修改的字段
             'secret_key' => $reqParam['secret_key'],
             'ip_white'   => $reqParam['ip_white'],
         ];
-        $id       = $this->userRepo->saveUser($update);
+        $id     = $this->userRepo->saveUser($update);
 
         return $this->success($id);
     }
@@ -293,6 +279,7 @@ class UserController extends BaseController
     /**
      * 修改邮箱
      * update_email
+     *
      * @return \Psr\Http\Message\ResponseInterface
      *
      * @PostMapping(path="update_email")
@@ -324,6 +311,7 @@ class UserController extends BaseController
      * User：YM
      * Date：2020/2/5
      * Time：下午4:25
+     *
      * @return \Psr\Http\Message\ResponseInterface
      *
      * @PostMapping(path="get_info")
@@ -345,6 +333,7 @@ class UserController extends BaseController
      * User：YM
      * Date：2020/2/5
      * Time：下午4:26
+     *
      * @return \Psr\Http\Message\ResponseInterface
      *
      * @PostMapping(path="delete")
@@ -363,6 +352,7 @@ class UserController extends BaseController
      * User：YM
      * Date：2020/2/5
      * Time：下午4:26
+     *
      * @return \Psr\Http\Message\ResponseInterface
      *
      * @PostMapping(path="get_roles")
