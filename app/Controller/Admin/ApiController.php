@@ -275,12 +275,8 @@ class ApiController extends BaseController
     public function get_pool()
     {
         $currUser       = $this->auth->check();
-        $promotion_link = env('API_HOME_SHARE',
-                '') . '/#/pages/spread/index?r=/home/spread/pool&job_number=' . $currUser['job_number'];
-        $res            = $this->OfficialAccount->shorten($promotion_link);
-        if (isset($res['errcode']) && $res['errcode'] === 0) {
-            $promotion_link = $res['short_url'];
-        }
+        $promotion_link = env('API_HOME_SHARE', '') . '/#/pages/spread/index?r=/home/spread/pool&job_number=' . $currUser['job_number'];
+        $promotion_link = $this->OfficialAccount->shorten($promotion_link) ?? $promotion_link;
         return $this->success([
             'promotion_link' => $promotion_link,
             //TODO..
@@ -305,10 +301,8 @@ class ApiController extends BaseController
         $currUser = $this->auth->check();
 
         $promotion_link = env('API_HOME_SHARE', '') . "/#/pages/spread/index?r=/home/spread/product_show&sid={$reqParam['id']}&job_number={$currUser['job_number']}&channel={$reqParam['sale_channel']}";
-        $res            = $this->OfficialAccount->shorten($promotion_link);
-        if (isset($res['errcode']) && $res['errcode'] === 0) {
-            $promotion_link = $res['short_url'];
-        }
+        $promotion_link = $this->OfficialAccount->shorten($promotion_link) ?? $promotion_link;
+
         return $this->success([
             'promotion_link' => $promotion_link,
         ]);

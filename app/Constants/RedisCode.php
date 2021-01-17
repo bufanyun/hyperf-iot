@@ -19,6 +19,11 @@ use Hyperf\Constants\Annotation\Constants;
  */
 class RedisCode extends AbstractConstants
 {
+
+    /**
+     * @Message("微信短链接")
+     */
+    public const SHORTEN_LINK = 'shorten_link:';
     /**
      * @Message("选号哈希，缓存归属地号单60秒，防止客户重复请求")
      */
