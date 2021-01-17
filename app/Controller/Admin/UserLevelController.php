@@ -42,7 +42,6 @@ use App\Exception\DatabaseExceptionHandler;
  */
 class UserLevelController extends BaseController
 {
-
     use \Core\Common\Traits\Admin\Controller\Expert;
 
     /**
@@ -51,8 +50,6 @@ class UserLevelController extends BaseController
      * @var UserLevel
      */
     private $model;
-
-
     /**
      *
      * @Inject()
@@ -98,12 +95,10 @@ class UserLevelController extends BaseController
 
         Db::beginTransaction();
         try {
-            //变更余额升级
             $this->UserModel->where(['id' => $currUser['id']])->update($this->UserModel->loadModel([
                 'balance' => $currUser['balance'] - $levelInfo['price'],
                 'level'   => $levelInfo['id'],
             ]));
-            //记录日志
             $this->AdminMoneyLogModel->set([
                 'admin_id' => $currUser['id'],
                 'money'    => $levelInfo['price'],
@@ -132,7 +127,7 @@ class UserLevelController extends BaseController
     public function selected()
     {
         $query = $this->model->query();
-        $where = ['status' => 1]; //额外条件
+        $where = ['status' => 1];
         $list  = $query
             ->select('name', 'id as code')
             ->where($where)
@@ -151,21 +146,7 @@ class UserLevelController extends BaseController
      */
     public function list()
     {
-        $reqParam = $this->request->all();
-        $query    = $this->model->query()->orderBy('id', 'ASC');
-
-        [$querys, $sort, $order, $offset, $limit] = $this->model->buildTableParams($reqParam, $query);
-        $where = []; //额外条件
-
-        $total    = $querys
-            ->where($where)
-            ->orderBy($sort, $order)
-            ->count();
-        $list     = $querys
-            ->where($where)
-//            ->offset($offset)->limit($limit)
-            ->get()
-            ->toArray();
+        $list     = $this->model->query()->orderBy('id', 'ASC')->get()->toArray();
         $currUser = $this->auth->check();
         if (!empty($list)) {
             foreach ($list as $k => $v) {
@@ -173,9 +154,7 @@ class UserLevelController extends BaseController
             }
             unset($v);
         }
-        $user = $this->auth->check();
-        unset($user['cash']);
-        $result = ["total" => $total, "rows" => $list, 'user' => $this->auth->check()];
+        $result = ["rows" => $list, 'user' => $currUser];
         return $this->success($result);
     }
 
