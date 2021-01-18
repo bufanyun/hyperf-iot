@@ -154,7 +154,7 @@ class UserLevelController extends BaseController
             }
             unset($v);
         }
-        $result = ["rows" => $list, 'user' => $currUser];
+        $result = ["rows" => $list, 'user' => $currUser + ['level_name' => UserCode::getLevelMap()[$currUser['level']]]];
         return $this->success($result);
     }
 
