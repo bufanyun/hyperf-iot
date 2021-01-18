@@ -1245,3 +1245,27 @@ if (!function_exists('str_rand')) {
         return $string;
     }
 }
+if (!function_exists('isHTTPS')) {
+    /**
+     * 判断url是否为https
+     * isHTTPS
+     * @param string|null $url
+     * @return bool
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/18 17:00
+     */
+    function isHTTPS(string $url = null): bool
+    {
+        if($url === null){
+            $request    = ApplicationContext::getContainer()->get(RequestInterface::class);
+            $url       = $request->fullUrl();
+        }
+        if (filter_var($url, FILTER_VALIDATE_URL) === false) {
+            return false;
+        }
+        if(substr($url, 0, 5) !== 'https'){
+            return false;
+        }
+        return true;
+    }
+}
