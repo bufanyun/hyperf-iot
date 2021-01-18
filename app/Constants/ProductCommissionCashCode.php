@@ -9,23 +9,33 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
+
 namespace App\Constants;
 
 use Hyperf\Constants\AbstractConstants;
 use Hyperf\Constants\Annotation\Constants;
 
 /**
- * 明细备注规范
+ * 佣金提现状态码
+ *
  * @Constants
  */
-class AdminMoneyLogCode extends AbstractConstants
+class ProductCommissionCashCode extends AbstractConstants
 {
     /**
-     * @Message("10001")
+     * @Message("正在处理")
      */
-    public const PURCHASE_LEVEL = '购买用户等级';
+    public const STATUS_PROCESSING = 0;
     /**
-     * @Message("10002")
+     * @Message("已结算")
      */
-    public const MONEY_ONLINE_RECHARGE = '余额在线充值';
+    public const STATUS_SETTLED = 1;
+    /**
+     * @Message("交易冻结")
+     */
+    public const STATUS_FROZEN = 2;
+    /**
+     * @Message("拒绝打款")
+     */
+    public const STATUS_REJECT = 3;
 }

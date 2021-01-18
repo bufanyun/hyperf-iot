@@ -4,15 +4,8 @@ declare (strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Controller\BaseController;
-use Crypto\Rand;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Annotation\AutoController;
-use http\Exception;
-use App\Exception\BusinessException;
-use Core\Plugins\BaiDu\Lbs;
-use Hyperf\DbConnection\Db;
-use App\Models\IpRegion;
-use Hyperf\Utils\Parallel;
 use Hyperf\HttpServer\Annotation\Middleware;
 use Hyperf\HttpServer\Annotation\Middlewares;
 use App\Middleware\LoginAuthMiddleware;
@@ -20,6 +13,7 @@ use App\Middleware\AdminAuthMiddleware;
 use Hyperf\HttpServer\Annotation\RequestMapping;
 use App\Constants\StatusCode;
 use App\Models\ProductCommissionLog;
+use App\Constants\ProductCommissionCode;
 
 /**
  * ProductCommissionLogController
@@ -37,6 +31,8 @@ use App\Models\ProductCommissionLog;
 class ProductCommissionLogController extends BaseController
 {
 
+    use \Core\Common\Traits\Admin\Controller\Expert;
+
     /**
      *
      * @Inject()
@@ -53,27 +49,21 @@ class ProductCommissionLogController extends BaseController
     public function list()
     {
         $reqParam = $this->request->all();
-        $query = $this->model->query();
-
-        [$querys, $sort, $order, $offset, $limit] = $this->model->buildTableParams($reqParam, $query);
         $where = []; //额外条件
+        $query = $this->model->query()->where($where);
+        [$querys, $sort, $order, $offset, $limit] = $this->model->buildTableParams($reqParam, $query);
 
         $total = $querys
-            ->where($where)
             ->orderBy($sort, $order)
             ->count();
-        //        Db::enableQueryLog();
         $list = $querys
-            ->where($where)
             ->orderBy($sort, $order)
             ->offset($offset)->limit($limit)
-            ->get();
-        //        var_export(Db::getQueryLog());
-
-        $list = $list ? $list->toArray() : [];
+            ->get()
+            ->toArray();
         if(!empty($list)){
             foreach ($list as $k => $v) {
-                //                $list[$k]['status'] = $v['status'] === 0 ? false : true;
+                $list[$k]['type'] = ProductCommissionCode::getMessage($v['type']);
             }
             unset($v);
         }

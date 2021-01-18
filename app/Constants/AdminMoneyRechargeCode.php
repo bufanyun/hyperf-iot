@@ -16,7 +16,8 @@ use Hyperf\Constants\AbstractConstants;
 use Hyperf\Constants\Annotation\Constants;
 
 /**
- * 后台用户充值枚举
+ * 后台余额充值类
+ *
  * @Constants
  */
 class AdminMoneyRechargeCode extends AbstractConstants
@@ -25,7 +26,6 @@ class AdminMoneyRechargeCode extends AbstractConstants
      * @Message("支付宝")
      */
     public const PAYMENT_METHOD_ALIPAY = 'alipay';
-
     /**
      * @Message("微信支付")
      */
@@ -42,5 +42,8 @@ class AdminMoneyRechargeCode extends AbstractConstants
      * @Message("已支付")
      */
     public const PAYMENT_STATUS_PAID = 1002;
-
+    /**
+     * @Message("已退款")
+     */
+    public const PAYMENT_STATUS_REFUND = 1003;
 }

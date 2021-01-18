@@ -25,13 +25,13 @@ class AlipayNotify extends Kernel
      * 针对notify_url验证消息是否是支付宝发出的合法消息
      * @return 验证结果
      */
-    public function verifyNotify()
+    public function verifyNotify(array $reqParam)
     {
-        if (empty($_GET)) {//判断POST来的数组是否为空
+        if (empty($reqParam)) {//判断POST来的数组是否为空
             return false;
         } else {
             //生成签名结果
-            $isSign = $this->getSignVeryfy($_GET, $_GET["sign"]);
+            $isSign = $this->getSignVeryfy($reqParam, $reqParam["sign"]);
             //获取支付宝远程服务器ATN结果（验证是否是支付宝发来的消息）
             $responseTxt = 'true';
             //if (! empty($_POST["notify_id"])) {$responseTxt = $this->getResponse($_POST["notify_id"]);}
@@ -51,13 +51,13 @@ class AlipayNotify extends Kernel
      * 针对return_url验证消息是否是支付宝发出的合法消息
      * @return 验证结果
      */
-    public function verifyReturn()
+    public function verifyReturn(array $reqParam)
     {
-        if (empty($_GET)) {//判断POST来的数组是否为空
+        if (empty($reqParam)) {//判断POST来的数组是否为空
             return false;
         } else {
             //生成签名结果
-            $isSign = $this->getSignVeryfy($_GET, $_GET["sign"]);
+            $isSign = $this->getSignVeryfy($reqParam, $reqParam["sign"]);
             //获取支付宝远程服务器ATN结果（验证是否是支付宝发来的消息）
             $responseTxt = 'true';
             //if (! empty($_GET["notify_id"])) {$responseTxt = $this->getResponse($_GET["notify_id"]);}

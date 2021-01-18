@@ -93,7 +93,7 @@ class EpaySevice
      * 回调验证
      * author [MengShuai] [<133814250@qq.com>]
      */
-    public function notify()
+    public function notify(array $reqParam)
     {
         /**
          * 回调格式实例
@@ -109,7 +109,7 @@ class EpaySevice
          */
 
         //计算得出通知验证结果
-        $verify_result = $this->AlipayNotify->verifyNotify();
+        $verify_result = $this->AlipayNotify->verifyNotify($reqParam);
         return !$verify_result ? false : true;
     }
 

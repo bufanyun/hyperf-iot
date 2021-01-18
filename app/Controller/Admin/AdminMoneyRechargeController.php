@@ -1,4 +1,5 @@
 <?php
+
 declare (strict_types=1);
 
 namespace App\Controller\Admin;
@@ -22,6 +23,7 @@ use Core\Common\Extend\Epay\EpaySevice;
 /**
  * AdminMoneyRechargeController
  * 余额充值表
+ *
  * @package App\Controller\Admin
  *
  * @AutoController(prefix="admin_api/admin_money_recharge")
@@ -47,6 +49,7 @@ class AdminMoneyRechargeController extends BaseController
     /**
      * 跳转支付网关
      * jump
+     *
      * @return mixed
      * author MengShuai <133814250@qq.com>
      * date 2021/01/18 16:13
@@ -58,7 +61,10 @@ class AdminMoneyRechargeController extends BaseController
         if (!isset($reqParam['orderid'])) {
             return $this->error(StatusCode::ERR_EXCEPTION, '订单号不能为空');
         }
-        $result = $this->model->query()->where(['orderid' => $reqParam['orderid'], 'status' => AdminMoneyRechargeCode::PAYMENT_STATUS_UNPAID])->first();
+        $result = $this->model->query()->where([
+            'orderid' => $reqParam['orderid'],
+            'status'  => AdminMoneyRechargeCode::PAYMENT_STATUS_UNPAID,
+        ])->first();
         if (empty($result)) {
             return $this->error(StatusCode::ERR_EXCEPTION, '订单不存在或已处理');
         }
@@ -78,6 +84,7 @@ class AdminMoneyRechargeController extends BaseController
     /**
      * 创建支付订单
      * create_order
+     *
      * @return mixed
      * author MengShuai <133814250@qq.com>
      * date 2021/01/18 16:13
@@ -89,12 +96,15 @@ class AdminMoneyRechargeController extends BaseController
         if ($reqParam['money'] !== (int)$reqParam['money']) {
             return $this->error(StatusCode::ERR_EXCEPTION, '只能输入整数');
         }
-        $reqParam['type'] = in_array($reqParam['type'], [AdminMoneyRechargeCode::PAYMENT_METHOD_ALIPAY, AdminMoneyRechargeCode::PAYMENT_METHOD_WXPAY]) ? $reqParam['type'] : AdminMoneyRechargeCode::PAYMENT_METHOD_ALIPAY;
+        $reqParam['type'] = in_array($reqParam['type'], [
+            AdminMoneyRechargeCode::PAYMENT_METHOD_ALIPAY,
+            AdminMoneyRechargeCode::PAYMENT_METHOD_WXPAY,
+        ]) ? $reqParam['type'] : AdminMoneyRechargeCode::PAYMENT_METHOD_ALIPAY;
         $requestHeaders   = $this->request->getHeaders();
         Db::beginTransaction();
         try {
             $orderId = $this->model->getOrderId();
-            $res = $this->model->query()->insert($this->model->loadModel([
+            $res     = $this->model->query()->insert($this->model->loadModel([
                 'admin_id'  => $this->auth->check(false),
                 'money'     => $reqParam['money'],
                 'orderid'   => $orderId,
@@ -120,6 +130,7 @@ class AdminMoneyRechargeController extends BaseController
 
     /**
      * list
+     *
      * @return \Psr\Http\Message\ResponseInterface
      *
      * @RequestMapping(path="list")
@@ -127,27 +138,24 @@ class AdminMoneyRechargeController extends BaseController
     public function list()
     {
         $reqParam = $this->request->all();
-        $query    = $this->model->query();
-
-        [$querys, $sort, $order, $offset, $limit] = $this->model->buildTableParams($reqParam, $query);
         $where = []; //额外条件
+        $query    = $this->model->query()->where($where);
+        [$querys, $sort, $order, $offset, $limit] = $this->model->buildTableParams($reqParam, $query);
 
         $total = $querys
-            ->where($where)
             ->orderBy($sort, $order)
             ->count();
-        //        Db::enableQueryLog();
+
         $list = $querys
-            ->where($where)
             ->orderBy($sort, $order)
             ->offset($offset)->limit($limit)
-            ->get();
-        //        var_export(Db::getQueryLog());
-
-        $list = $list ? $list->toArray() : [];
+            ->get()
+            ->toArray();
         if (!empty($list)) {
             foreach ($list as $k => $v) {
-                //                $list[$k]['status'] = $v['status'] === 0 ? false : true;
+                $list[$k]['status']  = AdminMoneyRechargeCode::getMessage($v['status']);
+                $list[$k]['paytype'] = AdminMoneyRechargeCode::getMessage($v['paytype']);
+                $list[$k]['paytime'] = isset($v['paytime']) ? date("Y-m-d H:i:s", $v['paytime']) : '-';
             }
             unset($v);
         }
