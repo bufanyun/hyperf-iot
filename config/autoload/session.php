@@ -16,7 +16,7 @@ return [
     'options' => [
         'connection' => 'session',
         'path' => BASE_PATH . '/runtime/session',
-        'gc_maxlifetime' => 1200,
+        'gc_maxlifetime' => 86400 * 7,   //有效时间
         'session_name' => 'HYPERF_SESSION_ID',
         'domain' => null,
     ],

@@ -33,6 +33,9 @@ class AdminMoneyLog extends BaseModel
      */
     protected $casts = ['id' => 'integer', 'admin_id' => 'integer', 'created_at' => 'datetime'];
 
+    protected $searchFields = ['memo'];
+
+
     /**
      * 添加明细记录
      * set
