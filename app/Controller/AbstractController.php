@@ -86,7 +86,7 @@ abstract class AbstractController
      * @var Setting
      */
     protected $setting;
-    
+
     /**
      * 模板渲染
      * /index/index/index : 绝对路径

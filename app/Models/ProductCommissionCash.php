@@ -40,4 +40,11 @@ class ProductCommissionCash extends BaseModel
 
     protected $searchFields = ['admin_id', 'money', 'settlement_no', 'ip'];
 
+    public function getUpdatedAtAttribute() : string
+    {
+        if ('0000-00-00 00:00:00' === (string) $this->attributes['updated_at']) {
+            return '-';
+        }
+        return (string) $this->attributes['updated_at'];
+    }
 }

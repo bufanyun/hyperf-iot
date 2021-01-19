@@ -5,7 +5,7 @@ namespace App\Models;
 
 /**
  * @property int $id 
- * @property int $admin_id 
+ * @property string $admin_id
  * @property string $order_id 
  * @property int $type
  * @property int $month
@@ -34,5 +34,5 @@ class ProductCommissionLog extends BaseModel
      *
      * @var array
      */
-    protected $casts = ['id' => 'integer', 'admin_id' => 'integer', 'type' => 'integer', 'created_at' => 'datetime'];
+    protected $casts = ['id' => 'integer', 'type' => 'integer', 'created_at' => 'datetime'];
 }

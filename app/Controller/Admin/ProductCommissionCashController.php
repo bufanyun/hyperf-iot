@@ -19,6 +19,7 @@ use App\Models\ProductCommissionCash;
 use App\Models\User;
 use App\Models\ProductCommissionLog;
 use App\Constants\ProductCommissionCashCode;
+use App\Constants\ProductCommissionCode;
 
 /**
  * ProductCommissionCashController
@@ -83,7 +84,7 @@ class ProductCommissionCashController extends BaseController
         if ($currUser['commission'] < $reqParam['commission']) {
             return $this->error(StatusCode::ERR_EXCEPTION, '提现金额不能超过账户佣金');
         }
-        if (!preg_match("/^[1-9][0-9]*$/" ,$reqParam['commission'])) {
+        if (!preg_match("/^[1-9][0-9]*$/", $reqParam['commission'])) {
             return $this->error(StatusCode::ERR_EXCEPTION, '提现金额必须是正整数');
         }
 
@@ -115,6 +116,7 @@ class ProductCommissionCashController extends BaseController
                 'useragent'  => $requestHeaders['user-agent'][0] ?? '',
                 'status'     => ProductCommissionCashCode::STATUS_PROCESSING,
                 'remarks'    => ProductCommissionCashCode::getMessage(ProductCommissionCashCode::STATUS_PROCESSING),
+                'created_at' => date("Y-m-d H:i:s"),
             ]);
 
             $this->userModel->query()
