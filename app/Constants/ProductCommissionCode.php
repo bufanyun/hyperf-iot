@@ -35,4 +35,9 @@ class ProductCommissionCode extends AbstractConstants
      * @Message("后续月返")
      */
     public const TYPE_MOON_RETURN = 3;
+    /**
+     * @Message("申请提现")
+     */
+    public const APPLY_FOR = 4;
+
 }

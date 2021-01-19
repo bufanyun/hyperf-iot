@@ -23,6 +23,7 @@ use function Hyperf\ViewEngine\view;
 use Core\Common\Container\Response;
 use Core\Common\Container\Auth;
 use Psr\Container\ContainerInterface;
+use App\Models\Setting;
 
 /**
  *
@@ -33,12 +34,13 @@ use Psr\Container\ContainerInterface;
  * author MengShuai <133814250@qq.com>
  * date 2021/01/06 23:02
  *
- * @property ContainerInterface        $container
- * @property RequestInterface          $request
- * @property Response                  $response
- * @property SessionInterface          $session
+ * @property ContainerInterface $container
+ * @property RequestInterface $request
+ * @property Response $response
+ * @property SessionInterface $session
  * @property ValidatorFactoryInterface $validation
- * @property Auth                      $auth
+ * @property Auth $auth
+ * @property Setting $setting
  */
 abstract class AbstractController
 {
@@ -78,15 +80,20 @@ abstract class AbstractController
      * @var Auth
      */
     protected $auth;
-    
 
+    /**
+     * @Inject()
+     * @var Setting
+     */
+    protected $setting;
+    
     /**
      * 模板渲染
      * /index/index/index : 绝对路径
      * index : 相对路径
      * view
      *
-     * @param array  $params
+     * @param array $params
      * @param string $name
      *
      * @return \Hyperf\ViewEngine\Contract\ViewInterface|null
