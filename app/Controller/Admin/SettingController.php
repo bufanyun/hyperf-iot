@@ -46,6 +46,8 @@ use Hyperf\Di\Annotation\Inject;
 class SettingController extends BaseController
 {
 
+    use \Core\Common\Traits\Admin\Controller\Expert;
+
     /**
      *
      * @Inject()

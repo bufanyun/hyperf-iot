@@ -35,6 +35,8 @@ class Attachment extends BaseModel
      * @var array
      */
     protected $casts = ['id' => 'integer', 'size' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
+
+    protected $searchFields = ['id', 'title', 'user_id', 'type'];
     /**
      * getList
      * 获取列表

@@ -41,7 +41,7 @@
         "hyperf/view-engine": "^2.1",
         "hyperf/websocket-server": "^2.1",
         "jenssegers/agent": "^2.6",
-        "league/flysystem-memory": "^2.0",
+        "league/flysystem": "2.0",
         "naixiaoxin/hyperf-wechat": "^1.1",
         "phpmailer/phpmailer": "^6.2",
         "yurunsoft/phpmailer-swoole": "1.0.2"

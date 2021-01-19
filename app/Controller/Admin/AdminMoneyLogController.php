@@ -37,6 +37,8 @@ use App\Models\AdminMoneyLog;
  */
 class AdminMoneyLogController extends BaseController
 {
+    use \Core\Common\Traits\Admin\Controller\Expert;
+    
     /**
      * @Inject()
      * @var AdminMoneyLog
