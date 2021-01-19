@@ -71,7 +71,6 @@ class ProductCommissionCashController extends BaseController
     public function apply()
     {
         $reqParam = $this->request->all();
-        var_export($reqParam);
         $query    = $this->model->query();
         $currUser = $this->auth->check();
         $cash     = json_decode($currUser['cash'], true);
