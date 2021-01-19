@@ -1,19 +1,6 @@
 <?php
 declare(strict_types=1);
 
-/**
- * Created by PhpStorm.
- *​
- * BaseController.php
- *
- * 基础控制器
- *
- * User：YM
- * Date：2019/11/14
- * Time：上午9:53
- */
-
-
 namespace App\Controller;
 
 use App\Constants\StatusCode;
@@ -21,14 +8,16 @@ use Core\Common\Facade\Log;
 use Hyperf\Utils\Context;
 use Hyperf\Utils\Coroutine;
 use Hyperf\Utils\ApplicationContext;
+use Hyperf\Amqp\Producer;
+use App\Amqp\Producer\LogsProducer;
 
 /**
- * BaseController
  * 基础类的控制器
+ * Class BaseController
+ *
  * @package App\Controller
- * User：YM
- * Date：2019/11/14
- * Time：上午9:53
+ * author MengShuai <133814250@qq.com>
+ * date 2021/01/19 23:07
  */
 class BaseController extends AbstractController
 {
@@ -123,11 +112,15 @@ class BaseController extends AbstractController
         $msg = $msg ?? StatusCode::getMessage(StatusCode::SUCCESS);
         $data = ['code' => StatusCode::SUCCESS, 'msg' => $msg, 'data' => $data];
         $response = $this->response->json($data);
-//        $executionTime = microtime(true) - Context::get('request_start_time');
-//        $rbs = strlen($response->getBody()->getContents());
-//        // 获取日志实例，记录日志
+        $executionTime = microtime(true) - Context::get('request_start_time');
+        $rbs = strlen($response->getBody()->getContents());
+        // 获取日志实例，记录日志
 //        $logger = ApplicationContext::getContainer()->get(\Hyperf\Logger\LoggerFactory::class)->get('success','response');
 //        $logger->info($msg, getLogArguments($executionTime, $rbs)+['data' => $data]);
+        //记录日志
+        $message  = new LogsProducer(getLogArguments($executionTime, $rbs));
+        $producer = ApplicationContext::getContainer()->get(Producer::class);
+        $producer->produce($message);
         return $response;
     }
 
@@ -150,6 +143,10 @@ class BaseController extends AbstractController
         // 获取日志实例，记录日志
         $logger = ApplicationContext::getContainer()->get(\Hyperf\Logger\LoggerFactory::class)->get('error','response');
         $logger->error($msg, getLogArguments($executionTime, $rbs));
+        //记录日志
+        $message  = new LogsProducer(getLogArguments($executionTime, $rbs));
+        $producer = ApplicationContext::getContainer()->get(Producer::class);
+        $producer->produce($message);
         return $response;
     }
 }

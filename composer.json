@@ -15,7 +15,7 @@
         "php": ">=7.2",
         "ext-swoole": ">=4.5",
         "hyperf-libraries/sms": "^2.0",
-        "hyperf/amqp": "2.1.*",
+        "hyperf/amqp": "^2.1",
         "hyperf/async-queue": "2.1.*",
         "hyperf/cache": "2.1.*",
         "hyperf/command": "2.1.*",

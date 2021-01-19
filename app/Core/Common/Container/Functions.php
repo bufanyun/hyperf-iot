@@ -472,7 +472,7 @@ if (!function_exists('getLogArguments')) {
         }
 
         return [
-//            'qid' => $requestHeaders['qid'][0]??'',
+            'qid' => $requestHeaders['qid'][0]??'',
             'server_name'        => $requestHeaders['host'][0] ?? '',
             'server_addr'        => getServerLocalIp() ?? '',
             'remote_addr'        => $serverParams['remote_addr'] ?? '',
@@ -488,7 +488,7 @@ if (!function_exists('getLogArguments')) {
             'arguments'          => $arguments ? json_encode($arguments) : '',
             'method'             => $serverParams['request_method'] ?? '',
             'execution_time'     => $executionTime,
-            'request_body_size'  => $requestHeaders['content-length'][0] ?? '',
+            'request_body_size'  => $requestHeaders['content-length'][0] ?? 0,
             'response_body_size' => $rbs,
             'uuid'               => $uuid,
             'user_id'            => $userId ?? '',

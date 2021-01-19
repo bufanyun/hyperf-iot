@@ -51,7 +51,6 @@ class PassportController extends BaseController
             $errorMessage = $validator->errors()->first();
             throw new BusinessException(StatusCode::ERR_EXCEPTION_USER, $errorMessage);
         }
-
         $data = $this->passportRepo->handleLogin($inputData);
         return $this->success($data, is_string($data) ? $data : '登录成功',);
     }
