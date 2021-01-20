@@ -123,29 +123,28 @@ class ProductOrderController extends BaseController
         $query    = $this->model->query();
 
         [$querys, $sort, $order, $offset, $limit] = $this->model->buildTableParams($reqParam, $query);
-        $where = []; //额外条件
+        $where = [];
 
         $total = $querys
             ->with('product_sale:id,kind_name,name,icon')
             ->where($where)
             ->orderBy($sort, $order)
             ->count();
-//        Db::enableQueryLog();
+
         $list = $querys
             ->with('product_sale:id,kind_name,name,icon')
             ->where($where)
             ->orderBy($sort, $order)
             ->offset($offset)->limit($limit)
-            ->get();
-//        var_export(Db::getQueryLog());
+            ->get()
+            ->toArray();
 
-        $list = $list ? $list->toArray() : [];
         if (!empty($list)) {
             foreach ($list as $k => $v) {
                 $list[$k]['status']         = ProductOrderCode::getMessage($v['status']);
                 $list[$k]['activat_status'] = ProductOrderCode::getMessage($v['activat_status']);
                 $list[$k]['sale_channel']   = $this->ProductOrderChannelModel->query()->where(['id' => $v['sale_channel']])->value('name') ?? '默认';
-                $list[$k]['source']   = isset($v['source']) && $v['source']!=='' ? $v['source'] : '互联网';
+                $list[$k]['source']         = isset($v['source']) && $v['source'] !== '' ? $v['source'] : '互联网';
 
             }
             unset($v);

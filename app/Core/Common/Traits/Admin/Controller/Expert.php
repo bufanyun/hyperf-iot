@@ -28,7 +28,7 @@ use App\Exception\DatabaseExceptionHandler;
 trait Expert
 {
     /**
-     * 协程 - 获取表格列表
+     * 获取表格数据
      * list
      *
      * @return \Psr\Http\Message\ResponseInterface
@@ -40,19 +40,10 @@ trait Expert
     public function list()
     {
         $reqParam = $this->request->all();
-        $select   = ['*'];
+        $select   = $this->model->fillable ?? ['*'];
         $where    = []; //额外条件
 
-        [$total, $list] = parallel([
-            function () use ($reqParam, $where, $select) {
-                [$querys, $sort, $order, $offset, $limit] = $this->model->buildTableParams($reqParam, $this->model->query()->select($select)->where($where));
-                return $querys->orderBy($sort, $order)->count();
-            },
-            function () use ($reqParam, $where, $select) {
-                [$querys, $sort, $order, $offset, $limit] = $this->model->buildTableParams($reqParam, $this->model->query()->where($where)->select($select));
-                return $querys->orderBy($sort, $order)->offset($offset)->limit($limit)->get()->toArray();
-            },
-        ]);
+        [$total, $list] = $this->model->parallelSearch($reqParam, $where, $select);
 
         if (!empty($list)) {
             foreach ($list as $k => $v) {
@@ -121,7 +112,7 @@ trait Expert
         if ($this->request->isMethod('post') && $this->model->edit($row, $this->request->all())) {
             return $this->success($row, '更新成功');
         }
-
+        $row = $row->toArray();
         return $this->success($row, '获取成功');
     }
 

@@ -48,9 +48,34 @@ class AttachmentController extends BaseController
      */
     private $model;
 
+    /**
+     * list
+     * @return \Psr\Http\Message\ResponseInterface
+     *
+     * @RequestMapping(path="list")
+     */
+    public function list()
+    {
+        $reqParam = $this->request->all();
+        $select   = $this->model->fillable ?? ['*'];
+        $where    = []; //额外条件
+
+        [$total, $list] = $this->model->parallelSearch($reqParam, $where, $select);
+
+        $config = config('upload');
+        if (!empty($list)) {
+            foreach ($list as $k => $v) {
+                $list[$k]['path'] = '/' . $config['rewrite'] . '/' . $config['attachments'] . $v['path'];
+                $list[$k]['url']  = env('CDN_DOMAIN', '') . $list[$k]['path'];
+            }
+            unset($v);
+        }
+        $result = ["total" => $total, "rows" => $list];
+        return $this->success($result);
+    }
 
     /**
-     * 删除
+     * 删除附件
      * del
      *
      * @RequestMapping(path="del")
@@ -64,7 +89,6 @@ class AttachmentController extends BaseController
                 return $this->error(StatusCode::ERR_EXCEPTION, '缺少编辑的条件');
             }
 
-
             $ids   = explode(",", (string)$this->request->input($this->model->getKeyName()));
             $query = $this->model->query();
             $where = [
@@ -76,7 +100,6 @@ class AttachmentController extends BaseController
                 throw new BusinessException(StatusCode::ERR_EXCEPTION_USER,
                     '未找到需要删除的数据');
             }
-
             $count       = 0;
             $isPseudoDel = $this->model->isPseudoDel();
             $config      = config('upload');
@@ -107,41 +130,6 @@ class AttachmentController extends BaseController
         }
 
         return $this->error(StatusCode::ERR_EXCEPTION, '访问非法');
-    }
-
-    /**
-     * list
-     * @return \Psr\Http\Message\ResponseInterface
-     *
-     * @RequestMapping(path="list")
-     */
-    public function list()
-    {
-        $reqParam = $this->request->all();
-        $where    = []; //额外条件
-        $query    = $this->model->query()->where($where);
-
-        [$querys, $sort, $order, $offset, $limit] = $this->model->buildTableParams($reqParam, $query);
-        $total = $querys
-            ->orderBy($sort, $order)
-            ->count();
-
-        $list = $querys
-            ->orderBy($sort, $order)
-            ->offset($offset)->limit($limit)
-            ->get()
-            ->toArray();
-
-        $config = config('upload');
-        if (!empty($list)) {
-            foreach ($list as $k => $v) {
-                $list[$k]['path'] = '/' . $config['rewrite'] . '/' . $config['attachments'] . $v['path'];
-                $list[$k]['url']  = env('CDN_DOMAIN', '') . $list[$k]['path'];
-            }
-            unset($v);
-        }
-        $result = ["total" => $total, "rows" => $list];
-        return $this->success($result);
     }
 
 }

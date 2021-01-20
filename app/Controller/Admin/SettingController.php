@@ -64,30 +64,20 @@ class SettingController extends BaseController
     public function list()
     {
         $reqParam = $this->request->all();
-        $query = $this->model->query();
+        $select   = $this->model->fillable ?? ['*'];
+        $where    = []; //额外条件
 
-        [$querys, $sort, $order, $offset, $limit] = $this->model->buildTableParams($reqParam, $query);
-        $where = []; //额外条件
+        [$total, $list] = $this->model->parallelSearch($reqParam, $where, $select);
 
-        $total = $querys
-            ->where($where)
-            ->orderBy($sort, $order)
-            ->count();
-        //        Db::enableQueryLog();
-        $list = $querys
-            ->where($where)
-            ->orderBy($sort, $order)
-            ->offset($offset)->limit($limit)
-            ->get();
-        //        var_export(Db::getQueryLog());
+        $groups = $this->model->query()->select('group', 'id')->groupBy('group')->get()->toArray();
 
-        $list = $list ? $list->toArray() : [];
         if(!empty($list)){
             foreach ($list as $k => $v) {
                 //                $list[$k]['status'] = $v['status'] === 0 ? false : true;
             }
             unset($v);
         }
+        var_export(__('admin.setting.basic'));
         $result = array("total" => $total, "rows" => $list);
         return $this->success($result);
     }

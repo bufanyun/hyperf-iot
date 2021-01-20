@@ -138,19 +138,11 @@ class AdminMoneyRechargeController extends BaseController
     public function list()
     {
         $reqParam = $this->request->all();
-        $where = []; //额外条件
-        $query    = $this->model->query()->where($where);
-        [$querys, $sort, $order, $offset, $limit] = $this->model->buildTableParams($reqParam, $query);
+        $select   = ['*'];
+        $where    = []; //额外条件
 
-        $total = $querys
-            ->orderBy($sort, $order)
-            ->count();
-
-        $list = $querys
-            ->orderBy($sort, $order)
-            ->offset($offset)->limit($limit)
-            ->get()
-            ->toArray();
+        [$total, $list] = $this->model->parallelSearch($reqParam, $where, $select);
+        
         if (!empty($list)) {
             foreach ($list as $k => $v) {
                 $list[$k]['status']  = AdminMoneyRechargeCode::getMessage($v['status']);

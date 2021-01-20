@@ -33,9 +33,9 @@ use Core\Plugins\WeChat\OfficialAccount;
  *     @Middleware(AdminAuthMiddleware::class)
  * })
  *
- * @property User            $model
- * @property Sms             $Sms
- * @property Ems             $Ems
+ * @property User $model
+ * @property Sms $Sms
+ * @property Ems $Ems
  * @property OfficialAccount $OfficialAccount
  */
 class ApiController extends BaseController

@@ -27,12 +27,37 @@ use App\Exception\DatabaseExceptionHandler;
  */
 trait Table
 {
+
+    /**
+     * 协程查询列表
+     * parallelSearch
+     * @param $reqParam
+     * @param $where
+     * @param $select
+     * @return array
+     * author MengShuai <133814250@qq.com>
+     * date 2021/01/20 11:59
+     */
+    public function parallelSearch($reqParam, $where, $select)
+    {
+        return parallel([
+            function () use ($reqParam, $where, $select) {
+                [$querys, $sort, $order, $offset, $limit] = $this->buildTableParams($reqParam, $this->query()->select($select)->where($where));
+                return $querys->orderBy($sort, $order)->count();
+            },
+            function () use ($reqParam, $where, $select) {
+                [$querys, $sort, $order, $offset, $limit] = $this->buildTableParams($reqParam, $this->query()->select($select)->where($where));
+                return $querys->orderBy($sort, $order)->offset($offset)->limit($limit)->get()->toArray();
+            },
+        ]);
+    }
+
     /**
      * 添加数据行
      * add
      *
      * @param array $params
-     * @param null  $query
+     * @param null $query
      *
      * @return bool
      * author MengShuai <133814250@qq.com>
@@ -73,7 +98,7 @@ trait Table
      *
      * @param       $where
      * @param array $params
-     * @param null  $query
+     * @param null $query
      *
      * @return bool
      * author MengShuai <133814250@qq.com>
@@ -156,7 +181,7 @@ trait Table
      *
      * @param array $where
      * @param array $params
-     * @param null  $query
+     * @param null $query
      *
      * @return int
      * author MengShuai <133814250@qq.com>
@@ -213,8 +238,8 @@ trait Table
      * loadModel
      *
      * @param array $params
-     * @param null  $query
-     * @param bool  $isUpdate
+     * @param null $query
+     * @param bool $isUpdate
      *
      * @return array
      * author MengShuai <133814250@qq.com>
@@ -289,7 +314,7 @@ trait Table
      * buildTableParams
      *
      * @param array $params
-     * @param null  $query
+     * @param null $query
      *
      * @return array
      * author MengShuai <133814250@qq.com>
@@ -314,7 +339,7 @@ trait Table
         $filter    = $filter ? $filter : [];
         $tableName = $model->getTable();
 
-        if ($search && !empty($this->searchFields)) {  //允许快捷搜索的字段
+        if ($search && !empty($this->searchFields)) {
             $searchFields = is_array($this->searchFields) ? $this->searchFields : explode(',', $this->searchFields);
             if (!empty($searchFields)) {
                 $query->where(function ($query) use ($searchFields, $tableName, $search) {
@@ -336,7 +361,7 @@ trait Table
             }
             unset($v);
         } else {
-            $filter = [];  //不存在fillable设置时，禁止高级查询
+            $filter = [];
         }
 
         foreach ($filter as $k => $v) {
@@ -421,11 +446,10 @@ trait Table
         }
         unset($v);
 
-        //是否使用伪删除
         if ($this->isPseudoDel()) {
             $query->whereNull(static::DELETED_AT);
         }
-
+        
         return [$query, $sort, $order, $offset, $limit];
     }
 

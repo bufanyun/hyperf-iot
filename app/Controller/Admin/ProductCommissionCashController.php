@@ -150,19 +150,10 @@ class ProductCommissionCashController extends BaseController
     public function list()
     {
         $reqParam = $this->request->all();
+        $select   = $this->model->fillable ?? ['*'];
         $where    = []; //额外条件
-        $query    = $this->model->query()->where($where);
 
-        [$querys, $sort, $order, $offset, $limit] = $this->model->buildTableParams($reqParam, $query);
-
-        $total = $querys
-            ->orderBy($sort, $order)
-            ->count();
-        $list  = $querys
-            ->orderBy($sort, $order)
-            ->offset($offset)->limit($limit)
-            ->get()
-            ->toArray();
+        [$total, $list] = $this->model->parallelSearch($reqParam, $where, $select);
 
         if (!empty($list)) {
             foreach ($list as $k => $v) {

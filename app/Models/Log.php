@@ -62,6 +62,9 @@ class Log extends BaseModel
      */
     protected $casts = ['id' => 'integer', 'code' => 'integer', 'city_id' => 'integer', 'execution_time' => 'float', 'request_body_size' => 'integer', 'response_body_size' => 'integer', 'unix_time' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
 
+
+    protected $searchFields = ['user_id', 'method', 'uri', 'url', 'msg', 'code', 'real_ip'];
+
     /**
      * getList
      * 获取列表
