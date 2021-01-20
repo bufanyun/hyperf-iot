@@ -19,6 +19,7 @@ use Hyperf\Di\Annotation\Inject;
 /**
  * SettingController
  * 基础配置控制器
+ *
  * @package App\Controller\Admin
  *
  * @Controller(prefix="admin_api/setting")
@@ -44,6 +45,7 @@ class SettingController extends BaseController
 
     /**
      * list
+     *
      * @return \Psr\Http\Message\ResponseInterface
      *
      * @RequestMapping(path="list")
@@ -54,7 +56,22 @@ class SettingController extends BaseController
         if (!empty($groups)) {
             foreach ($groups as $k => $v) {
                 $groups[$k]['title'] = __("admin_setting.{$v['group']}");
-                $groups[$k]['lists'] = $this->model->query()->select('*')->get()->toArray();
+                $groups[$k]['lists'] = $this->model->query()->select('*')->where(['group' => $v['group']])->get()->toArray();
+                foreach ($groups[$k]['lists'] as $kk => $vv) {
+                    if ($vv['type'] === 'array') {
+                        $value  = json_decode($vv['value'], true);
+                        $values = [];
+                        $i      = 0;
+                        foreach ($value as $k3 => $v3) {
+                            $values[$i]['key']   = $k3;
+                            $values[$i]['value'] = $v3;
+                            $i++;
+                        }
+                        $groups[$k]['lists'][$kk]['value'] = $values;
+                        unset($v3);
+                    }
+                }
+                unset($vv);
             }
             unset($v);
         }
@@ -69,6 +86,7 @@ class SettingController extends BaseController
      * User：YM
      * Date：2020/2/5
      * Time：下午5:55
+     *
      * @return \Psr\Http\Message\ResponseInterface
      *
      * @PostMapping(path="site_set")
@@ -89,6 +107,7 @@ class SettingController extends BaseController
      * User：YM
      * Date：2020/2/5
      * Time：下午5:55
+     *
      * @return \Psr\Http\Message\ResponseInterface
      *
      * @PostMapping(path="site_save")
