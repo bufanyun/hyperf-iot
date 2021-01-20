@@ -11,6 +11,8 @@ declare(strict_types=1);
  */
 
 return [
+    //后台设置分组
+    
     'basic'      => '基本配置',
     'dictionary' => '字典',
     'cash'       => '提现配置',

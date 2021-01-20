@@ -1,16 +1,6 @@
 <?php
 
 declare(strict_types=1);
-/**
- * Created by PhpStorm.
- *​
- * SettingController.php
- *
- * User：YM
- * Date：2020/2/5
- * Time：下午5:52
- */
-
 
 namespace App\Controller\Admin;
 
@@ -30,9 +20,6 @@ use Hyperf\Di\Annotation\Inject;
  * SettingController
  * 基础配置控制器
  * @package App\Controller\Admin
- * User：YM
- * Date：2020/2/5
- * Time：下午5:52
  *
  * @Controller(prefix="admin_api/setting")
  *
