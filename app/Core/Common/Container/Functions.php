@@ -438,14 +438,13 @@ if (!function_exists('getLogArguments')) {
     /**
      * getLogArguments
      * 获取要存储的日志部分字段，monolog以外的业务信息
-     * User：YM
-     * Date：2019/12/20
-     * Time：下午12:57
+     *
      * @param float $executionTime 程序执行时间，运行时才能判断这里初始化为0
      * @param int $rbs 响应包体大小，初始化0，只有正常请求响应才有值
+     * @param array $data 响应内容
      * @return array
      */
-    function getLogArguments($executionTime = null, $rbs = 0)
+    function getLogArguments($executionTime = null, $rbs = 0, array $data)
     {
         $request        = ApplicationContext::getContainer()->get(RequestInterface::class);
         $requestHeaders = $request->getHeaders();
@@ -472,7 +471,7 @@ if (!function_exists('getLogArguments')) {
         }
 
         return [
-            'qid' => $requestHeaders['qid'][0]??'',
+            'qid'                => $requestHeaders['qid'][0] ?? '',
             'server_name'        => $requestHeaders['host'][0] ?? '',
             'server_addr'        => getServerLocalIp() ?? '',
             'remote_addr'        => $serverParams['remote_addr'] ?? '',
@@ -496,6 +495,9 @@ if (!function_exists('getLogArguments')) {
             'unix_time'          => $serverParams['request_time'] ?? '',
             'time_day'           => isset($serverParams['request_time']) ? date('Y-m-d', $serverParams['request_time']) : '',
             'time_hour'          => isset($serverParams['request_time']) ? date('Y-m-d H:00:00', $serverParams['request_time']) : '',
+            'code'               => isset($data['code']) ? $data['code'] : 0,
+            'msg'                => isset($data['msg']) ? $data['msg'] : '',
+            'data'               => isset($data['data']) ? json_encode($data['data']) : [],
         ];
     }
 }
@@ -1256,14 +1258,14 @@ if (!function_exists('isHTTPS')) {
      */
     function isHTTPS(string $url = null): bool
     {
-        if($url === null){
-            $request    = ApplicationContext::getContainer()->get(RequestInterface::class);
-            $url       = $request->fullUrl();
+        if ($url === null) {
+            $request = ApplicationContext::getContainer()->get(RequestInterface::class);
+            $url     = $request->fullUrl();
         }
         if (filter_var($url, FILTER_VALIDATE_URL) === false) {
             return false;
         }
-        if(substr($url, 0, 5) !== 'https'){
+        if (substr($url, 0, 5) !== 'https') {
             return false;
         }
         return true;

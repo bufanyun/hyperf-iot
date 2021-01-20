@@ -81,32 +81,4 @@ class LogsController extends BaseController
         return $this->success($result);
     }
 
-    /**
-     * switch
-     * @return \Psr\Http\Message\ResponseInterface
-     *
-     * @RequestMapping(path="switch")
-     */
-    public function switch()
-    {
-        $reqParam = $this->request->all();
-        if ( ! isset($reqParam['key'])) {
-            return $this->error(StatusCode::ERR_EXCEPTION, '缺少更新开关的参数');
-        }
-        $primaryKey = $this->model->getKeyName();
-        if ( ! isset($reqParam[$primaryKey])) {
-            return $this->error(StatusCode::ERR_EXCEPTION, '缺少更新开关的条件');
-        }
-        $query = $this->model->query();
-        $where = [$primaryKey => $reqParam[$primaryKey]];
-        $param = [
-            'key'    => $reqParam['key'],
-            'update' => isset($reqParam['update']) ? $reqParam['update'] : '',
-        ];
-
-        $update = $this->model->switch($where, $param, $query);
-        return $this->success(['switch' => $update]);
-    }
-
-
 }

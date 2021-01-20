@@ -118,7 +118,7 @@ class BaseController extends AbstractController
 //        $logger = ApplicationContext::getContainer()->get(\Hyperf\Logger\LoggerFactory::class)->get('success','response');
 //        $logger->info($msg, getLogArguments($executionTime, $rbs)+['data' => $data]);
         //记录日志
-        $message  = new LogsProducer(getLogArguments($executionTime, $rbs));
+        $message  = new LogsProducer(getLogArguments($executionTime, $rbs, $data));
         $producer = ApplicationContext::getContainer()->get(Producer::class);
         $producer->produce($message);
         return $response;
@@ -144,7 +144,7 @@ class BaseController extends AbstractController
         $logger = ApplicationContext::getContainer()->get(\Hyperf\Logger\LoggerFactory::class)->get('error','response');
         $logger->error($msg, getLogArguments($executionTime, $rbs));
         //记录日志
-        $message  = new LogsProducer(getLogArguments($executionTime, $rbs));
+        $message  = new LogsProducer(getLogArguments($executionTime, $rbs, $data));
         $producer = ApplicationContext::getContainer()->get(Producer::class);
         $producer->produce($message);
         return $response;
