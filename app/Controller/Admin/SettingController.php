@@ -63,22 +63,16 @@ class SettingController extends BaseController
      */
     public function list()
     {
-        $reqParam = $this->request->all();
-        $select   = $this->model->fillable ?? ['*'];
-        $where    = []; //额外条件
-
-        [$total, $list] = $this->model->parallelSearch($reqParam, $where, $select);
-
-        $groups = $this->model->query()->select('group', 'id')->groupBy('group')->get()->toArray();
-
-        if(!empty($list)){
-            foreach ($list as $k => $v) {
-                //                $list[$k]['status'] = $v['status'] === 0 ? false : true;
+        $groups = $this->model->query()->select('group')->groupBy('group')->get()->toArray();
+        if (!empty($groups)) {
+            foreach ($groups as $k => $v) {
+                $groups[$k]['title'] = __("admin_setting.{$v['group']}");
+                $groups[$k]['lists'] = $this->model->query()->select('*')->get()->toArray();
             }
             unset($v);
         }
-        var_export(__('admin.setting.basic'));
-        $result = array("total" => $total, "rows" => $list);
+
+        $result = ['groups' => $groups];
         return $this->success($result);
     }
 
