@@ -22,6 +22,7 @@ use Hyperf\HttpServer\Annotation\RequestMapping;
 use App\Constants\StatusCode;
 use App\Models\Log;
 use Hyperf\Utils\Coroutine;
+use Hyperf\Utils\Exception\ParallelExecutionException;
 
 /**
  * LogsController
@@ -62,21 +63,19 @@ class LogsController extends BaseController
     public function list()
     {
         $reqParam = $this->request->all();
+        $select   = ['id', 'real_ip', 'city_id', 'url', 'uri', 'arguments', 'method', 'device', 'browser', 'execution_time', 'created_at', 'code', 'msg'];
         $where    = []; //额外条件
-        $query    = $this->model->query()->where($where)
-            ->select('id', 'real_ip', 'city_id', 'url', 'uri', 'arguments', 'method', 'device', 'browser', 'execution_time', 'created_at', 'code', 'msg');
-        [$querys, $sort, $order, $offset, $limit] = $this->model->buildTableParams($reqParam, $query);
 
-        $total = $querys
-            ->where($where)
-            ->orderBy($sort, $order)
-            ->count();
-
-        $list = $querys
-            ->orderBy($sort, $order)
-            ->offset($offset)->limit($limit)
-            ->get()
-            ->toArray();
+        [$total, $list] = parallel([
+            function () use ($reqParam, $where, $select) {
+                [$querys, $sort, $order, $offset, $limit] = $this->model->buildTableParams($reqParam, $this->model->query()->select($select)->where($where));
+                return $querys->orderBy($sort, $order)->count();
+            },
+            function () use ($reqParam, $where, $select) {
+                [$querys, $sort, $order, $offset, $limit] = $this->model->buildTableParams($reqParam, $this->model->query()->where($where)->select($select));
+                return $querys->orderBy($sort, $order)->offset($offset)->limit($limit)->get()->toArray();
+            },
+        ]);
 
         if (!empty($list)) {
             foreach ($list as $k => $v) {
@@ -84,24 +83,6 @@ class LogsController extends BaseController
             }
             unset($v);
         }
-
-        var_export(['start' =>date("H:i:s")]);
-        $result = parallel([
-            function () {
-                sleep(3);
-                return 'aaa';
-            },
-            function () {
-                sleep(1);
-                return 'bbb';
-            },
-            function () {
-                sleep(3);
-                return 'ccc';
-            }
-        ]);
-        var_export(['$result' =>$result]);
-        var_export(['end' =>date("H:i:s")]);
         $result = ["total" => $total, "rows" => $list];
         return $this->success($result);
     }

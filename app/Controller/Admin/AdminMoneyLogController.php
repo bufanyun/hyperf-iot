@@ -44,44 +44,7 @@ class AdminMoneyLogController extends BaseController
      * @var AdminMoneyLog
      */
     private $model;
-
-    /**
-     * list
-     * @return \Psr\Http\Message\ResponseInterface
-     *
-     * @RequestMapping(path="list")
-     */
-    public function list()
-    {
-        $reqParam = $this->request->all();
-        $query = $this->model->query();
-
-        [$querys, $sort, $order, $offset, $limit] = $this->model->buildTableParams($reqParam, $query);
-        $where = []; //额外条件
-
-        $total = $querys
-            ->where($where)
-            ->orderBy($sort, $order)
-            ->count();
-        //        Db::enableQueryLog();
-        $list = $querys
-            ->where($where)
-            ->orderBy($sort, $order)
-            ->offset($offset)->limit($limit)
-            ->get();
-        //        var_export(Db::getQueryLog());
-
-        $list = $list ? $list->toArray() : [];
-        if(!empty($list)){
-            foreach ($list as $k => $v) {
-                //                $list[$k]['status'] = $v['status'] === 0 ? false : true;
-            }
-            unset($v);
-        }
-        $result = array("total" => $total, "rows" => $list);
-        return $this->success($result);
-    }
-
+    
     /**
      * switch
      * @return \Psr\Http\Message\ResponseInterface

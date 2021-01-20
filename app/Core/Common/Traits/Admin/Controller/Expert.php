@@ -28,7 +28,7 @@ use App\Exception\DatabaseExceptionHandler;
 trait Expert
 {
     /**
-     * 页面列表
+     * 协程 - 获取表格列表
      * list
      *
      * @return \Psr\Http\Message\ResponseInterface
@@ -40,20 +40,19 @@ trait Expert
     public function list()
     {
         $reqParam = $this->request->all();
+        $select   = ['*'];
         $where    = []; //额外条件
-        $query    = $this->model->query()->where($where);   //前置模型
 
-        [$querys, $sort, $order, $offset, $limit] = $this->model->buildTableParams($reqParam, $query);
-
-        $total = $querys
-            ->orderBy($sort, $order)
-            ->count();
-        //        Db::enableQueryLog();
-        $list = $querys
-            ->orderBy($sort, $order)
-            ->offset($offset)->limit($limit)
-            ->get()
-            ->toArray();
+        [$total, $list] = parallel([
+            function () use ($reqParam, $where, $select) {
+                [$querys, $sort, $order, $offset, $limit] = $this->model->buildTableParams($reqParam, $this->model->query()->select($select)->where($where));
+                return $querys->orderBy($sort, $order)->count();
+            },
+            function () use ($reqParam, $where, $select) {
+                [$querys, $sort, $order, $offset, $limit] = $this->model->buildTableParams($reqParam, $this->model->query()->where($where)->select($select));
+                return $querys->orderBy($sort, $order)->offset($offset)->limit($limit)->get()->toArray();
+            },
+        ]);
 
         if (!empty($list)) {
             foreach ($list as $k => $v) {
