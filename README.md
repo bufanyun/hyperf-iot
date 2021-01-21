@@ -14,17 +14,29 @@ hyperf-iot基于Hyperf v2.1、VUE+Prime Pro开发的前后分离管理后台，�
     * 基于`Less`进行样式开发
 * 通用的会员模块和API模块
 * 共用同一账号体系的Web端会员中心权限验证和API接口会员权限验证
+* 整合第三方短信接口(阿里云、腾讯云短信)
+* 无缝整合第三方云存储(七牛云、阿里云OSS)功能，支持云储存分片上传
+* 第三方登录(QQ、微信)整合
+* 第三方支付(微信、支付宝)无缝整合，微信支持PC端扫码支付
 
 
 
-## 页面展示
+## 部分页面展示
 
 * 控制台
 ![控制台](https://images.gitee.com/uploads/images/2021/0106/162041_4f4c0b7c_5102272.png "屏幕截图.png")
 
+* 商品卡片
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0121/223623_81f830b7_5102272.png "屏幕截图.png")
+
 * 列表
 ![列表](https://images.gitee.com/uploads/images/2021/0106/162247_3a970594_5102272.png "屏幕截图.png")
 
+* 编辑
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0121/223959_3bfccce8_5102272.png "屏幕截图.png")
+
+* 系统配置
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0121/223906_91c88661_5102272.png "屏幕截图.png")
 
 ## 环境要求
 
