@@ -25,37 +25,51 @@ hyperf-iot基于Hyperf v2.1、VUE+Prime Pro开发的前后分离管理后台，�
 * 列表
 ![列表](https://images.gitee.com/uploads/images/2021/0106/162247_3a970594_5102272.png "屏幕截图.png")
 
-## 注
-本项目还在持续开发中，遇到问题请联系作者！
 
 ## 环境要求
 
- - PHP >= 7.3
+ - PHP >= 7.2
  - Swoole PHP extension >= 4.5，and Disabled `Short Name`
  - OpenSSL PHP extension
  - JSON PHP extension
  - PDO PHP extension （If you need to use MySQL Client）
  - Redis PHP extension （If you need to use Redis Client）
  - Protobuf PHP extension （If you need to use gRPC Server of Client）
+ - RabbitMQ >=3.8
+ 
+ ## 快速开始
+ 1. 拉取代码到你已经安装好以上环境的服务器中
+ ```shell script
+git clone https://gitee.com/bufanyun/hyperf-iot.git && cd hyperf-iot
+ ```
+
+ 2. 配置你的站点信息
+ - 将根目录下的`.env.example`名称改为.env，并配置相关信息，默认使用了redis和rabbitmq组件，所以不配置将无法正常使用！
+ - 服务默认使用的是9609端口，请放行防火墙端口，如需修改为其他端口请到`/config/autoload/server.php`中修改！
+
+ 3. 更新composer包
+  ```shell script
+ composer update
+  ```
+ 4. 启动服务，执行下面任意一个命令即可，首次启动会自动缓存代理配置，可能需要时间久一些
+   ```shell script
+  php bin/hyperf.php serve:watch  #测试调试期间用这个
+  php bin/hyperf.php start  #线上用这个
+   ```
+ 5.访问测试
+   ```shell script
+  curl http://127.0.0.1:9608
+   ```
+ - 如果能看到：{"code":20000,"msg":"操作成功","data":{"$method":"GET"}}则说明启动成功！
+ 
+  ## 注
+  本项目还在持续开发中，目前暂时不公开数据结构，仅供学习参考，遇到问题请联系作者下方微信！
+  
+  ![输入图片说明](https://images.gitee.com/uploads/images/2021/0121/222810_ac5b4081_5102272.png "屏幕截图.png")
 
 
-# Installation using Composer
 
-The easiest way to create a new Hyperf project is to use Composer. If you don't have it already installed, then please install as per the documentation.
-
-To create your new Hyperf project:
-
-$ composer create-project hyperf/hyperf-skeleton path/to/install
-
-Once installed, you can run the server immediately using the command below.
-
-$ cd path/to/install
-$ php bin/hyperf.php start
-
-This will start the cli-server on port `9501`, and bind it to all network interfaces. You can then visit the site at `http://localhost:9501/`
-
-which will bring up Hyperf default home page.
-
+  
 
 
   

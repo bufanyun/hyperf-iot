@@ -70,6 +70,10 @@ class SettingController extends BaseController
                         $groups[$k]['lists'][$kk]['value'] = $values;
                         unset($v3);
                     }
+                    if($vv['type'] === 'switch')
+                    {
+                        $groups[$k]['lists'][$kk]['value'] = $vv['value']===1 ?? false;
+                    }
                 }
                 unset($vv);
             }
