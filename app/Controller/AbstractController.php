@@ -188,7 +188,6 @@ abstract class AbstractController
             }
             unset($vo);
         }
-
         return $config;
     }
 }

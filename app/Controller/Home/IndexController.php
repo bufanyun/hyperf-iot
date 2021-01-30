@@ -62,8 +62,7 @@ class IndexController extends BaseController
      * @var EmsPlugins
      */
     protected $EmsPlugins;
-
-
+    
     /**
      * index
      * 微信扫码设备
@@ -75,21 +74,6 @@ class IndexController extends BaseController
     public function index()
     {
         return $this->view(['name' => 'ms']);
-    }
-
-    /**
-     * test
-     *
-     * @return \Psr\Http\Message\ResponseInterface
-     *
-     * @RequestMapping(path="test")
-     *
-     * Middleware(OssCallbackMiddleware::class)
-     */
-
-    public function test()
-    {
-
     }
 
 }
