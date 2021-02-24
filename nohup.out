@@ -1924,3 +1924,495 @@ Stack trace:
 #6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/utils/src/Functions.php(271): Hyperf\Utils\Parallel->Hyperf\Utils\{closure}()
 #7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/utils/src/Coroutine.php(62): call()
 #8 {main}
+[ERROR] Not Found[173] in /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php
+[ERROR] #0 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(107): Hyperf\HttpServer\CoreMiddleware->handleNotFound()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\HttpServer\CoreMiddleware->process()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/validation/src/Middleware/ValidationMiddleware.php(81): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Validation\Middleware\ValidationMiddleware->process()
+#5 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/session/src/Middleware/SessionMiddleware.php(58): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Session\Middleware\SessionMiddleware->process()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#9 /www/wwwroot/prime.facms.cn/backend/app/Middleware/DebugMiddleware.php(39): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\DebugMiddleware->process()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#12 /www/wwwroot/prime.facms.cn/backend/app/Middleware/RequestMiddleware.php(68): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\RequestMiddleware->process()
+#14 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#15 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpDispatcher.php(40): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#16 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/Server.php(116): Hyperf\Dispatcher\HttpDispatcher->dispatch()
+#17 {main}
+[ERROR] Not Found[173] in /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php
+[ERROR] #0 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(107): Hyperf\HttpServer\CoreMiddleware->handleNotFound()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\HttpServer\CoreMiddleware->process()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/validation/src/Middleware/ValidationMiddleware.php(81): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Validation\Middleware\ValidationMiddleware->process()
+#5 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/session/src/Middleware/SessionMiddleware.php(58): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Session\Middleware\SessionMiddleware->process()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#9 /www/wwwroot/prime.facms.cn/backend/app/Middleware/DebugMiddleware.php(39): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\DebugMiddleware->process()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#12 /www/wwwroot/prime.facms.cn/backend/app/Middleware/RequestMiddleware.php(68): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\RequestMiddleware->process()
+#14 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#15 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpDispatcher.php(40): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#16 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/Server.php(116): Hyperf\Dispatcher\HttpDispatcher->dispatch()
+#17 {main}
+array (
+  'name' => '方仁马',
+  'identity' => '340223197810245110',
+  'contact' => '17754111586',
+  'ship_province' => '江苏',
+  'ship_city' => '盐城市',
+  'ship_country' => '阜宁县',
+  'ship_addr' => '阜宁县公兴社区刘舍湾头村委会',
+  'province' => '北京',
+  'city' => '北京市',
+  'newnumber' => '16619736427',
+  'development_code' => '5112191792',
+  'productCode' => 'AL_NO_PRIZES_CARD',
+)array (
+  '$res' => 
+  array (
+    'code' => 3001,
+    'msg' => '验证码校验异常，请重新进行校验',
+    'data' => 
+    array (
+    ),
+  ),
+)[ERROR] 验证码校验异常，请重新进行校验[266] in /www/wwwroot/prime.facms.cn/backend/app/Core/Repositories/Home/OrderSubmitRepository.php
+[ERROR] #0 /www/wwwroot/prime.facms.cn/backend/runtime/container/proxy/App_Controller_Home_ApiController.proxy.php(128): Core\Repositories\Home\OrderSubmitRepository->default()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(161): App\Controller\Home\ApiController->uniform()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(113): Hyperf\HttpServer\CoreMiddleware->handleFound()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\HttpServer\CoreMiddleware->process()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#5 /www/wwwroot/prime.facms.cn/backend/app/Middleware/SpreadMiddleware.php(53): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\SpreadMiddleware->process()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/validation/src/Middleware/ValidationMiddleware.php(81): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#9 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Validation\Middleware\ValidationMiddleware->process()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/session/src/Middleware/SessionMiddleware.php(58): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#12 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Session\Middleware\SessionMiddleware->process()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#14 /www/wwwroot/prime.facms.cn/backend/app/Middleware/DebugMiddleware.php(39): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#15 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\DebugMiddleware->process()
+#16 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#17 /www/wwwroot/prime.facms.cn/backend/app/Middleware/RequestMiddleware.php(68): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#18 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\RequestMiddleware->process()
+#19 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#20 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpDispatcher.php(40): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#21 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/Server.php(116): Hyperf\Dispatcher\HttpDispatcher->dispatch()
+#22 {main}
+array (
+  'name' => '方仁马',
+  'identity' => '340223197810245110',
+  'contact' => '17754111586',
+  'ship_province' => '江苏',
+  'ship_city' => '盐城市',
+  'ship_country' => '阜宁县',
+  'ship_addr' => '阜宁县公兴社区刘舍湾头村委会',
+  'province' => '北京',
+  'city' => '北京市',
+  'newnumber' => '16619736427',
+  'development_code' => '5112191792',
+  'productCode' => 'AL_NO_PRIZES_CARD',
+)array (
+  '$res' => 
+  array (
+    'code' => 3001,
+    'msg' => '验证码校验异常，请重新进行校验',
+    'data' => 
+    array (
+    ),
+  ),
+)[ERROR] 验证码校验异常，请重新进行校验[266] in /www/wwwroot/prime.facms.cn/backend/app/Core/Repositories/Home/OrderSubmitRepository.php
+[ERROR] #0 /www/wwwroot/prime.facms.cn/backend/runtime/container/proxy/App_Controller_Home_ApiController.proxy.php(128): Core\Repositories\Home\OrderSubmitRepository->default()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(161): App\Controller\Home\ApiController->uniform()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(113): Hyperf\HttpServer\CoreMiddleware->handleFound()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\HttpServer\CoreMiddleware->process()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#5 /www/wwwroot/prime.facms.cn/backend/app/Middleware/SpreadMiddleware.php(53): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\SpreadMiddleware->process()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/validation/src/Middleware/ValidationMiddleware.php(81): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#9 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Validation\Middleware\ValidationMiddleware->process()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/session/src/Middleware/SessionMiddleware.php(58): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#12 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Session\Middleware\SessionMiddleware->process()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#14 /www/wwwroot/prime.facms.cn/backend/app/Middleware/DebugMiddleware.php(39): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#15 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\DebugMiddleware->process()
+#16 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#17 /www/wwwroot/prime.facms.cn/backend/app/Middleware/RequestMiddleware.php(68): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#18 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\RequestMiddleware->process()
+#19 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#20 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpDispatcher.php(40): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#21 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/Server.php(116): Hyperf\Dispatcher\HttpDispatcher->dispatch()
+#22 {main}
+array (
+  'name' => '方仁马',
+  'identity' => '340223197810245110',
+  'contact' => '17754111586',
+  'ship_province' => '江苏',
+  'ship_city' => '盐城市',
+  'ship_country' => '阜宁县',
+  'ship_addr' => '阜宁县公兴社区刘舍湾头村委会',
+  'province' => '北京',
+  'city' => '北京市',
+  'newnumber' => '16619736427',
+  'development_code' => '5112191792',
+  'productCode' => 'AL_NO_PRIZES_CARD',
+)array (
+  '$res' => 
+  array (
+    'code' => 3001,
+    'msg' => '验证码校验异常，请重新进行校验',
+    'data' => 
+    array (
+    ),
+  ),
+)[ERROR] 验证码校验异常，请重新进行校验[266] in /www/wwwroot/prime.facms.cn/backend/app/Core/Repositories/Home/OrderSubmitRepository.php
+[ERROR] #0 /www/wwwroot/prime.facms.cn/backend/runtime/container/proxy/App_Controller_Home_ApiController.proxy.php(128): Core\Repositories\Home\OrderSubmitRepository->default()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(161): App\Controller\Home\ApiController->uniform()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(113): Hyperf\HttpServer\CoreMiddleware->handleFound()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\HttpServer\CoreMiddleware->process()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#5 /www/wwwroot/prime.facms.cn/backend/app/Middleware/SpreadMiddleware.php(53): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\SpreadMiddleware->process()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/validation/src/Middleware/ValidationMiddleware.php(81): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#9 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Validation\Middleware\ValidationMiddleware->process()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/session/src/Middleware/SessionMiddleware.php(58): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#12 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Session\Middleware\SessionMiddleware->process()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#14 /www/wwwroot/prime.facms.cn/backend/app/Middleware/DebugMiddleware.php(39): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#15 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\DebugMiddleware->process()
+#16 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#17 /www/wwwroot/prime.facms.cn/backend/app/Middleware/RequestMiddleware.php(68): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#18 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\RequestMiddleware->process()
+#19 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#20 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpDispatcher.php(40): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#21 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/Server.php(116): Hyperf\Dispatcher\HttpDispatcher->dispatch()
+#22 {main}
+array (
+  'name' => '方仁马',
+  'identity' => '340223197810245110',
+  'contact' => '17754111586',
+  'ship_province' => '江苏',
+  'ship_city' => '盐城市',
+  'ship_country' => '阜宁县',
+  'ship_addr' => '阜宁县公兴社区刘舍湾头村委会',
+  'province' => '北京',
+  'city' => '北京市',
+  'newnumber' => '16619736427',
+  'development_code' => '5112191792',
+  'productCode' => 'AL_NO_PRIZES_CARD',
+)array (
+  '$res' => 
+  array (
+    'code' => 3001,
+    'msg' => '验证码校验异常，请重新进行校验',
+    'data' => 
+    array (
+    ),
+  ),
+)[ERROR] 验证码校验异常，请重新进行校验[266] in /www/wwwroot/prime.facms.cn/backend/app/Core/Repositories/Home/OrderSubmitRepository.php
+[ERROR] #0 /www/wwwroot/prime.facms.cn/backend/runtime/container/proxy/App_Controller_Home_ApiController.proxy.php(128): Core\Repositories\Home\OrderSubmitRepository->default()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(161): App\Controller\Home\ApiController->uniform()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(113): Hyperf\HttpServer\CoreMiddleware->handleFound()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\HttpServer\CoreMiddleware->process()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#5 /www/wwwroot/prime.facms.cn/backend/app/Middleware/SpreadMiddleware.php(53): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\SpreadMiddleware->process()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/validation/src/Middleware/ValidationMiddleware.php(81): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#9 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Validation\Middleware\ValidationMiddleware->process()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/session/src/Middleware/SessionMiddleware.php(58): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#12 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Session\Middleware\SessionMiddleware->process()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#14 /www/wwwroot/prime.facms.cn/backend/app/Middleware/DebugMiddleware.php(39): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#15 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\DebugMiddleware->process()
+#16 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#17 /www/wwwroot/prime.facms.cn/backend/app/Middleware/RequestMiddleware.php(68): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#18 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\RequestMiddleware->process()
+#19 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#20 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpDispatcher.php(40): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#21 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/Server.php(116): Hyperf\Dispatcher\HttpDispatcher->dispatch()
+#22 {main}
+array (
+  'name' => '方仁马',
+  'identity' => '340223197810245110',
+  'contact' => '17754111586',
+  'ship_province' => '江苏',
+  'ship_city' => '盐城市',
+  'ship_country' => '阜宁县',
+  'ship_addr' => '阜宁县公兴社区刘舍湾头村委会',
+  'province' => '北京',
+  'city' => '北京市',
+  'newnumber' => '18510549338',
+  'development_code' => '5112191792',
+  'productCode' => 'XM_NO_PRIZES_CARD',
+)array (
+  '$res' => 
+  array (
+    'code' => 3001,
+    'msg' => '验证码校验异常，请重新进行校验',
+    'data' => 
+    array (
+    ),
+  ),
+)[ERROR] 验证码校验异常，请重新进行校验[266] in /www/wwwroot/prime.facms.cn/backend/app/Core/Repositories/Home/OrderSubmitRepository.php
+[ERROR] #0 /www/wwwroot/prime.facms.cn/backend/runtime/container/proxy/App_Controller_Home_ApiController.proxy.php(128): Core\Repositories\Home\OrderSubmitRepository->default()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(161): App\Controller\Home\ApiController->uniform()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(113): Hyperf\HttpServer\CoreMiddleware->handleFound()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\HttpServer\CoreMiddleware->process()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#5 /www/wwwroot/prime.facms.cn/backend/app/Middleware/SpreadMiddleware.php(53): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\SpreadMiddleware->process()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/validation/src/Middleware/ValidationMiddleware.php(81): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#9 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Validation\Middleware\ValidationMiddleware->process()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/session/src/Middleware/SessionMiddleware.php(58): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#12 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Session\Middleware\SessionMiddleware->process()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#14 /www/wwwroot/prime.facms.cn/backend/app/Middleware/DebugMiddleware.php(39): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#15 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\DebugMiddleware->process()
+#16 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#17 /www/wwwroot/prime.facms.cn/backend/app/Middleware/RequestMiddleware.php(68): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#18 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\RequestMiddleware->process()
+#19 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#20 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpDispatcher.php(40): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#21 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/Server.php(116): Hyperf\Dispatcher\HttpDispatcher->dispatch()
+#22 {main}
+array (
+  'name' => '方仁马',
+  'identity' => '340223197810245110',
+  'contact' => '17754111586',
+  'ship_province' => '江苏',
+  'ship_city' => '盐城市',
+  'ship_country' => '阜宁县',
+  'ship_addr' => '阜宁县公兴社区刘舍湾头村委会',
+  'province' => '北京',
+  'city' => '北京市',
+  'newnumber' => '18510549338',
+  'development_code' => '5112191792',
+  'productCode' => 'XM_NO_PRIZES_CARD',
+)array (
+  '$res' => 
+  array (
+    'code' => 3001,
+    'msg' => '验证码校验异常，请重新进行校验',
+    'data' => 
+    array (
+    ),
+  ),
+)[ERROR] 验证码校验异常，请重新进行校验[266] in /www/wwwroot/prime.facms.cn/backend/app/Core/Repositories/Home/OrderSubmitRepository.php
+[ERROR] #0 /www/wwwroot/prime.facms.cn/backend/runtime/container/proxy/App_Controller_Home_ApiController.proxy.php(128): Core\Repositories\Home\OrderSubmitRepository->default()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(161): App\Controller\Home\ApiController->uniform()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(113): Hyperf\HttpServer\CoreMiddleware->handleFound()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\HttpServer\CoreMiddleware->process()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#5 /www/wwwroot/prime.facms.cn/backend/app/Middleware/SpreadMiddleware.php(53): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\SpreadMiddleware->process()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/validation/src/Middleware/ValidationMiddleware.php(81): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#9 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Validation\Middleware\ValidationMiddleware->process()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/session/src/Middleware/SessionMiddleware.php(58): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#12 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Session\Middleware\SessionMiddleware->process()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#14 /www/wwwroot/prime.facms.cn/backend/app/Middleware/DebugMiddleware.php(39): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#15 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\DebugMiddleware->process()
+#16 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#17 /www/wwwroot/prime.facms.cn/backend/app/Middleware/RequestMiddleware.php(68): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#18 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\RequestMiddleware->process()
+#19 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#20 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpDispatcher.php(40): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#21 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/Server.php(116): Hyperf\Dispatcher\HttpDispatcher->dispatch()
+#22 {main}
+array (
+  'name' => '方仁马',
+  'identity' => '340223197810245110',
+  'contact' => '17754111586',
+  'ship_province' => '江苏',
+  'ship_city' => '盐城市',
+  'ship_country' => '阜宁县',
+  'ship_addr' => '阜宁县公兴社区刘舍湾头村委会',
+  'province' => '北京',
+  'city' => '北京市',
+  'newnumber' => '13051187835',
+  'development_code' => '5112191792',
+  'productCode' => 'XM_NO_PRIZES_CARD',
+)array (
+  '$res' => 
+  array (
+    'code' => 3001,
+    'msg' => '验证码校验异常，请重新进行校验',
+    'data' => 
+    array (
+    ),
+  ),
+)[ERROR] 验证码校验异常，请重新进行校验[266] in /www/wwwroot/prime.facms.cn/backend/app/Core/Repositories/Home/OrderSubmitRepository.php
+[ERROR] #0 /www/wwwroot/prime.facms.cn/backend/runtime/container/proxy/App_Controller_Home_ApiController.proxy.php(128): Core\Repositories\Home\OrderSubmitRepository->default()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(161): App\Controller\Home\ApiController->uniform()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(113): Hyperf\HttpServer\CoreMiddleware->handleFound()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\HttpServer\CoreMiddleware->process()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#5 /www/wwwroot/prime.facms.cn/backend/app/Middleware/SpreadMiddleware.php(53): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\SpreadMiddleware->process()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/validation/src/Middleware/ValidationMiddleware.php(81): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#9 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Validation\Middleware\ValidationMiddleware->process()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/session/src/Middleware/SessionMiddleware.php(58): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#12 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Session\Middleware\SessionMiddleware->process()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#14 /www/wwwroot/prime.facms.cn/backend/app/Middleware/DebugMiddleware.php(39): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#15 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\DebugMiddleware->process()
+#16 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#17 /www/wwwroot/prime.facms.cn/backend/app/Middleware/RequestMiddleware.php(68): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#18 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\RequestMiddleware->process()
+#19 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#20 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpDispatcher.php(40): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#21 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/Server.php(116): Hyperf\Dispatcher\HttpDispatcher->dispatch()
+#22 {main}
+[ERROR] 工号不能为空！[44] in /www/wwwroot/prime.facms.cn/backend/app/Middleware/SpreadMiddleware.php
+[ERROR] #0 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\SpreadMiddleware->process()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/validation/src/Middleware/ValidationMiddleware.php(81): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Validation\Middleware\ValidationMiddleware->process()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#5 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/session/src/Middleware/SessionMiddleware.php(58): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Session\Middleware\SessionMiddleware->process()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#8 /www/wwwroot/prime.facms.cn/backend/app/Middleware/DebugMiddleware.php(39): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#9 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\DebugMiddleware->process()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#11 /www/wwwroot/prime.facms.cn/backend/app/Middleware/RequestMiddleware.php(68): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#12 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\RequestMiddleware->process()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#14 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpDispatcher.php(40): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#15 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/Server.php(116): Hyperf\Dispatcher\HttpDispatcher->dispatch()
+#16 {main}
+[ERROR] Not Found[173] in /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php
+[ERROR] #0 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(107): Hyperf\HttpServer\CoreMiddleware->handleNotFound()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\HttpServer\CoreMiddleware->process()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/validation/src/Middleware/ValidationMiddleware.php(81): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Validation\Middleware\ValidationMiddleware->process()
+#5 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/session/src/Middleware/SessionMiddleware.php(58): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Session\Middleware\SessionMiddleware->process()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#9 /www/wwwroot/prime.facms.cn/backend/app/Middleware/DebugMiddleware.php(39): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\DebugMiddleware->process()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#12 /www/wwwroot/prime.facms.cn/backend/app/Middleware/RequestMiddleware.php(68): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\RequestMiddleware->process()
+#14 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#15 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpDispatcher.php(40): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#16 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/Server.php(116): Hyperf\Dispatcher\HttpDispatcher->dispatch()
+#17 {main}
+[ERROR] Not Found[173] in /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php
+[ERROR] #0 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(107): Hyperf\HttpServer\CoreMiddleware->handleNotFound()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\HttpServer\CoreMiddleware->process()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/validation/src/Middleware/ValidationMiddleware.php(81): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Validation\Middleware\ValidationMiddleware->process()
+#5 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/session/src/Middleware/SessionMiddleware.php(58): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Session\Middleware\SessionMiddleware->process()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#9 /www/wwwroot/prime.facms.cn/backend/app/Middleware/DebugMiddleware.php(39): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\DebugMiddleware->process()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#12 /www/wwwroot/prime.facms.cn/backend/app/Middleware/RequestMiddleware.php(68): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\RequestMiddleware->process()
+#14 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#15 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpDispatcher.php(40): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#16 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/Server.php(116): Hyperf\Dispatcher\HttpDispatcher->dispatch()
+#17 {main}
+[ERROR] Not Found[173] in /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php
+[ERROR] #0 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(107): Hyperf\HttpServer\CoreMiddleware->handleNotFound()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\HttpServer\CoreMiddleware->process()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/validation/src/Middleware/ValidationMiddleware.php(81): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Validation\Middleware\ValidationMiddleware->process()
+#5 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/session/src/Middleware/SessionMiddleware.php(58): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Session\Middleware\SessionMiddleware->process()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#9 /www/wwwroot/prime.facms.cn/backend/app/Middleware/DebugMiddleware.php(39): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\DebugMiddleware->process()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#12 /www/wwwroot/prime.facms.cn/backend/app/Middleware/RequestMiddleware.php(68): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\RequestMiddleware->process()
+#14 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#15 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpDispatcher.php(40): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#16 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/Server.php(116): Hyperf\Dispatcher\HttpDispatcher->dispatch()
+#17 {main}
+[ERROR] Not Found[173] in /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php
+[ERROR] #0 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(107): Hyperf\HttpServer\CoreMiddleware->handleNotFound()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\HttpServer\CoreMiddleware->process()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/validation/src/Middleware/ValidationMiddleware.php(81): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Validation\Middleware\ValidationMiddleware->process()
+#5 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/session/src/Middleware/SessionMiddleware.php(58): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Session\Middleware\SessionMiddleware->process()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#9 /www/wwwroot/prime.facms.cn/backend/app/Middleware/DebugMiddleware.php(39): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\DebugMiddleware->process()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#12 /www/wwwroot/prime.facms.cn/backend/app/Middleware/RequestMiddleware.php(68): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\RequestMiddleware->process()
+#14 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#15 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpDispatcher.php(40): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#16 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/Server.php(116): Hyperf\Dispatcher\HttpDispatcher->dispatch()
+#17 {main}
+[ERROR] Not Found[173] in /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php
+[ERROR] #0 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(107): Hyperf\HttpServer\CoreMiddleware->handleNotFound()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\HttpServer\CoreMiddleware->process()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/validation/src/Middleware/ValidationMiddleware.php(81): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Validation\Middleware\ValidationMiddleware->process()
+#5 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/session/src/Middleware/SessionMiddleware.php(58): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Session\Middleware\SessionMiddleware->process()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#9 /www/wwwroot/prime.facms.cn/backend/app/Middleware/DebugMiddleware.php(39): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\DebugMiddleware->process()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#12 /www/wwwroot/prime.facms.cn/backend/app/Middleware/RequestMiddleware.php(68): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\RequestMiddleware->process()
+#14 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#15 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpDispatcher.php(40): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#16 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/Server.php(116): Hyperf\Dispatcher\HttpDispatcher->dispatch()
+#17 {main}
+[ERROR] Not Found[173] in /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php
+[ERROR] #0 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(107): Hyperf\HttpServer\CoreMiddleware->handleNotFound()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\HttpServer\CoreMiddleware->process()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/validation/src/Middleware/ValidationMiddleware.php(81): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Validation\Middleware\ValidationMiddleware->process()
+#5 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/session/src/Middleware/SessionMiddleware.php(58): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Session\Middleware\SessionMiddleware->process()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#9 /www/wwwroot/prime.facms.cn/backend/app/Middleware/DebugMiddleware.php(39): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\DebugMiddleware->process()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#12 /www/wwwroot/prime.facms.cn/backend/app/Middleware/RequestMiddleware.php(68): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\RequestMiddleware->process()
+#14 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#15 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpDispatcher.php(40): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#16 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/Server.php(116): Hyperf\Dispatcher\HttpDispatcher->dispatch()
+#17 {main}
