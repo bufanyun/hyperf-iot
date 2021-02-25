@@ -2440,3 +2440,505 @@ array (
 #20 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpDispatcher.php(40): Hyperf\Dispatcher\HttpRequestHandler->handle()
 #21 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/Server.php(116): Hyperf\Dispatcher\HttpDispatcher->dispatch()
 #22 {main}
+[2021-02-25 09:32:19 *4110084.0]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Broken pipe: 13
+[ERROR] PhpAmqpLib\Exception\AMQPRuntimeException: Error sending data(0) in /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection/SwooleIO.php:198
+Stack trace:
+#0 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(388): Hyperf\Amqp\Connection\SwooleIO->write()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(516): PhpAmqpLib\Connection\AbstractConnection->write()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php(247): PhpAmqpLib\Connection\AbstractConnection->send_channel_method_frame()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(763): PhpAmqpLib\Channel\AbstractChannel->send_method_frame()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(752): PhpAmqpLib\Connection\AbstractConnection->x_close_ok()
+#5 [internal function]: PhpAmqpLib\Connection\AbstractConnection->connection_close()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php(216): call_user_func()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php(373): PhpAmqpLib\Channel\AbstractChannel->dispatch()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(675): PhpAmqpLib\Channel\AbstractChannel->wait()
+#9 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php(234): PhpAmqpLib\Connection\AbstractConnection->wait_channel()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php(351): PhpAmqpLib\Channel\AbstractChannel->next_frame()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Consumer.php(96): PhpAmqpLib\Channel\AbstractChannel->wait()
+#12 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/ConsumerManager.php(82): Hyperf\Amqp\Consumer->consume()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/process/src/AbstractProcess.php(134): class@anonymous->handle()
+#14 {main}
+[ERROR] PhpAmqpLib\Exception\AMQPRuntimeException: Error sending data(0) in /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection/SwooleIO.php:198
+Stack trace:
+#0 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(388): Hyperf\Amqp\Connection\SwooleIO->write()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(516): PhpAmqpLib\Connection\AbstractConnection->write()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php(247): PhpAmqpLib\Connection\AbstractConnection->send_channel_method_frame()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(763): PhpAmqpLib\Channel\AbstractChannel->send_method_frame()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(752): PhpAmqpLib\Connection\AbstractConnection->x_close_ok()
+#5 [internal function]: PhpAmqpLib\Connection\AbstractConnection->connection_close()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php(216): call_user_func()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php(373): PhpAmqpLib\Channel\AbstractChannel->dispatch()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(675): PhpAmqpLib\Channel\AbstractChannel->wait()
+#9 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php(234): PhpAmqpLib\Connection\AbstractConnection->wait_channel()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php(351): PhpAmqpLib\Channel\AbstractChannel->next_frame()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Consumer.php(96): PhpAmqpLib\Channel\AbstractChannel->wait()
+#12 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/ConsumerManager.php(82): Hyperf\Amqp\Consumer->consume()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/process/src/AbstractProcess.php(134): class@anonymous->handle()
+#14 {main}
+[ERROR] PhpAmqpLib\Exception\AMQPRuntimeException: Error Connecting to server(111): Connection refused (111) in /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection/SwooleIO.php:132
+Stack trace:
+#0 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(240): Hyperf\Amqp\Connection\SwooleIO->connect()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(223): PhpAmqpLib\Connection\AbstractConnection->connect()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection/AMQPSwooleConnection.php(50): PhpAmqpLib\Connection\AbstractConnection->__construct()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection.php(181): Hyperf\Amqp\Connection\AMQPSwooleConnection->__construct()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection.php(77): Hyperf\Amqp\Connection->initConnection()
+#5 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/di/src/Resolver/ObjectResolver.php(99): Hyperf\Amqp\Connection->__construct()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/di/src/Resolver/ObjectResolver.php(66): Hyperf\Di\Resolver\ObjectResolver->createInstance()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/di/src/Resolver/ResolverDispatcher.php(62): Hyperf\Di\Resolver\ObjectResolver->resolve()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/di/src/Resolver/DepthGuard.php(75): Hyperf\Di\Resolver\ResolverDispatcher->Hyperf\Di\Resolver\{closure}()
+#9 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/di/src/Resolver/ResolverDispatcher.php(63): Hyperf\Di\Resolver\DepthGuard->call()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/di/src/Container.php(185): Hyperf\Di\Resolver\ResolverDispatcher->resolve()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/di/src/Container.php(82): Hyperf\Di\Container->resolveDefinition()
+#12 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/utils/src/Functions.php(416): Hyperf\Di\Container->make()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Pool/AmqpConnectionPool.php(60): make()
+#14 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/pool/src/Pool.php(161): Hyperf\Amqp\Pool\AmqpConnectionPool->createConnection()
+#15 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/pool/src/Pool.php(60): Hyperf\Pool\Pool->getConnection()
+#16 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Consumer.php(68): Hyperf\Pool\Pool->get()
+#17 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/ConsumerManager.php(82): Hyperf\Amqp\Consumer->consume()
+#18 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/process/src/AbstractProcess.php(134): class@anonymous->handle()
+#19 {main}
+[ERROR] PhpAmqpLib\Exception\AMQPRuntimeException: Error sending data(0) in /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection/SwooleIO.php:198
+Stack trace:
+#0 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(388): Hyperf\Amqp\Connection\SwooleIO->write()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(516): PhpAmqpLib\Connection\AbstractConnection->write()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php(247): PhpAmqpLib\Connection\AbstractConnection->send_channel_method_frame()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(763): PhpAmqpLib\Channel\AbstractChannel->send_method_frame()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(752): PhpAmqpLib\Connection\AbstractConnection->x_close_ok()
+#5 [internal function]: PhpAmqpLib\Connection\AbstractConnection->connection_close()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php(216): call_user_func()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php(373): PhpAmqpLib\Channel\AbstractChannel->dispatch()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(675): PhpAmqpLib\Channel\AbstractChannel->wait()
+#9 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php(234): PhpAmqpLib\Connection\AbstractConnection->wait_channel()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php(351): PhpAmqpLib\Channel\AbstractChannel->next_frame()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Consumer.php(96): PhpAmqpLib\Channel\AbstractChannel->wait()
+#12 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/ConsumerManager.php(82): Hyperf\Amqp\Consumer->consume()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/process/src/AbstractProcess.php(134): class@anonymous->handle()
+#14 {main}
+[ERROR] PhpAmqpLib\Exception\AMQPRuntimeException: Error sending data(0) in /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection/SwooleIO.php:198
+Stack trace:
+#0 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(388): Hyperf\Amqp\Connection\SwooleIO->write()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(516): PhpAmqpLib\Connection\AbstractConnection->write()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php(247): PhpAmqpLib\Connection\AbstractConnection->send_channel_method_frame()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(763): PhpAmqpLib\Channel\AbstractChannel->send_method_frame()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(752): PhpAmqpLib\Connection\AbstractConnection->x_close_ok()
+#5 [internal function]: PhpAmqpLib\Connection\AbstractConnection->connection_close()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php(216): call_user_func()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php(373): PhpAmqpLib\Channel\AbstractChannel->dispatch()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(675): PhpAmqpLib\Channel\AbstractChannel->wait()
+#9 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php(234): PhpAmqpLib\Connection\AbstractConnection->wait_channel()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php(351): PhpAmqpLib\Channel\AbstractChannel->next_frame()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Consumer.php(96): PhpAmqpLib\Channel\AbstractChannel->wait()
+#12 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/ConsumerManager.php(82): Hyperf\Amqp\Consumer->consume()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/process/src/AbstractProcess.php(134): class@anonymous->handle()
+#14 {main}
+[ERROR] PhpAmqpLib\Exception\AMQPRuntimeException: Error Connecting to server(111): Connection refused (111) in /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection/SwooleIO.php:132
+Stack trace:
+#0 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(240): Hyperf\Amqp\Connection\SwooleIO->connect()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(223): PhpAmqpLib\Connection\AbstractConnection->connect()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection/AMQPSwooleConnection.php(50): PhpAmqpLib\Connection\AbstractConnection->__construct()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection.php(181): Hyperf\Amqp\Connection\AMQPSwooleConnection->__construct()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection.php(77): Hyperf\Amqp\Connection->initConnection()
+#5 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/di/src/Resolver/ObjectResolver.php(99): Hyperf\Amqp\Connection->__construct()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/di/src/Resolver/ObjectResolver.php(66): Hyperf\Di\Resolver\ObjectResolver->createInstance()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/di/src/Resolver/ResolverDispatcher.php(62): Hyperf\Di\Resolver\ObjectResolver->resolve()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/di/src/Resolver/DepthGuard.php(75): Hyperf\Di\Resolver\ResolverDispatcher->Hyperf\Di\Resolver\{closure}()
+#9 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/di/src/Resolver/ResolverDispatcher.php(63): Hyperf\Di\Resolver\DepthGuard->call()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/di/src/Container.php(185): Hyperf\Di\Resolver\ResolverDispatcher->resolve()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/di/src/Container.php(82): Hyperf\Di\Container->resolveDefinition()
+#12 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/utils/src/Functions.php(416): Hyperf\Di\Container->make()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Pool/AmqpConnectionPool.php(60): make()
+#14 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/pool/src/Pool.php(161): Hyperf\Amqp\Pool\AmqpConnectionPool->createConnection()
+#15 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/pool/src/Pool.php(60): Hyperf\Pool\Pool->getConnection()
+#16 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Consumer.php(68): Hyperf\Pool\Pool->get()
+#17 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/ConsumerManager.php(82): Hyperf\Amqp\Consumer->consume()
+#18 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/process/src/AbstractProcess.php(134): class@anonymous->handle()
+#19 {main}
+[ERROR] PhpAmqpLib\Exception\AMQPRuntimeException: Error Connecting to server(111): Connection refused (111) in /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection/SwooleIO.php:132
+Stack trace:
+#0 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(240): Hyperf\Amqp\Connection\SwooleIO->connect()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(223): PhpAmqpLib\Connection\AbstractConnection->connect()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection/AMQPSwooleConnection.php(50): PhpAmqpLib\Connection\AbstractConnection->__construct()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection.php(181): Hyperf\Amqp\Connection\AMQPSwooleConnection->__construct()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection.php(77): Hyperf\Amqp\Connection->initConnection()
+#5 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/di/src/Resolver/ObjectResolver.php(99): Hyperf\Amqp\Connection->__construct()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/di/src/Resolver/ObjectResolver.php(66): Hyperf\Di\Resolver\ObjectResolver->createInstance()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/di/src/Resolver/ResolverDispatcher.php(62): Hyperf\Di\Resolver\ObjectResolver->resolve()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/di/src/Resolver/DepthGuard.php(75): Hyperf\Di\Resolver\ResolverDispatcher->Hyperf\Di\Resolver\{closure}()
+#9 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/di/src/Resolver/ResolverDispatcher.php(63): Hyperf\Di\Resolver\DepthGuard->call()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/di/src/Container.php(185): Hyperf\Di\Resolver\ResolverDispatcher->resolve()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/di/src/Container.php(82): Hyperf\Di\Container->resolveDefinition()
+#12 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/utils/src/Functions.php(416): Hyperf\Di\Container->make()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Pool/AmqpConnectionPool.php(60): make()
+#14 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/pool/src/Pool.php(161): Hyperf\Amqp\Pool\AmqpConnectionPool->createConnection()
+#15 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/pool/src/Pool.php(60): Hyperf\Pool\Pool->getConnection()
+#16 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Consumer.php(68): Hyperf\Pool\Pool->get()
+#17 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/ConsumerManager.php(82): Hyperf\Amqp\Consumer->consume()
+#18 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/process/src/AbstractProcess.php(134): class@anonymous->handle()
+#19 {main}
+PHP Notice:  Undefined index: code in /www/wwwroot/prime.facms.cn/backend/app/Core/Common/Extend/CardApi/GtNumber/Tools.php on line 61
+
+Notice: Undefined index: code in /www/wwwroot/prime.facms.cn/backend/app/Core/Common/Extend/CardApi/GtNumber/Tools.php on line 61
+PHP Notice:  Undefined index: code in /www/wwwroot/prime.facms.cn/backend/app/Core/Repositories/Home/OrderSubmitRepository.php on line 357
+
+Notice: Undefined index: code in /www/wwwroot/prime.facms.cn/backend/app/Core/Repositories/Home/OrderSubmitRepository.php on line 357
+[ERROR] 数据解析失败[358] in /www/wwwroot/prime.facms.cn/backend/app/Core/Repositories/Home/OrderSubmitRepository.php
+[ERROR] #0 /www/wwwroot/prime.facms.cn/backend/runtime/container/proxy/App_Controller_Home_ApiController.proxy.php(128): Core\Repositories\Home\OrderSubmitRepository->default()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(161): App\Controller\Home\ApiController->uniform()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(113): Hyperf\HttpServer\CoreMiddleware->handleFound()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\HttpServer\CoreMiddleware->process()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#5 /www/wwwroot/prime.facms.cn/backend/app/Middleware/SpreadMiddleware.php(53): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\SpreadMiddleware->process()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/validation/src/Middleware/ValidationMiddleware.php(81): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#9 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Validation\Middleware\ValidationMiddleware->process()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/session/src/Middleware/SessionMiddleware.php(58): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#12 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Session\Middleware\SessionMiddleware->process()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#14 /www/wwwroot/prime.facms.cn/backend/app/Middleware/DebugMiddleware.php(39): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#15 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\DebugMiddleware->process()
+#16 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#17 /www/wwwroot/prime.facms.cn/backend/app/Middleware/RequestMiddleware.php(68): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#18 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\RequestMiddleware->process()
+#19 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#20 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpDispatcher.php(40): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#21 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/Server.php(116): Hyperf\Dispatcher\HttpDispatcher->dispatch()
+#22 {main}
+PHP Notice:  Undefined index: code in /www/wwwroot/prime.facms.cn/backend/app/Core/Common/Extend/CardApi/GtNumber/Tools.php on line 61
+
+Notice: Undefined index: code in /www/wwwroot/prime.facms.cn/backend/app/Core/Common/Extend/CardApi/GtNumber/Tools.php on line 61
+PHP Notice:  Undefined index: code in /www/wwwroot/prime.facms.cn/backend/app/Core/Repositories/Home/OrderSubmitRepository.php on line 357
+
+Notice: Undefined index: code in /www/wwwroot/prime.facms.cn/backend/app/Core/Repositories/Home/OrderSubmitRepository.php on line 357
+[ERROR] 数据解析失败[358] in /www/wwwroot/prime.facms.cn/backend/app/Core/Repositories/Home/OrderSubmitRepository.php
+[ERROR] #0 /www/wwwroot/prime.facms.cn/backend/runtime/container/proxy/App_Controller_Home_ApiController.proxy.php(128): Core\Repositories\Home\OrderSubmitRepository->default()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(161): App\Controller\Home\ApiController->uniform()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(113): Hyperf\HttpServer\CoreMiddleware->handleFound()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\HttpServer\CoreMiddleware->process()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#5 /www/wwwroot/prime.facms.cn/backend/app/Middleware/SpreadMiddleware.php(53): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\SpreadMiddleware->process()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/validation/src/Middleware/ValidationMiddleware.php(81): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#9 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Validation\Middleware\ValidationMiddleware->process()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/session/src/Middleware/SessionMiddleware.php(58): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#12 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Session\Middleware\SessionMiddleware->process()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#14 /www/wwwroot/prime.facms.cn/backend/app/Middleware/DebugMiddleware.php(39): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#15 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\DebugMiddleware->process()
+#16 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#17 /www/wwwroot/prime.facms.cn/backend/app/Middleware/RequestMiddleware.php(68): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#18 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\RequestMiddleware->process()
+#19 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#20 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpDispatcher.php(40): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#21 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/Server.php(116): Hyperf\Dispatcher\HttpDispatcher->dispatch()
+#22 {main}
+PHP Notice:  Undefined index: code in /www/wwwroot/prime.facms.cn/backend/app/Core/Common/Extend/CardApi/GtNumber/Tools.php on line 61
+
+Notice: Undefined index: code in /www/wwwroot/prime.facms.cn/backend/app/Core/Common/Extend/CardApi/GtNumber/Tools.php on line 61
+PHP Notice:  Undefined index: code in /www/wwwroot/prime.facms.cn/backend/app/Core/Repositories/Home/OrderSubmitRepository.php on line 357
+
+Notice: Undefined index: code in /www/wwwroot/prime.facms.cn/backend/app/Core/Repositories/Home/OrderSubmitRepository.php on line 357
+[ERROR] 数据解析失败[358] in /www/wwwroot/prime.facms.cn/backend/app/Core/Repositories/Home/OrderSubmitRepository.php
+[ERROR] #0 /www/wwwroot/prime.facms.cn/backend/runtime/container/proxy/App_Controller_Home_ApiController.proxy.php(128): Core\Repositories\Home\OrderSubmitRepository->default()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(161): App\Controller\Home\ApiController->uniform()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(113): Hyperf\HttpServer\CoreMiddleware->handleFound()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\HttpServer\CoreMiddleware->process()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#5 /www/wwwroot/prime.facms.cn/backend/app/Middleware/SpreadMiddleware.php(53): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\SpreadMiddleware->process()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/validation/src/Middleware/ValidationMiddleware.php(81): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#9 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Validation\Middleware\ValidationMiddleware->process()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/session/src/Middleware/SessionMiddleware.php(58): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#12 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Session\Middleware\SessionMiddleware->process()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#14 /www/wwwroot/prime.facms.cn/backend/app/Middleware/DebugMiddleware.php(39): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#15 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\DebugMiddleware->process()
+#16 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#17 /www/wwwroot/prime.facms.cn/backend/app/Middleware/RequestMiddleware.php(68): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#18 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\RequestMiddleware->process()
+#19 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#20 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpDispatcher.php(40): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#21 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/Server.php(116): Hyperf\Dispatcher\HttpDispatcher->dispatch()
+#22 {main}
+PHP Notice:  Undefined index: code in /www/wwwroot/prime.facms.cn/backend/app/Core/Common/Extend/CardApi/GtNumber/Tools.php on line 61
+
+Notice: Undefined index: code in /www/wwwroot/prime.facms.cn/backend/app/Core/Common/Extend/CardApi/GtNumber/Tools.php on line 61
+PHP Notice:  Undefined index: code in /www/wwwroot/prime.facms.cn/backend/app/Core/Repositories/Home/OrderSubmitRepository.php on line 357
+
+Notice: Undefined index: code in /www/wwwroot/prime.facms.cn/backend/app/Core/Repositories/Home/OrderSubmitRepository.php on line 357
+[ERROR] 数据解析失败[358] in /www/wwwroot/prime.facms.cn/backend/app/Core/Repositories/Home/OrderSubmitRepository.php
+[ERROR] #0 /www/wwwroot/prime.facms.cn/backend/runtime/container/proxy/App_Controller_Home_ApiController.proxy.php(128): Core\Repositories\Home\OrderSubmitRepository->default()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(161): App\Controller\Home\ApiController->uniform()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(113): Hyperf\HttpServer\CoreMiddleware->handleFound()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\HttpServer\CoreMiddleware->process()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#5 /www/wwwroot/prime.facms.cn/backend/app/Middleware/SpreadMiddleware.php(53): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\SpreadMiddleware->process()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/validation/src/Middleware/ValidationMiddleware.php(81): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#9 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Validation\Middleware\ValidationMiddleware->process()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/session/src/Middleware/SessionMiddleware.php(58): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#12 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Session\Middleware\SessionMiddleware->process()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#14 /www/wwwroot/prime.facms.cn/backend/app/Middleware/DebugMiddleware.php(39): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#15 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\DebugMiddleware->process()
+#16 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#17 /www/wwwroot/prime.facms.cn/backend/app/Middleware/RequestMiddleware.php(68): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#18 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\RequestMiddleware->process()
+#19 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#20 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpDispatcher.php(40): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#21 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/Server.php(116): Hyperf\Dispatcher\HttpDispatcher->dispatch()
+#22 {main}
+PHP Notice:  Undefined index: code in /www/wwwroot/prime.facms.cn/backend/app/Core/Common/Extend/CardApi/GtNumber/Tools.php on line 61
+
+Notice: Undefined index: code in /www/wwwroot/prime.facms.cn/backend/app/Core/Common/Extend/CardApi/GtNumber/Tools.php on line 61
+PHP Notice:  Undefined index: code in /www/wwwroot/prime.facms.cn/backend/app/Core/Repositories/Home/OrderSubmitRepository.php on line 357
+
+Notice: Undefined index: code in /www/wwwroot/prime.facms.cn/backend/app/Core/Repositories/Home/OrderSubmitRepository.php on line 357
+[ERROR] 数据解析失败[358] in /www/wwwroot/prime.facms.cn/backend/app/Core/Repositories/Home/OrderSubmitRepository.php
+[ERROR] #0 /www/wwwroot/prime.facms.cn/backend/runtime/container/proxy/App_Controller_Home_ApiController.proxy.php(128): Core\Repositories\Home\OrderSubmitRepository->default()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(161): App\Controller\Home\ApiController->uniform()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(113): Hyperf\HttpServer\CoreMiddleware->handleFound()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\HttpServer\CoreMiddleware->process()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#5 /www/wwwroot/prime.facms.cn/backend/app/Middleware/SpreadMiddleware.php(53): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\SpreadMiddleware->process()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/validation/src/Middleware/ValidationMiddleware.php(81): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#9 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Validation\Middleware\ValidationMiddleware->process()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/session/src/Middleware/SessionMiddleware.php(58): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#12 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Session\Middleware\SessionMiddleware->process()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#14 /www/wwwroot/prime.facms.cn/backend/app/Middleware/DebugMiddleware.php(39): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#15 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\DebugMiddleware->process()
+#16 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#17 /www/wwwroot/prime.facms.cn/backend/app/Middleware/RequestMiddleware.php(68): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#18 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\RequestMiddleware->process()
+#19 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#20 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpDispatcher.php(40): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#21 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/Server.php(116): Hyperf\Dispatcher\HttpDispatcher->dispatch()
+#22 {main}
+PHP Notice:  Undefined index: code in /www/wwwroot/prime.facms.cn/backend/app/Core/Common/Extend/CardApi/GtNumber/Tools.php on line 61
+
+Notice: Undefined index: code in /www/wwwroot/prime.facms.cn/backend/app/Core/Common/Extend/CardApi/GtNumber/Tools.php on line 61
+PHP Notice:  Undefined index: code in /www/wwwroot/prime.facms.cn/backend/app/Core/Repositories/Home/OrderSubmitRepository.php on line 357
+
+Notice: Undefined index: code in /www/wwwroot/prime.facms.cn/backend/app/Core/Repositories/Home/OrderSubmitRepository.php on line 357
+[ERROR] 数据解析失败[358] in /www/wwwroot/prime.facms.cn/backend/app/Core/Repositories/Home/OrderSubmitRepository.php
+[ERROR] #0 /www/wwwroot/prime.facms.cn/backend/runtime/container/proxy/App_Controller_Home_ApiController.proxy.php(128): Core\Repositories\Home\OrderSubmitRepository->default()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(161): App\Controller\Home\ApiController->uniform()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(113): Hyperf\HttpServer\CoreMiddleware->handleFound()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\HttpServer\CoreMiddleware->process()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#5 /www/wwwroot/prime.facms.cn/backend/app/Middleware/SpreadMiddleware.php(53): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\SpreadMiddleware->process()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/validation/src/Middleware/ValidationMiddleware.php(81): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#9 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Validation\Middleware\ValidationMiddleware->process()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/session/src/Middleware/SessionMiddleware.php(58): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#12 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Session\Middleware\SessionMiddleware->process()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#14 /www/wwwroot/prime.facms.cn/backend/app/Middleware/DebugMiddleware.php(39): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#15 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\DebugMiddleware->process()
+#16 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#17 /www/wwwroot/prime.facms.cn/backend/app/Middleware/RequestMiddleware.php(68): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#18 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\RequestMiddleware->process()
+#19 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#20 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpDispatcher.php(40): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#21 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/Server.php(116): Hyperf\Dispatcher\HttpDispatcher->dispatch()
+#22 {main}
+PHP Notice:  Undefined index: code in /www/wwwroot/prime.facms.cn/backend/app/Core/Common/Extend/CardApi/GtNumber/Tools.php on line 61
+
+Notice: Undefined index: code in /www/wwwroot/prime.facms.cn/backend/app/Core/Common/Extend/CardApi/GtNumber/Tools.php on line 61
+PHP Notice:  Undefined index: code in /www/wwwroot/prime.facms.cn/backend/app/Core/Repositories/Home/OrderSubmitRepository.php on line 357
+
+Notice: Undefined index: code in /www/wwwroot/prime.facms.cn/backend/app/Core/Repositories/Home/OrderSubmitRepository.php on line 357
+[ERROR] 数据解析失败[358] in /www/wwwroot/prime.facms.cn/backend/app/Core/Repositories/Home/OrderSubmitRepository.php
+[ERROR] #0 /www/wwwroot/prime.facms.cn/backend/runtime/container/proxy/App_Controller_Home_ApiController.proxy.php(128): Core\Repositories\Home\OrderSubmitRepository->default()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(161): App\Controller\Home\ApiController->uniform()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(113): Hyperf\HttpServer\CoreMiddleware->handleFound()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\HttpServer\CoreMiddleware->process()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#5 /www/wwwroot/prime.facms.cn/backend/app/Middleware/SpreadMiddleware.php(53): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\SpreadMiddleware->process()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/validation/src/Middleware/ValidationMiddleware.php(81): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#9 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Validation\Middleware\ValidationMiddleware->process()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/session/src/Middleware/SessionMiddleware.php(58): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#12 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Session\Middleware\SessionMiddleware->process()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#14 /www/wwwroot/prime.facms.cn/backend/app/Middleware/DebugMiddleware.php(39): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#15 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\DebugMiddleware->process()
+#16 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#17 /www/wwwroot/prime.facms.cn/backend/app/Middleware/RequestMiddleware.php(68): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#18 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\RequestMiddleware->process()
+#19 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#20 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpDispatcher.php(40): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#21 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/Server.php(116): Hyperf\Dispatcher\HttpDispatcher->dispatch()
+#22 {main}
+[ERROR] PhpAmqpLib\Exception\AMQPBasicCancelException: Channel was canceled(0) in /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AMQPChannel.php:921
+Stack trace:
+#0 [internal function]: PhpAmqpLib\Channel\AMQPChannel->basic_cancel_from_server()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php(216): call_user_func()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php(373): PhpAmqpLib\Channel\AbstractChannel->dispatch()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Consumer.php(96): PhpAmqpLib\Channel\AbstractChannel->wait()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/ConsumerManager.php(82): Hyperf\Amqp\Consumer->consume()
+#5 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/process/src/AbstractProcess.php(134): class@anonymous->handle()
+#6 {main}
+PHP Fatal error:  Uncaught Swoole\Error: API must be called in the coroutine in /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection/SwooleIO.php:174
+Stack trace:
+#0 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection/SwooleIO.php(174): Swoole\Coroutine\Client->recv()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Wire/AMQPReader.php(160): Hyperf\Amqp\Connection\SwooleIO->read()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Wire/AMQPReader.php(106): PhpAmqpLib\Wire\AMQPReader->rawread()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(575): PhpAmqpLib\Wire\AMQPReader->read()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(632): PhpAmqpLib\Connection\AbstractConnection->wait_frame()
+#5 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php(234): in /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection/SwooleIO.php on line 174
+
+Fatal error: Uncaught Swoole\Error: API must be called in the coroutine in /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection/SwooleIO.php:174
+Stack trace:
+#0 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection/SwooleIO.php(174): Swoole\Coroutine\Client->recv()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Wire/AMQPReader.php(160): Hyperf\Amqp\Connection\SwooleIO->read()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Wire/AMQPReader.php(106): PhpAmqpLib\Wire\AMQPReader->rawread()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(575): PhpAmqpLib\Wire\AMQPReader->read()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(632): PhpAmqpLib\Connection\AbstractConnection->wait_frame()
+#5 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php(234): in /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection/SwooleIO.php on line 174
+[2021-02-25 09:54:16 $4110081.0]	WARNING	check_worker_exit_status: worker#3[pid=930929] abnormal exit, status=255, signal=0
+[ERROR] Not Found[173] in /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php
+[ERROR] #0 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(107): Hyperf\HttpServer\CoreMiddleware->handleNotFound()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\HttpServer\CoreMiddleware->process()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/validation/src/Middleware/ValidationMiddleware.php(81): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Validation\Middleware\ValidationMiddleware->process()
+#5 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/session/src/Middleware/SessionMiddleware.php(58): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Session\Middleware\SessionMiddleware->process()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#9 /www/wwwroot/prime.facms.cn/backend/app/Middleware/DebugMiddleware.php(39): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\DebugMiddleware->process()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#12 /www/wwwroot/prime.facms.cn/backend/app/Middleware/RequestMiddleware.php(68): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\RequestMiddleware->process()
+#14 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#15 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpDispatcher.php(40): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#16 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/Server.php(116): Hyperf\Dispatcher\HttpDispatcher->dispatch()
+#17 {main}
+[ERROR] Not Found[173] in /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php
+[ERROR] #0 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(107): Hyperf\HttpServer\CoreMiddleware->handleNotFound()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\HttpServer\CoreMiddleware->process()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/validation/src/Middleware/ValidationMiddleware.php(81): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Validation\Middleware\ValidationMiddleware->process()
+#5 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/session/src/Middleware/SessionMiddleware.php(58): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Session\Middleware\SessionMiddleware->process()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#9 /www/wwwroot/prime.facms.cn/backend/app/Middleware/DebugMiddleware.php(39): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\DebugMiddleware->process()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#12 /www/wwwroot/prime.facms.cn/backend/app/Middleware/RequestMiddleware.php(68): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\RequestMiddleware->process()
+#14 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#15 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpDispatcher.php(40): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#16 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/Server.php(116): Hyperf\Dispatcher\HttpDispatcher->dispatch()
+#17 {main}
+[ERROR] Not Found[173] in /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php
+[ERROR] #0 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(107): Hyperf\HttpServer\CoreMiddleware->handleNotFound()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\HttpServer\CoreMiddleware->process()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/validation/src/Middleware/ValidationMiddleware.php(81): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Validation\Middleware\ValidationMiddleware->process()
+#5 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/session/src/Middleware/SessionMiddleware.php(58): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Session\Middleware\SessionMiddleware->process()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#9 /www/wwwroot/prime.facms.cn/backend/app/Middleware/DebugMiddleware.php(39): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\DebugMiddleware->process()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#12 /www/wwwroot/prime.facms.cn/backend/app/Middleware/RequestMiddleware.php(68): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\RequestMiddleware->process()
+#14 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#15 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpDispatcher.php(40): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#16 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/Server.php(116): Hyperf\Dispatcher\HttpDispatcher->dispatch()
+#17 {main}
+[ERROR] Not Found[173] in /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php
+[ERROR] #0 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(107): Hyperf\HttpServer\CoreMiddleware->handleNotFound()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\HttpServer\CoreMiddleware->process()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/validation/src/Middleware/ValidationMiddleware.php(81): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Validation\Middleware\ValidationMiddleware->process()
+#5 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/session/src/Middleware/SessionMiddleware.php(58): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Session\Middleware\SessionMiddleware->process()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#9 /www/wwwroot/prime.facms.cn/backend/app/Middleware/DebugMiddleware.php(39): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\DebugMiddleware->process()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#12 /www/wwwroot/prime.facms.cn/backend/app/Middleware/RequestMiddleware.php(68): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\RequestMiddleware->process()
+#14 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#15 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpDispatcher.php(40): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#16 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/Server.php(116): Hyperf\Dispatcher\HttpDispatcher->dispatch()
+#17 {main}
+[ERROR] PhpAmqpLib\Exception\AMQPBasicCancelException: Channel was canceled(0) in /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AMQPChannel.php:921
+Stack trace:
+#0 [internal function]: PhpAmqpLib\Channel\AMQPChannel->basic_cancel_from_server()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php(216): call_user_func()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php(373): PhpAmqpLib\Channel\AbstractChannel->dispatch()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Consumer.php(96): PhpAmqpLib\Channel\AbstractChannel->wait()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/ConsumerManager.php(82): Hyperf\Amqp\Consumer->consume()
+#5 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/process/src/AbstractProcess.php(134): class@anonymous->handle()
+#6 {main}
+[ERROR] PhpAmqpLib\Exception\AMQPBasicCancelException: Channel was canceled(0) in /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AMQPChannel.php:921
+Stack trace:
+#0 [internal function]: PhpAmqpLib\Channel\AMQPChannel->basic_cancel_from_server()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php(216): call_user_func()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php(373): PhpAmqpLib\Channel\AbstractChannel->dispatch()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Consumer.php(96): PhpAmqpLib\Channel\AbstractChannel->wait()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/ConsumerManager.php(82): Hyperf\Amqp\Consumer->consume()
+#5 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/process/src/AbstractProcess.php(134): class@anonymous->handle()
+#6 {main}
+PHP Fatal error:  Uncaught Swoole\Error: API must be called in the coroutine in /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection/SwooleIO.php:174
+Stack trace:
+#0 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection/SwooleIO.php(174): Swoole\Coroutine\Client->recv()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Wire/AMQPReader.php(160): Hyperf\Amqp\Connection\SwooleIO->read()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Wire/AMQPReader.php(106): PhpAmqpLib\Wire\AMQPReader->rawread()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(575): PhpAmqpLib\Wire\AMQPReader->read()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(632): PhpAmqpLib\Connection\AbstractConnection->wait_frame()
+#5 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php(234): in /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection/SwooleIO.php on line 174
+
+Fatal error: Uncaught Swoole\Error: API must be called in the coroutine in /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection/SwooleIO.php:174
+Stack trace:
+#0 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection/SwooleIO.php(174): Swoole\Coroutine\Client->recv()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Wire/AMQPReader.php(160): Hyperf\Amqp\Connection\SwooleIO->read()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Wire/AMQPReader.php(106): PhpAmqpLib\Wire\AMQPReader->rawread()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(575): PhpAmqpLib\Wire\AMQPReader->read()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(632): PhpAmqpLib\Connection\AbstractConnection->wait_frame()
+#5 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php(234): in /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection/SwooleIO.php on line 174
+[2021-02-25 10:25:27 $4110081.0]	WARNING	check_worker_exit_status: worker#3[pid=937543] abnormal exit, status=255, signal=0
+PHP Fatal error:  Uncaught Swoole\Error: API must be called in the coroutine in /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection/SwooleIO.php:174
+Stack trace:
+#0 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection/SwooleIO.php(174): Swoole\Coroutine\Client->recv()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Wire/AMQPReader.php(160): Hyperf\Amqp\Connection\SwooleIO->read()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Wire/AMQPReader.php(106): PhpAmqpLib\Wire\AMQPReader->rawread()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(575): PhpAmqpLib\Wire\AMQPReader->read()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(632): PhpAmqpLib\Connection\AbstractConnection->wait_frame()
+#5 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php(234): in /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection/SwooleIO.php on line 174
+
+Fatal error: Uncaught Swoole\Error: API must be called in the coroutine in /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection/SwooleIO.php:174
+Stack trace:
+#0 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection/SwooleIO.php(174): Swoole\Coroutine\Client->recv()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Wire/AMQPReader.php(160): Hyperf\Amqp\Connection\SwooleIO->read()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Wire/AMQPReader.php(106): PhpAmqpLib\Wire\AMQPReader->rawread()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(575): PhpAmqpLib\Wire\AMQPReader->read()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Connection/AbstractConnection.php(632): PhpAmqpLib\Connection\AbstractConnection->wait_frame()
+#5 /www/wwwroot/prime.facms.cn/backend/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php(234): in /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/amqp/src/Connection/SwooleIO.php on line 174
+[2021-02-25 10:25:31 $4110081.0]	WARNING	check_worker_exit_status: worker#2[pid=930909] abnormal exit, status=255, signal=0
