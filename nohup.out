@@ -10627,3 +10627,4 @@ Stack trace:
 #6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/utils/src/Functions.php(271): Hyperf\Utils\Parallel->Hyperf\Utils\{closure}()
 #7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/utils/src/Coroutine.php(62): call()
 #8 {main}
+[2021-03-04 10:02:39 *4110084.0]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Broken pipe: 13
