@@ -14084,3 +14084,28 @@ Stack trace:
 #6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/utils/src/Functions.php(271): Hyperf\Utils\Parallel->Hyperf\Utils\{closure}()
 #7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/utils/src/Coroutine.php(62): call()
 #8 {main}
+[2021-03-08 19:51:46 *4110085.1]	WARNING	swSignalfd_onSignal (ERRNO 707): Unable to find callback function for signal Broken pipe: 13
+[ERROR] 证件号码购买同一销售品超过数量限制[139] in /www/wwwroot/prime.facms.cn/backend/app/Core/Repositories/Home/OrderSubmitRepository.php
+[ERROR] #0 /www/wwwroot/prime.facms.cn/backend/runtime/container/proxy/App_Controller_Home_ApiController.proxy.php(139): Core\Repositories\Home\OrderSubmitRepository->qh()
+#1 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(161): App\Controller\Home\ApiController->uniform()
+#2 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/CoreMiddleware.php(113): Hyperf\HttpServer\CoreMiddleware->handleFound()
+#3 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\HttpServer\CoreMiddleware->process()
+#4 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#5 /www/wwwroot/prime.facms.cn/backend/app/Middleware/SpreadMiddleware.php(53): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#6 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\SpreadMiddleware->process()
+#7 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#8 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/validation/src/Middleware/ValidationMiddleware.php(81): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#9 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Validation\Middleware\ValidationMiddleware->process()
+#10 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#11 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/session/src/Middleware/SessionMiddleware.php(58): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#12 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): Hyperf\Session\Middleware\SessionMiddleware->process()
+#13 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#14 /www/wwwroot/prime.facms.cn/backend/app/Middleware/DebugMiddleware.php(39): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#15 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\DebugMiddleware->process()
+#16 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#17 /www/wwwroot/prime.facms.cn/backend/app/Middleware/RequestMiddleware.php(68): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#18 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/AbstractRequestHandler.php(64): App\Middleware\RequestMiddleware->process()
+#19 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpRequestHandler.php(26): Hyperf\Dispatcher\AbstractRequestHandler->handleRequest()
+#20 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/dispatcher/src/HttpDispatcher.php(40): Hyperf\Dispatcher\HttpRequestHandler->handle()
+#21 /www/wwwroot/prime.facms.cn/backend/vendor/hyperf/http-server/src/Server.php(116): Hyperf\Dispatcher\HttpDispatcher->dispatch()
+#22 {main}
