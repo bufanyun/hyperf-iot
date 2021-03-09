@@ -192,14 +192,23 @@ class OrderSubmitRepository extends BaseRepository
 //        var_export($inputData);
         switch ($product->api_model) {
             case 'BkApi':
+                $captchaId = null;
                 if ($product->captcha_switch) {
                     if (!isset($inputData['captchaInfo']['captcha'])) {
-                        throw new BusinessException(StatusCode::ERR_EXCEPTION,
-                            '验证码错误');
+                        throw new BusinessException(StatusCode::ERR_EXCEPTION, '请填写验证码');
                     }
-                    // TODO
-                    //...
+                    $captchaRes = $this->BkApi->request('messageCheck', [
+                        'identity' => $inputData['certInfo']['certId'],
+                        'contact'  => $inputData['certInfo']['contractPhone'],
+                        'development_code' => $this->BkApi->config['development_code'],
+                        'captcha' => $inputData['captchaInfo']['captcha'],
+                    ]);
+                    if ($captchaRes['code'] !== StatusCode::SUCCESS) {
+                        throw new BusinessException(StatusCode::ERR_EXCEPTION, $captchaRes['msg'] ?? '验证码错误');
+                    }
+                    $captchaId = $captchaRes['data']['flexData']['captchaId'];
                 }
+
                 if ((int)$inputData['numInfo']['essProvince'] === 51) {
                     $inputData['numInfo']['essCity'] = 530; //凡是有号码归属地市为广东省的，需要将地市选为广东、佛山市
                 }
@@ -255,8 +264,10 @@ class OrderSubmitRepository extends BaseRepository
                     'newnumber'        => $inputData['numInfo']['number'],
                     'development_code' => $this->BkApi->config['development_code'],
                     'productCode'      => $product->kind,
-                    //                    'captchaId'        => $inputData['captchaInfo']['captcha'],
                 ];
+                if ($product->captcha_switch) {
+                    $data = array_merge($data, ['captchaId' => $captchaId]);
+                }
                 var_export($data);
                 $this->logger->info('开始下单：' . json_encode($data, JSON_UNESCAPED_UNICODE) . "\r\n");
                 $res = $this->BkApi->request('ZOPsubmit', $data);

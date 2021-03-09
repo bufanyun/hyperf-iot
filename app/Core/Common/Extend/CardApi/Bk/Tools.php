@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 namespace Core\Common\Extend\CardApi\Bk;
 
 use Core\Common\Extend\CardApi\Bk\Method;
@@ -28,17 +29,14 @@ class Tools
 
     private ?CurlHelpers $Curl = null;
 
-    public $config = [
-        'appID'  => '',
-        'AES'    => '',
-        'domain' => 'https://fsuni.com',  //统一请求接口
-    ];
+    public array $config = [];
 
     public function __construct()
     {
         $this->config = array_merge($this->config, [
             'appID'            => env('BK_CONFIG_APPID', ''),
             'AES'              => env('BK_CONFIG_AES', ''),
+            'domain'           => env('BK_CONFIG_DOMAIN', ''),
             'development_code' => env('BK_CONFIG_DEVELOPMENT_CODE', ''),
         ]);
         $this->Curl   = (ApplicationContext::getContainer())->get(CurlHelpers::class);
@@ -48,7 +46,7 @@ class Tools
      * 统一返回格式
      * format
      * @param string $rs
-     * @param array  $keys
+     * @param array $keys
      *
      * @return array
      * author MengShuai <133814250@qq.com>
@@ -56,6 +54,7 @@ class Tools
      */
     public function format(string $rs, array $keys): array
     {
+        var_export(['$rs' => $rs, 'k' => $keys]);
         $rs   = json_decode($rs, true);
         $data = [];
         if (!empty($keys)) {
@@ -64,6 +63,7 @@ class Tools
                     $data[$k] = $v;
                 }
             }
+            unset($v);
         }
         $res = [
             'code' => (isset($rs['result']) && $rs['result'] == true) ? StatusCode::SUCCESS : StatusCode::ERR_EXCEPTION,
@@ -81,7 +81,7 @@ class Tools
      * 发送请求
      * request
      * @param string $method
-     * @param array  $data
+     * @param array $data
      *
      * @return array
      * author MengShuai <133814250@qq.com>

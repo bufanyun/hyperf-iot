@@ -147,8 +147,7 @@ class ApiController extends BaseController
                 if ($validator->fails()) {
                     return $this->error(StatusCode::ERR_EXCEPTION, $validator->errors()->first());
                 }
-                $OrderThreeInspect = OrderThreeInspect((string)$reqParam['certInfo']['certName'],
-                    (string)$reqParam['certInfo']['certId'], (string)$reqParam['certInfo']['contractPhone']);
+                $OrderThreeInspect = OrderThreeInspect((string)$reqParam['certInfo']['certName'], (string)$reqParam['certInfo']['certId'], (string)$reqParam['certInfo']['contractPhone']);
                 if ($OrderThreeInspect !== true) {
                     return $this->error(StatusCode::ERR_EXCEPTION, $OrderThreeInspect);
                 }
@@ -284,18 +283,52 @@ class ApiController extends BaseController
     }
 
     /**
+     * selectPhones
      * Bk联通获取验证码
+     *
+     * @return mixed
+     *
+     * @RequestMapping(path="getCode")
      */
     public function getCode()
     {
-        $data = [
-            'identity'         => $this->decrypt->identity,
-            'contact'          => $this->decrypt->contact,
-            'development_code' => $this->api->config['development_code'],
-        ];
+        $params    = $this->request->all();
+        $validator = $this->validationFactory->make(
+            $params,
+            [
+                'identity' => 'required|string',
+                'contact'  => 'required|string',
+            ],
+            [
+                'identity.required' => '身份证不能为空',
+                'contact.required'  => '手机号码不能为空',
+            ]
+        );
+        if ($validator->fails()) {
+            return $this->error(StatusCode::ERR_EXCEPTION, $validator->errors()->first());
+        }
 
-        $res = $this->api->request('getCode', $data);
-        return $res;
+        $data = [
+            'identity'         => $params['identity'],
+            'contact'          => $params['contact'],
+            'development_code' => $this->BkApi->config['development_code'],
+        ];
+        $key = RedisCode::FREQUENT_CAPTCHA . buildStringHash(json_encode($data));
+        if ($res = $this->Redis->get($key)) {
+            return $this->error(StatusCode::ERR_EXCEPTION, '请在' . $this->Redis->ttl($key). '秒后重试');
+        }
+        $res = $this->BkApi->request('selectPhones', $data);
+        if ($res['code'] == StatusCode::SUCCESS && !empty($res['data'])) {
+            $this->Redis->set($key, json_encode($res), 60);
+        }
+
+        $res  = $this->BkApi->request('getCode', $data);
+        if ($res['code'] !== StatusCode::SUCCESS) {
+            return $this->error(StatusCode::ERR_EXCEPTION, $res['msg'] ?? null);
+        }
+
+        $this->Redis->set($key, json_encode($res), 60);
+        return $this->success([], '发送成功');
     }
 
     /**
@@ -311,6 +344,9 @@ class ApiController extends BaseController
         ];
 
         $res = $this->api->request('messageCheck', $data);
+        if ($res['code'] !== StatusCode::SUCCESS) {
+            return $this->error(StatusCode::ERR_EXCEPTION, $res['msg'] ?? null);
+        }
         return $res;
     }
 

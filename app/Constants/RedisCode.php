@@ -29,6 +29,10 @@ class RedisCode extends AbstractConstants
      */
     public const SELECT_PHONES = 'select_phones:';
     /**
+     * @Message("验证码频繁发送，60秒内仅允许一次")
+     */
+    public const FREQUENT_CAPTCHA = 'frequent_captcha:';
+    /**
      * @Message("产品分类列表")
      */
     public const CLASSIFY_LIST = 'classify_list';

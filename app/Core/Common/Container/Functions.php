@@ -444,7 +444,7 @@ if (!function_exists('getLogArguments')) {
      * @param array $data 响应内容
      * @return array
      */
-    function getLogArguments($executionTime = null, $rbs = 0, array $data)
+    function getLogArguments($executionTime = null, $rbs = 0, array $data = [])
     {
         $request        = ApplicationContext::getContainer()->get(RequestInterface::class);
         $requestHeaders = $request->getHeaders();

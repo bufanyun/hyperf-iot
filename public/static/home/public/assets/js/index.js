@@ -432,55 +432,61 @@ $(function () {
         if (requestFlag1) {
             return;
         }
-        requestFlag1 = true;
-        // 验证码倒计时方法
-        var time = 60;
-        // 设置定时器
-        var setTime = setInterval(function () {
-            time -= 1;
-            $('#captcha').empty().text(time + 's后重新获取');
-            $('#captcha').addClass('grey');
-            requestFlag1 = true;
-            if (time === 0) {
-                $('#captcha').empty().text('获取验证码');
-                $('#captcha').removeClass('grey');
-                requestFlag1 = false;
-                clearInterval(setTime);
-                showCaptchaVoiceFlag();
-            }
-        }, 1000);
-        var param = {
-            phoneNumber: numberTxtAfter,
-        };
-        var captcha_url = "https://msgo.10010.com/lsd-message/send/captcha/phone/v1";
-        if (wangka === 1 || wangka === '1') {
-            captcha_url = "https://card.10010.com/ko-order/messageCaptcha/send";
-            param = {
-                phoneVal: numberTxtAfter
-            };
-        }
+
         $.ajax({
             type: 'GET',
-            url: captcha_url,
+            url: API_interface+'/home/api/getCode',
             timeout: 6000,
-            data: param,
-            success: function (resp) {
-                captchaInfo.type = '00';
-                if (wangka === 1 || wangka === '1') {
-                    // 王卡助手验证码
-                    if (resp && resp.code && resp.code !== '0000') {
-                        $('#errorAll, .mask').show();
-                        $('#errorAll').find($('.popup-desc')).empty().text(resp.msg);
-                        noScroll();
-                    }
-                } else {
-                    // 码上购验证码
-                    if (resp && resp.rspCode && resp.rspCode !== '0000') {
-                        $('#errorAll, .mask').show();
-                        $('#errorAll').find($('.popup-desc')).empty().text(resp.rspDesc);
-                        noScroll();
-                    }
+            data: {
+                identity:$('#certNo').val().trim(),
+                contact:$('#mobilePhone').val(),
+                sid:product.id,
+                sub_agent:initParam.sub_agent,
+                job_number:initParam.job_number
+            },
+            success: function (data) {
+                if(data.code !== 20000){
+                    $('#errorAll, .mask').show();
+                    noScroll();
+                    $('#errorAll .popup-desc').text(data.msg);
+                    return;
                 }
+
+                requestFlag1 = true;
+                // 验证码倒计时方法
+                var time = 60;
+                // 设置定时器
+                var setTime = setInterval(function () {
+                    time -= 1;
+                    $('#captcha').empty().text(time + 's后重新获取');
+                    $('#captcha').addClass('grey');
+                    requestFlag1 = true;
+                    if (time === 0) {
+                        $('#captcha').empty().text('获取验证码');
+                        $('#captcha').removeClass('grey');
+                        requestFlag1 = false;
+                        clearInterval(setTime);
+                        showCaptchaVoiceFlag();
+                    }
+                }, 1000);
+                return;
+
+                // captchaInfo.type = '00';
+                // if (wangka === 1 || wangka === '1') {
+                //     // 王卡助手验证码
+                //     if (resp && resp.code && resp.code !== '0000') {
+                //         $('#errorAll, .mask').show();
+                //         $('#errorAll').find($('.popup-desc')).empty().text(resp.msg);
+                //         noScroll();
+                //     }
+                // } else {
+                //     // 码上购验证码
+                //     if (resp && resp.rspCode && resp.rspCode !== '0000') {
+                //         $('#errorAll, .mask').show();
+                //         $('#errorAll').find($('.popup-desc')).empty().text(resp.rspDesc);
+                //         noScroll();
+                //     }
+                // }
             },
             error: function () {
                 requestFlag1 = false;
@@ -1295,7 +1301,7 @@ $(function () {
         req.certInfo.contractPhone = numberTxtAfter;
         req.postInfo.address = $('#address').val().trim();
         // 验证码参数
-        captchaInfo.captcha = captchaCode;
+        captchaInfo.captcha = $('#captchaText').val().trim();
         req.captchaInfo = captchaInfo;
         // 触点购判断
         if (initParam.ti != undefined) {
