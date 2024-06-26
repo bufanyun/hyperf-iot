@@ -26,8 +26,9 @@ hyperf-iot基于Hyperf v2.1、VUE+Prime Pro开发的靓号系统,号卡分销系
 
 
 ### 商业版2.0版本演示（付费版本，购买请联系微信：15303830571）
-* 演示后台：http://haokav2.demo.facms.cn/admin
-* 演示移动端店铺（手机访问）：http://haokav2.demo.facms.cn/s/1
+* 管理后台：http://haokav2.demo.facms.cn/admin
+* 商户端（手机访问）：http://haokav2.demo.facms.cn/merchant
+* 店铺端（手机访问）：http://haokav2.demo.facms.cn/s/1
 ```text
 超管账号：admin
 密码：123456
